@@ -1,0 +1,11 @@
+---
+const { d, i } = Astro.props;
+---
+<li><h3><span class="no mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{d.title}</h3><p>{d.text}</p></li>
+<style>
+li{padding:18px 0;border-top:1px solid var(--line);max-width:66ch;list-style:none}
+li:first-child{border-top:0;padding-top:0}
+h3{font-size:1.15rem;margin-bottom:4px;display:flex;gap:12px;align-items:baseline}
+.no{color:var(--ink2);font-size:.75rem}
+p{margin:0;color:var(--ink2)}
+</style>

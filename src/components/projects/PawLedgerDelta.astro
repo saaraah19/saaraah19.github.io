@@ -1,0 +1,14 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg viewBox="0 0 680 200" role="img" aria-label={t(`Two period curves diverge from a shared start. The area between them is the difference, second period minus first period. It describes what changed, never why. Schematic, not real data.`, `Deux courbes de période partent du même point. L’aire entre elles est la différence, deuxième période moins première période. Elle décrit ce qui a changé, jamais pourquoi. Schéma, pas de données réelles.`)}>
+  <path class="ax" d="M40 165 H640"/>
+  <path class="area" d="M40 140 C220 30 400 130 620 80 L620 110 C400 170 220 60 40 140 Z"/>
+  <path class="p dash" d="M40 140 C220 60 400 170 620 110"/><path class="p" d="M40 140 C220 30 400 130 620 80"/>
+  <circle class="n" cx="40" cy="140" r="5"/>
+  <text x="620" y="66" text-anchor="end">{t(`second period`, `deuxième période`)}</text><text x="620" y="146" text-anchor="end">{t(`first period`, `première période`)}</text>
+  <text x="40" y="190">Δ = B − A</text><text class="sm" x="132" y="190">{t(`what changed, never why`, `ce qui a changé, jamais pourquoi`)}</text>
+  <text class="sm" x="640" y="190" text-anchor="end">{t(`schematic`, `schéma`)}</text>
+</svg></div>

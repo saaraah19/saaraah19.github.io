@@ -1,0 +1,213 @@
+{
+ "title": "Marginalia",
+ "category": "ai-automation",
+ "tier": "featured",
+ "status": "live",
+ "order": 10,
+ "summary": "Upload a PDF, ask in plain language, get streamed answers grounded in the document, or an honest refusal when the answer is not there.",
+ "technologies": [
+  "FastAPI",
+  "Gemini",
+  "FAISS",
+  "BM25",
+  "SSE"
+ ],
+ "github": "https://github.com/saaraah19/marginalia",
+ "problem": "Full-text search misses reworded questions: “can I take time off whenever I want?” shares almost no words with “leave requests must be submitted 15 days in advance.” And a generic chatbot, asked something the document never covers, answers anyway.",
+ "thinking": "Retrieval has to find what was reworded, and the answer has to be allowed to be no.",
+ "flow": [
+  "Question",
+  "Retrieval",
+  "Evidence",
+  "Answer or refusal"
+ ],
+ "live": "https://marginalia-l34u.onrender.com",
+ "composition": "flow",
+ "build": [
+  "Answers stream over server-sent events from a FastAPI backend.",
+  "Retrieval combines FAISS embeddings with BM25 keyword search through LangChain's EnsembleRetriever.",
+  "Sessions are held in memory, and the frontend is plain HTML, CSS and JavaScript.",
+  "Containerised with Docker and hosted on Render."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/marginalia/01-import.webp",
+   "alt": "Marginalia: The upload screen: drop a PDF here or click to choose one.",
+   "caption": "Drop a PDF in. Up to 15 MB, and answers are grounded strictly in that document.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/marginalia/02-start.webp",
+   "alt": "Marginalia: The conversation screen after a document is loaded.",
+   "caption": "The document is loaded and the conversation is open.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/marginalia/03-answer.webp",
+   "alt": "Marginalia: A question answered from the document, with the source label.",
+   "caption": "Answers are marked “from your document”. Paid leave: 27 working days.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/marginalia/04-refusal.webp",
+   "alt": "Marginalia: A refusal marked outside document scope.",
+   "caption": "A sabbatical is not in the manual, so the reply says it is outside the document’s scope instead of inventing an answer.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/marginalia/05-decline.webp",
+   "alt": "Marginalia: Follow-up answers, then a declined off-topic request.",
+   "caption": "Notice periods are answered from the text. A request for a joke is politely declined.",
+   "role": "edge"
+  }
+ ],
+ "decisions": [
+  {
+   "title": "Two retrievers, not one",
+   "text": "BM25 catches the exact words; FAISS embeddings catch the meaning. An EnsembleRetriever merges both, so a reworded question still lands on the right passage."
+  },
+  {
+   "title": "A hidden first word",
+   "text": "The model starts every reply with a classification tag the reader never sees. The stream strips it and uses it to colour the margin tab: from the document, or outside its scope."
+  },
+  {
+   "title": "A bug worth keeping",
+   "text": "The tag first matched an English fallback sentence. In French the sentence changed and the match failed silently, so it now uses a language-independent tag."
+  },
+  {
+   "title": "A reading room",
+   "text": "Paper, ink, one teal accent and a tab in the margin. The point is to read a document, not to chat with a machine; the name comes from the notes people write in margins."
+  }
+ ],
+ "solution": "Upload a PDF, ask in plain language, and answers stream in grounded in the document. A coloured margin tab says whether the document actually supported what you just read.",
+ "result": "In the demo manual: the paid-leave question is answered from the text (27 working days), the sabbatical question is marked outside the document, and a request for a joke is declined.",
+ "limits": [
+  "Sessions live in memory, so a restart clears them.",
+  "The tag is self-reported by the model, which makes it the softest part of the design."
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 3,
+ "video": {
+  "alt": "Screen recording: a PDF is imported and questions are answered in the margin-tab interface.",
+  "caption": "A PDF goes in; questions come out as streamed, sourced answers.",
+  "w": 1280,
+  "h": 850
+ },
+ "built": "Hybrid retrieval (keywords plus meaning) feeds Gemini. Each streamed reply carries a hidden tag that colours the margin: from the document, or outside its scope.",
+ "facts": {
+  "who": "Anyone reading a long manual or policy PDF",
+  "when": "They ask in their own words, not the document's",
+  "why": "Keyword search misses it, and a generic chatbot answers anyway."
+ },
+ "tradeoff": {
+  "pick": "An honest “not in the document”",
+  "over": "An answer every time"
+ },
+ "homeDecision": 1,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flowNotes": [
+  "Plain language, any wording",
+  "BM25 finds the exact words, FAISS finds the meaning, merged",
+  "The passages that were actually found",
+  "Streamed over SSE, tagged “from your document” or “outside its scope”"
+ ],
+ "evidence": "demo",
+ "unfinished": [
+  "There are no automated tests yet.",
+  "There is no rate limiting."
+ ],
+ "fr": {
+  "summary": "Téléversez un PDF, posez vos questions en langage naturel et obtenez des réponses en streaming, fondées sur le document, ou un refus honnête quand la réponse n’y est pas.",
+  "problem": "La recherche plein texte rate les questions reformulées : « puis-je prendre des congés quand je veux ? » ne partage presque aucun mot avec « les demandes de congé doivent être déposées 15 jours à l’avance ». Et un chatbot générique, face à une question que le document n’aborde jamais, répond quand même.",
+  "thinking": "La recherche doit retrouver ce qui a été reformulé, et la réponse doit avoir le droit d’être non.",
+  "solution": "Téléversez un PDF, posez vos questions en langage naturel, et les réponses arrivent en streaming, fondées sur le document. Un onglet coloré dans la marge indique si le document soutenait vraiment ce que vous venez de lire.",
+  "result": "Dans le manuel de démo : la question sur les congés payés reçoit une réponse tirée du texte (27 jours ouvrés), la question sur le congé sabbatique est signalée comme hors du document, et une demande de blague est déclinée.",
+  "built": "Une recherche hybride (mots-clés et sens) alimente Gemini. Chaque réponse en streaming porte une étiquette cachée qui colore la marge : issue du document, ou hors de son périmètre.",
+  "decisions": [
+   {
+    "title": "Deux moteurs de recherche, pas un",
+    "text": "BM25 repère les mots exacts ; les embeddings FAISS repèrent le sens. Un EnsembleRetriever fusionne les deux, si bien qu’une question reformulée tombe quand même sur le bon passage."
+   },
+   {
+    "title": "Un premier mot caché",
+    "text": "Le modèle commence chaque réponse par une étiquette de classification que le lecteur ne voit jamais. Le flux la retire et s’en sert pour colorer l’onglet de la marge : issue du document, ou hors de son périmètre."
+   },
+   {
+    "title": "Un bug à garder",
+    "text": "L’étiquette correspondait d’abord à une phrase de secours en anglais. En français la phrase changeait et la correspondance échouait en silence ; elle utilise désormais une étiquette indépendante de la langue."
+   },
+   {
+    "title": "Une salle de lecture",
+    "text": "Du papier, de l’encre, un seul accent bleu-vert et un onglet dans la marge. Le but est de lire un document, pas de discuter avec une machine ; le nom vient des notes qu’on écrit dans les marges."
+   }
+  ],
+  "build": [
+   "Les réponses arrivent en streaming via des événements serveur (SSE) depuis un backend FastAPI.",
+   "La recherche combine les embeddings FAISS et la recherche par mots-clés BM25 grâce à l’EnsembleRetriever de LangChain.",
+   "Les sessions sont conservées en mémoire, et le front est du HTML, du CSS et du JavaScript simples.",
+   "Conteneurisé avec Docker et hébergé sur Render."
+  ],
+  "limits": [
+   "Les sessions vivent en mémoire : un redémarrage les efface.",
+   "L’étiquette est déclarée par le modèle lui-même, ce qui en fait le maillon le plus fragile de la conception."
+  ],
+  "unfinished": [
+   "Il n’y a pas encore de tests automatisés.",
+   "Il n’y a pas de limitation de débit."
+  ],
+  "flow": [
+   "Question",
+   "Recherche",
+   "Preuves",
+   "Réponse ou refus"
+  ],
+  "flowNotes": [
+   "En langage naturel, avec n’importe quelle formulation",
+   "BM25 trouve les mots exacts, FAISS trouve le sens, les deux fusionnés",
+   "Les passages réellement trouvés",
+   "En streaming via SSE, étiquetée « issue de votre document » ou « hors de son périmètre »"
+  ],
+  "facts": {
+   "who": "Toute personne qui lit un long manuel ou un PDF de règlement",
+   "when": "Elle pose sa question avec ses propres mots, pas ceux du document",
+   "why": "La recherche par mots-clés passe à côté, et un chatbot générique répond quand même."
+  },
+  "tradeoff": {
+   "pick": "Un honnête « ce n’est pas dans le document »",
+   "over": "Une réponse à chaque fois"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Marginalia : l’écran de téléversement : déposez un PDF ici ou cliquez pour en choisir un.",
+    "caption": "Déposez un PDF. Jusqu’à 15 Mo, et les réponses sont strictement fondées sur ce document."
+   },
+   {
+    "alt": "Marginalia : l’écran de conversation une fois le document chargé.",
+    "caption": "Le document est chargé et la conversation est ouverte."
+   },
+   {
+    "alt": "Marginalia : une question traitée à partir du document, avec l’étiquette de source.",
+    "caption": "Les réponses sont marquées « issue de votre document ». Congés payés : 27 jours ouvrés."
+   },
+   {
+    "alt": "Marginalia : un refus signalé comme hors du périmètre du document.",
+    "caption": "Un congé sabbatique n’est pas dans le manuel : la réponse indique qu’il est hors du périmètre du document au lieu d’inventer."
+   },
+   {
+    "alt": "Marginalia : réponses de suivi, puis une demande hors sujet déclinée.",
+    "caption": "Les préavis sont traités à partir du texte. Une demande de blague est poliment déclinée."
+   }
+  ],
+  "video": {
+   "alt": "Enregistrement d’écran : un PDF est importé et les questions reçoivent une réponse dans l’interface à onglet de marge.",
+   "caption": "Un PDF entre ; des réponses sourcées sortent en streaming."
+  },
+  "origin": "Parfois j’ai un énorme fichier plein de texte, je veux des réponses, et je n’ai pas le temps de le parcourir pour retrouver les bons mots et le bon contexte. Les chatbots que j’ai essayés inventaient des choses absentes du document, sans doute tirées de leur entraînement, ou ne me donnaient rien de vérifiable. Je voulais un outil qui fait gagner du temps, reste précis et protégé contre les hallucinations, montre le passage pour que je puisse vérifier, et dit tout haut si l’information est là ou non. Marginalia est la version avancée de mon tout premier chatbot IA, un simple bot de questions-réponses sur des PDF."
+ },
+ "origin": "Sometimes I have a huge file full of text and I want answers, but no time to browse it hunting for the right words and context. The chatbots I tried either made things up that were nowhere in the document, probably from their training data, or gave me nothing I could check. I wanted one that saves time, stays accurate and protected against hallucination, shows the passage so I can verify it, and says out loud whether the information is there or not. Marginalia is the advanced version of my very first AI chatbot, a simple PDF question-and-answer bot."
+}

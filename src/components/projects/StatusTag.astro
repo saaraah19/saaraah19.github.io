@@ -1,0 +1,45 @@
+---
+// Status label. "Live" gets a green dot and, when there is a link, becomes lightly interactive:
+// hover, focus or tap opens the tag to reveal a "Try it" link. Green is only ever used for live.
+import { langOf, useT } from '../../i18n';
+const T = useT(langOf(Astro));
+const { status, href = '', title = '' } = Astro.props;
+const label = T.status[status as string];
+const Lv = T.status.live;
+const live = status === 'live';
+---
+{live && href ? (
+  <span class="lv" data-lv>
+    <button type="button" class="lvb" aria-expanded="false" aria-label={`${title ? title + ': ' : ''}${T.tag.showLink}`}>
+      <i class="d" aria-hidden="true"></i><span>{Lv}</span>
+    </button>
+    <a class="go" href={href} data-warm="1" aria-label={`${T.tag.tryIt} ${title || ''} ${T.tag.tryAria}`.replace('  ', ' ')}>{T.tag.tryIt} <span aria-hidden="true">↗</span></a>
+  </span>
+) : live ? (
+  <span class="lv static"><span class="lvb"><i class="d" aria-hidden="true"></i><span>{Lv}</span></span></span>
+) : (
+  <span class="tag" data-s={status}>{label}</span>
+)}
+<style>
+.lv{--g:var(--live);display:inline-flex;align-items:stretch;border:1px solid var(--g);border-radius:999px;background:color-mix(in srgb,var(--g) 12%,var(--bg));color:var(--ink);font:600 .6875rem/1 var(--mono);letter-spacing:.09em;overflow:hidden;vertical-align:middle;transition:background .2s,box-shadow .2s}
+.lvb{display:inline-flex;align-items:center;gap:7px;padding:5px 11px 5px 9px;border:0;background:none;font:inherit;letter-spacing:inherit;color:inherit;cursor:pointer}
+.static .lvb{cursor:default}
+.d{position:relative;width:8px;height:8px;border-radius:50%;background:var(--g);flex:none}
+.d::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--g);opacity:0;animation:ring 2.6s ease-out infinite}
+@keyframes ring{0%{transform:scale(.5);opacity:.7}70%,100%{transform:scale(1.25);opacity:0}}
+.go{display:inline-flex;align-items:center;gap:4px;max-width:0;opacity:0;padding:0;white-space:nowrap;text-decoration:none;color:var(--ink);background:var(--g);color:#fff;transition:max-width .3s cubic-bezier(.3,1.2,.5,1),opacity .2s,padding .3s}
+:root[data-theme="dark"] .go{color:#0F1316}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .go{color:#0F1316}}
+.lv:hover .go,.lv:has(:focus-visible) .go,.lv.open .go{max-width:90px;opacity:1;padding:0 12px}
+.lv:hover,.lv.open,.lv:has(:focus-visible){box-shadow:0 0 0 3px color-mix(in srgb,var(--g) 22%,transparent)}
+.go:hover{filter:brightness(1.08)}
+.lv:has(.go:focus-visible){outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.d::after{animation:none}.go{transition:none}}
+</style>
+<script>
+  // Tap or click toggles the link open, so touch screens can reach it without hover.
+  document.querySelectorAll<HTMLElement>('[data-lv]').forEach((el) => {
+    const b = el.querySelector<HTMLButtonElement>('.lvb')!;
+    b.addEventListener('click', () => { const o = el.classList.toggle('open'); b.setAttribute('aria-expanded', String(o)); });
+  });
+</script>

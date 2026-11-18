@@ -1,0 +1,170 @@
+{
+ "title": "Farpoint",
+ "category": "web-products",
+ "tier": "experiment",
+ "status": "live",
+ "order": 20,
+ "summary": "A cat-themed 20-20-20 timer and screen-session companion with a guided convergence drill, hydration and eye-drop reminders, and a session journal.",
+ "technologies": [
+  "React",
+  "TypeScript",
+  "Express",
+  "SQLite"
+ ],
+ "github": "https://github.com/saaraah19/Farpoint",
+ "live": "https://farpoint.onrender.com",
+ "shots": [
+  {
+   "src": "../../assets/projects/farpoint/01-zen.webp",
+   "alt": "Farpoint: Zen mode.",
+   "caption": "Zen mode: the timer and nothing else.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/farpoint/02-pushups.webp",
+   "alt": "Farpoint: The eye-pushup drill.",
+   "caption": "The eye-pushup drill: follow the dot from near to far.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/farpoint/03-reminders.webp",
+   "alt": "Farpoint: The reminders panel.",
+   "caption": "Blink, hydration and eye-drop reminders, each on its own interval.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/farpoint/04-heatmap.webp",
+   "alt": "Farpoint: The compliance heatmap.",
+   "caption": "Eighty-four days of paws: one per day, full when the goal was hit.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/farpoint/05-adaptive.webp",
+   "alt": "Farpoint: The adaptive suggestion.",
+   "caption": "After a couple of tired sessions it offers shorter ones, and accepts no for an answer.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/farpoint/06-push.webp",
+   "alt": "Farpoint: The push notifications panel.",
+   "caption": "Push notifications, with the honest limits written out.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/farpoint/07-waking.webp",
+   "alt": "Farpoint: The wake-up screen.",
+   "caption": "Waking up the server: the first visit after a quiet spell can take up to a minute.",
+   "role": "edge"
+  }
+ ],
+ "problem": "Hours at a screen go by without a pause, and break reminders that nag get switched off.",
+ "thinking": "A pacing tool, not a medical device. It adapts to how a session actually felt.",
+ "decisions": [
+  {
+   "title": "20-20-20, and a drill",
+   "text": "Focus sessions follow the 20-20-20 rule, with an eye-pushup drill on top."
+  },
+  {
+   "title": "Adaptive pacing",
+   "text": "If two of your last three sessions were logged as tired or strained, it offers 15-minute sessions."
+  },
+  {
+   "title": "Real push, honest limits",
+   "text": "Notifications use real Web Push, and the app states plainly what that can and cannot do."
+  },
+  {
+   "title": "A gate against cold starts",
+   "text": "While the free-tier server wakes, a gate stops the app from saving defaults over your real data."
+  }
+ ],
+ "limits": [
+  "It is a pacing tool, not a medical device."
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "built": "A 20-20-20 focus timer with an eye-pushup drill and reminders; two tired sessions out of three switch it to shorter ones.",
+ "facts": {
+  "who": "People who spend hours at a screen",
+  "when": "Hours pass without a pause",
+  "why": "Break reminders that nag get switched off."
+ },
+ "tradeoff": {
+  "pick": "Pacing that adapts to how it felt",
+  "over": "Reminders that nag"
+ },
+ "homeDecision": 1,
+ "keyDecisions": [
+  1,
+  2,
+  3
+ ],
+ "fr": {
+  "summary": "Un minuteur 20-20-20 et compagnon de sessions d’écran sur le thème du chat, avec un exercice guidé de convergence, des rappels d’hydratation et de gouttes pour les yeux, et un journal de sessions.",
+  "problem": "Les heures devant un écran passent sans pause, et les rappels de pause qui harcèlent finissent désactivés.",
+  "thinking": "Un outil de rythme, pas un dispositif médical. Il s’adapte à la façon dont une session s’est vraiment passée.",
+  "built": "Un minuteur de concentration 20-20-20 avec exercice de convergence oculaire et rappels ; deux sessions fatigantes sur trois le font passer à des sessions plus courtes.",
+  "decisions": [
+   {
+    "title": "20-20-20, et un exercice",
+    "text": "Les sessions de concentration suivent la règle 20-20-20, avec par-dessus un exercice de convergence oculaire (« eye-pushup »)."
+   },
+   {
+    "title": "Un rythme adaptatif",
+    "text": "Si deux de vos trois dernières sessions ont été notées comme fatigantes ou éprouvantes, il propose des sessions de 15 minutes."
+   },
+   {
+    "title": "Un vrai push, des limites honnêtes",
+    "text": "Les notifications utilisent un vrai Web Push, et l’appli dit clairement ce que cela peut et ne peut pas faire."
+   },
+   {
+    "title": "Une barrière contre les démarrages à froid",
+    "text": "Pendant que le serveur gratuit se réveille, une barrière empêche l’appli d’enregistrer des valeurs par défaut par-dessus vos vraies données."
+   }
+  ],
+  "limits": [
+   "C’est un outil de rythme, pas un dispositif médical."
+  ],
+  "facts": {
+   "who": "Les personnes qui passent des heures devant un écran",
+   "when": "Les heures passent sans pause",
+   "why": "Les rappels de pause qui harcèlent finissent désactivés."
+  },
+  "tradeoff": {
+   "pick": "Un rythme qui s’adapte à la façon dont ça s’est passé",
+   "over": "Des rappels qui harcèlent"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Farpoint : le mode zen.",
+    "caption": "Le mode zen : le minuteur et rien d’autre."
+   },
+   {
+    "alt": "Farpoint : l’exercice de convergence oculaire.",
+    "caption": "L’exercice de convergence : suivez le point du proche au lointain."
+   },
+   {
+    "alt": "Farpoint : le panneau des rappels.",
+    "caption": "Rappels de clignement, d’hydratation et de gouttes pour les yeux, chacun avec son propre intervalle."
+   },
+   {
+    "alt": "Farpoint : la carte de régularité.",
+    "caption": "Quatre-vingt-quatre jours de pattes : une par jour, pleine quand l’objectif a été atteint."
+   },
+   {
+    "alt": "Farpoint : la suggestion adaptative.",
+    "caption": "Après quelques sessions fatigantes, il en propose de plus courtes, et accepte un non."
+   },
+   {
+    "alt": "Farpoint : le panneau des notifications push.",
+    "caption": "Notifications push, avec leurs limites honnêtes écrites noir sur blanc."
+   },
+   {
+    "alt": "Farpoint : l’écran de réveil.",
+    "caption": "Réveil du serveur : la première visite après une période calme peut prendre jusqu’à une minute."
+   }
+  ],
+  "origin": "Je passe mes journées à travailler sur un ordinateur portable, et j’oublie de cligner des yeux, de boire de l’eau et de regarder au loin. La règle 20-20-20 aide (toutes les 20 minutes, regarder quelque chose de lointain pendant 20 secondes), mais seulement si quelque chose me le rappelle. Farpoint me rappelle de faire une pause toutes les 20 minutes, de cligner des yeux, de m’hydrater et de mettre mes gouttes, et propose un exercice pour les yeux quand ils sont fatigués."
+ },
+ "origin": "I spend all day working on a laptop, and I forget to blink, to drink water and to look away. The 20-20-20 rule helps (every 20 minutes, look at something far away for 20 seconds), but only if something reminds me. Farpoint reminds me to pause every 20 minutes, to blink, to hydrate and to put in my eye drops, and it has an eye exercise for when my eyes are tired."
+}

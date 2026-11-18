@@ -1,0 +1,10 @@
+[
+ {"group": "Languages", "items": [{"n": "Python"}, {"n": "TypeScript"}, {"n": "JavaScript"}, {"n": "Dart", "c": true}, {"n": "PHP", "c": true}]},
+ {"group": "Front end", "items": [{"n": "React"}, {"n": "Next.js"}, {"n": "Vite"}, {"n": "Tailwind"}, {"n": "Flutter", "c": true}]},
+ {"group": "Back end", "items": [{"n": "FastAPI"}, {"n": "Express"}, {"n": "Prisma"}, {"n": "SQLAlchemy"}, {"n": "Zod"}]},
+ {"group": "Data", "items": [{"n": "PostgreSQL"}, {"n": "MongoDB"}, {"n": "SQLite"}, {"n": "pgvector"}, {"n": "FAISS"}, {"n": "BM25"}]},
+ {"group": "AI", "items": [{"n": "Gemini"}, {"n": "Groq"}, {"n": "LangChain"}]},
+ {"group": "Automation + services", "items": [{"n": "n8n"}, {"n": "Slack"}, {"n": "Notion"}, {"n": "Google Calendar"}, {"n": "Cloudinary"}, {"n": "Resend"}, {"n": "Google OAuth"}]},
+ {"group": "Desktop + media", "items": [{"n": "customtkinter"}, {"n": "FFmpeg"}, {"n": "yt-dlp"}, {"n": "WinDev", "c": true}]},
+ {"group": "Shipping", "items": [{"n": "Docker"}, {"n": "Render"}, {"n": "GitHub Actions"}, {"n": "Neon"}, {"n": "pytest"}]}
+]

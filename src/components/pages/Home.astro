@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import { langOf, useT, localizeProject } from '../../i18n';
+import Base from '../../layouts/Base.astro';
+import Hero from '../hero/Hero.astro';
+import Spread from '../projects/Spread.astro';
+import Tools from '../sections/Tools.astro';
+import Certifications from '../sections/Certifications.astro';
+import About from '../sections/About.astro';
+import Contact from '../sections/Contact.astro';
+import Row from '../projects/Row.astro';
+const lang = langOf(Astro);
+const T = useT(lang);
+const all = (await getCollection('projects')).map((e) => localizeProject({ id: e.id, ...e.data }, lang)).sort((a: any, b: any) => a.order - b.order);
+const cats = [['ai-automation', '01'], ['web-products', '02']];
+const cycle = ['flow', 'split', 'offset'];
+const experiments = all.filter((p) => p.tier === 'experiment');
+---
+<Base>
+  <Hero />
+  <div class="wrap">
+    <About />
+    <section id="work" aria-labelledby="work-h" style="padding-top:72px">
+      <h2 id="work-h" class="sr">{T.work.h}</h2>
+      {cats.map(([c, n]) => {
+        const feat = all.filter((p) => p.category === c && p.tier === 'featured');
+        const sup = all.filter((p) => p.category === c && p.tier === 'supporting');
+        return (
+          <div style="margin-top:56px">
+            <h3 class="mono" style="font-weight:400;margin-bottom:8px">{n} / {T.work.cats[c]}</h3>
+            {feat.map((p, i) => <Spread p={p} comp={p.composition ?? cycle[i % 3]} />)}
+            <ul style="margin:0;padding:0">{sup.map((p) => <Row p={p} />)}</ul>
+          </div>
+        );
+      })}
+    </section>
+    <section id="experiments" aria-labelledby="ex-h" style="padding-top:88px">
+      <h2 id="ex-h" class="mono" style="font-weight:400">{T.work.experiments}</h2>
+      <ul style="margin:24px 0 0;padding:0">{experiments.map((p) => <Row p={p} />)}</ul>
+    </section>
+    <Tools />
+    <Certifications />
+    <Contact />
+  </div>
+</Base>

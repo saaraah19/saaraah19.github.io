@@ -1,0 +1,26 @@
+---
+import AboutSketch from './AboutSketch.astro';
+import { langOf, useT } from '../../i18n';
+const A = useT(langOf(Astro)).about;
+---
+<section id="about" class="about" aria-labelledby="about-h">
+  <div class="cols">
+    <h2 id="about-h" class="mono">{A.h}</h2>
+    <div class="txt">
+      <p class="lead">{A.lead}</p>
+      <p>{A.p1}</p>
+      <p>{A.p2a}<span class="hl">{A.p2hl}</span>{A.p2b}</p>
+      <AboutSketch />
+    </div>
+  </div>
+</section>
+<style>
+.about{padding:72px 0 0}
+.cols{display:grid;grid-template-columns:170px minmax(0,1fr);gap:clamp(16px,4vw,48px)}
+h2,h3{font-weight:400;margin:0}
+.txt p{margin:0 0 1em;max-width:58ch}.lead{font:500 clamp(1.4rem,2.6vw,1.9rem)/1.25 var(--head);letter-spacing:-.01em;max-width:30ch!important;margin-bottom:.8em!important}
+.certs{margin-top:64px}ol{list-style:none;margin:0;padding:0}
+li{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,220px);gap:4px 20px;padding:12px 0;border-top:1px solid var(--line);align-items:baseline}
+li:last-child{border-bottom:1px solid var(--line)}.i{text-align:right}
+@media (max-width:760px){.cols{grid-template-columns:1fr}li{grid-template-columns:1fr}.i{text-align:left}}
+</style>

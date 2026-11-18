@@ -1,0 +1,198 @@
+{
+ "title": "Basma Miamaria",
+ "category": "web-products",
+ "tier": "featured",
+ "status": "live",
+ "order": 10,
+ "summary": "A portfolio and admin platform for an architecture and interior design studio in Oran. Non-technical staff manage text, colours, fonts, categories and galleries themselves.",
+ "technologies": [
+  "Next.js",
+  "Express",
+  "Prisma",
+  "PostgreSQL",
+  "Cloudinary"
+ ],
+ "github": "https://github.com/saaraah19/basma-miaamaria",
+ "problem": "The studio's clients kept asking for a website that shows its work: social media displays it, but not as professionally. And its team is not technical, so a site that needs a developer for every text change would go stale.",
+ "flow": [
+  "Public site",
+  "Admin",
+  "Content"
+ ],
+ "live": "https://basma-web.onrender.com/",
+ "composition": "split",
+ "build": [
+  "A monorepo with an API, a web app and a shared package.",
+  "The admin lets non-technical users edit text, colours, fonts, project categories and image galleries.",
+  "Next.js App Router with Tailwind, Tiptap, React Query and dnd-kit; Express, Prisma, PostgreSQL and Zod behind it.",
+  "Cloudinary and Resend as external services."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/basma-miamaria/01-landing.webp",
+   "alt": "Basma Miamaria: The landing page hero.",
+   "caption": "The public site: a landing page that leads straight to the studio’s projects.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/02-projects.webp",
+   "alt": "Basma Miaamaria: The projects section on the home page.",
+   "caption": "Projects shown as a gallery on the home page.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/03-projects-page.webp",
+   "alt": "Basma Miamaria: The projects page.",
+   "caption": "The full project page, with search and category filters.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/04-quote-form.webp",
+   "alt": "Basma Miamaria: The quote request form.",
+   "caption": "A quote request form: “Demander un devis”.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/05-admin.webp",
+   "alt": "Basma Miamaria: The admin dashboard.",
+   "caption": "The admin dashboard: projects, services and unread requests at a glance.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/06-admin-projects.webp",
+   "alt": "Basma Miamaria: The admin project management table.",
+   "caption": "Managing projects: view, images, edit, delete.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/basma-miamaria/07-admin-content.webp",
+   "alt": "Basma Miamaria: The admin content editor.",
+   "caption": "The content editor: text, colour, alignment and weight for each section.",
+   "role": "result"
+  }
+ ],
+ "thinking": "The people who run the studio have to be able to run the site, so the editing tools are part of the product.",
+ "decisions": [
+  {
+   "title": "Editing without a developer",
+   "text": "Staff change text, colours, fonts, categories and project galleries from an admin panel."
+  },
+  {
+   "title": "One set of rules",
+   "text": "Zod schemas are shared between the public site and the admin, in one monorepo, so the two cannot disagree about what a project is."
+  },
+  {
+   "title": "Images and freshness",
+   "text": "Images live on Cloudinary, and saving content triggers ISR revalidation so the public site updates without a rebuild."
+  },
+  {
+   "title": "French first",
+   "text": "The site is in French, because its visitors are."
+  }
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "built": "A French public site and an admin panel in one monorepo, so staff edit text, colours, fonts and galleries themselves and changes go live without a rebuild.",
+ "facts": {
+  "who": "An architecture and interior design studio in Oran, with a non-technical team",
+  "when": "Every time the site needs a text or image change",
+  "why": "A site that needs a developer for each change goes stale."
+ },
+ "tradeoff": {
+  "pick": "Editing tools as part of the product",
+  "over": "A developer for every change"
+ },
+ "homeDecision": 1,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flowNotes": [
+  "French, with a gallery and a quote request form",
+  "Staff change text, colours, fonts, categories and galleries",
+  "Shared Zod schemas keep both sides agreeing; saving triggers ISR revalidation, no rebuild"
+ ],
+ "fr": {
+  "summary": "Une plateforme de portfolio et d’administration pour un cabinet d’architecture et de design d’intérieur à Oran. L’équipe, non technique, gère elle-même les textes, les couleurs, les polices, les catégories et les galeries.",
+  "problem": "Les clients du bureau demandaient sans cesse un site qui présente son travail : les réseaux sociaux le montrent, mais pas aussi professionnellement. Et son équipe n’est pas technique, donc un site qui demande un développeur pour chaque changement de texte finirait par se périmer.",
+  "thinking": "Les personnes qui dirigent le cabinet doivent pouvoir faire vivre le site : les outils d’édition font donc partie du produit.",
+  "built": "Un site public en français et un panneau d’administration dans un seul monorepo : l’équipe modifie elle-même textes, couleurs, polices et galeries, et les changements sont publiés sans reconstruction.",
+  "decisions": [
+   {
+    "title": "Modifier sans développeur",
+    "text": "L’équipe change les textes, les couleurs, les polices, les catégories et les galeries de projets depuis un panneau d’administration."
+   },
+   {
+    "title": "Un seul jeu de règles",
+    "text": "Les schémas Zod sont partagés entre le site public et l’administration, dans un seul monorepo, si bien que les deux ne peuvent pas être en désaccord sur ce qu’est un projet."
+   },
+   {
+    "title": "Images et fraîcheur",
+    "text": "Les images vivent sur Cloudinary, et l’enregistrement d’un contenu déclenche une revalidation ISR : le site public se met à jour sans reconstruction."
+   },
+   {
+    "title": "Le français d’abord",
+    "text": "Le site est en français, parce que ses visiteurs le sont."
+   }
+  ],
+  "build": [
+   "Un monorepo avec une API, une application web et un paquet partagé.",
+   "L’administration permet à des utilisateurs non techniques de modifier textes, couleurs, polices, catégories de projets et galeries d’images.",
+   "Next.js App Router avec Tailwind, Tiptap, React Query et dnd-kit ; Express, Prisma, PostgreSQL et Zod derrière.",
+   "Cloudinary et Resend comme services externes."
+  ],
+  "flow": [
+   "Site public",
+   "Administration",
+   "Contenu"
+  ],
+  "flowNotes": [
+   "En français, avec une galerie et un formulaire de demande de devis",
+   "L’équipe change textes, couleurs, polices, catégories et galeries",
+   "Des schémas Zod partagés gardent les deux côtés d’accord ; l’enregistrement déclenche la revalidation ISR, sans reconstruction"
+  ],
+  "facts": {
+   "who": "Un cabinet d’architecture et de design d’intérieur à Oran, avec une équipe non technique",
+   "when": "Chaque fois que le site a besoin d’un changement de texte ou d’image",
+   "why": "Un site qui exige un développeur pour chaque changement finit par se périmer."
+  },
+  "tradeoff": {
+   "pick": "Des outils d’édition intégrés au produit",
+   "over": "Un développeur pour chaque changement"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Basma Miamaria : le bandeau d’accueil.",
+    "caption": "Le site public : une page d’accueil qui mène directement aux projets du cabinet."
+   },
+   {
+    "alt": "Basma Miamaria : la section des projets sur la page d’accueil.",
+    "caption": "Les projets présentés en galerie sur la page d’accueil."
+   },
+   {
+    "alt": "Basma Miamaria : la page des projets.",
+    "caption": "La page complète des projets, avec recherche et filtres par catégorie."
+   },
+   {
+    "alt": "Basma Miamaria : le formulaire de demande de devis.",
+    "caption": "Un formulaire de demande de devis : « Demander un devis »."
+   },
+   {
+    "alt": "Basma Miamaria : le tableau de bord d’administration.",
+    "caption": "Le tableau de bord : projets, services et demandes non lues en un coup d’œil."
+   },
+   {
+    "alt": "Basma Miamaria : le tableau de gestion des projets.",
+    "caption": "Gérer les projets : voir, images, modifier, supprimer."
+   },
+   {
+    "alt": "Basma Miamaria : l’éditeur de contenu.",
+    "caption": "L’éditeur de contenu : texte, couleur, alignement et graisse pour chaque section."
+   }
+  ],
+  "origin": "Un client est venu me voir. Les personnes avec qui il travaille lui demandaient sans cesse si son bureau d’architecture avait un site qui présente son travail. Les réseaux sociaux sont bien pour montrer des projets, mais pas aussi professionnels qu’un site. J’ai donc construit le site selon l’identité et les préférences du bureau, avec un panneau d’administration pour gérer le contenu."
+ },
+ "origin": "A client approached me. The people he works with kept asking whether his architecture studio had a website that shows its work. Social media is good for displaying projects, but it is not as professional as a website. So I built the site around the studio's identity and preferences, with an admin panel to manage the content."
+}

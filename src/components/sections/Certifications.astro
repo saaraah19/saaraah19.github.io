@@ -1,0 +1,27 @@
+---
+import certs from '../../data/certifications.json';
+import { langOf, useT, frData, tr } from '../../i18n';
+const lang = langOf(Astro);
+const T = useT(lang).certs;
+---
+<section id="certifications" class="certs" aria-labelledby="cert-h">
+  <div class="cols">
+    <h2 id="cert-h" class="mono">{T.h}</h2>
+    <ol>
+      {certs.map((c) => (
+        <li>
+          <span class="mono d">{c.status ? <span class="tag" data-s="dev">{T.inProgress}</span> : tr(lang, frData.dates, c.date ?? '')}</span>
+          <span class="n">{tr(lang, frData.certs, c.name)}</span>
+          <span class="mono i">{c.issuer ?? ''}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+<style>
+.certs{padding:88px 0 0}.cols{display:grid;grid-template-columns:170px minmax(0,1fr);gap:clamp(16px,4vw,48px)}
+h2{font-weight:400;margin:0}ol{list-style:none;margin:0;padding:0}
+li{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,220px);gap:4px 20px;padding:12px 0;border-top:1px solid var(--line);align-items:baseline}
+li:last-child{border-bottom:1px solid var(--line)}.i{text-align:right}
+@media (max-width:760px){.cols{grid-template-columns:1fr}li{grid-template-columns:1fr}.i{text-align:left}}
+</style>

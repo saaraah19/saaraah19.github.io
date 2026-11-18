@@ -1,0 +1,20 @@
+---
+// A curve through named points. Form, not boxes.
+import { langOf, useT } from '../../i18n';
+const T = useT(langOf(Astro));
+const { steps = [] as string[], label = '' } = Astro.props;
+const W = 720, n = steps.length;
+const pts = steps.map((s: string, i: number) => ({ s, x: 40 + (i * (W - 80)) / Math.max(n - 1, 1), y: i % 2 ? 62 : 38 }));
+let d = `M${pts[0].x} ${pts[0].y}`;
+for (let i = 1; i < n; i++) { const a = pts[i - 1], b = pts[i], m = (a.x + b.x) / 2; d += ` C${m} ${a.y} ${m} ${b.y} ${b.x} ${b.y}`; }
+---
+<div class="fw" tabindex="0" role="group" aria-label={T.scrollGroup}><svg viewBox={`0 0 ${W} 100`} role="img" aria-label={`${label}: ${steps.join(T.shot.then)}`}>
+  <path d={d} />
+  {pts.map((p, i) => <><circle cx={p.x} cy={p.y} r="5.5" /><text x={p.x} y={p.y + 24} text-anchor={i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle'} dx={i === 0 ? -5 : i === n - 1 ? 5 : 0}>{p.s}</text></>)}
+</svg></div>
+<style>
+.fw{overflow-x:auto}svg{width:100%;min-width:560px;height:auto;overflow:visible;display:block}
+path{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}
+circle{fill:var(--bg);stroke:var(--ink);stroke-width:1.5}
+text{font:11px var(--mono);fill:var(--ink)}
+</style>

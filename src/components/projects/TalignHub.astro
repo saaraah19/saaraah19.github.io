@@ -1,0 +1,15 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+const a = fr ? ['recruteurs', 'managers recruteurs', 'employés', 'candidats'] : ['recruiters', 'hiring managers', 'employees', 'candidates'];
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg viewBox="0 0 680 200" role="img" aria-label={t(`Recruiters, hiring managers, employees and candidates all reach one entry point, Compass. Compass works through specialised agents. Consequential decisions end with a person. In development.`, `Recruteurs, managers, employés et candidats passent tous par un seul point d’entrée, Compass. Compass s’appuie sur des agents spécialisés. Les décisions importantes finissent chez une personne. En développement.`)}>
+  {a.map((t, i) => <><text x="10" y={44 + i * 40}>{t}</text><circle class="n" cx="150" cy={40 + i * 40} r="4.5"/><path class="p" d={`M155 ${40 + i * 40} C230 ${40 + i * 40} 240 100 288 100`}/></>)}
+  <circle class="n hi" cx="300" cy="100" r="13"/>
+  <text x="300" y="132" text-anchor="middle">Compass</text><text class="sm" x="300" y="146" text-anchor="middle">{t(`one entry point`, `un point d’entrée`)}</text>
+  {[60, 100, 140].map((y) => <><path class="p" d={`M313 100 C380 100 400 ${y} 470 ${y}`}/><circle class="n" cx="474" cy={y} r="5"/><path class="p" d={`M479 ${y} C540 ${y} 560 100 600 100`}/></>)}
+  <text class="sm" x="474" y="170" text-anchor="middle">{t(`specialised agents`, `agents spécialisés`)}</text>
+  <rect class="n" x="601" y="93" width="14" height="14" transform="rotate(45 608 100)"/>
+  <text x="618" y="132" text-anchor="middle">{t(`human decision`, `décision humaine`)}</text><text class="sm" x="618" y="146" text-anchor="middle">{t(`stays with a person`, `reste humaine`)}</text>
+</svg></div>

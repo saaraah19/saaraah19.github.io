@@ -1,0 +1,127 @@
+{
+ "title": "Trievo",
+ "category": "ai-automation",
+ "tier": "supporting",
+ "status": "exp",
+ "order": 50,
+ "summary": "Watches Gmail, classifies each message in two Gemini passes, replies when confident, sends uncertain ones to Notion and alerts Slack on critical ones.",
+ "technologies": [
+  "n8n",
+  "FastAPI",
+  "Gemini"
+ ],
+ "github": "https://github.com/saaraah19/Trievo",
+ "flow": [
+  "Gmail",
+  "Classification",
+  "Action",
+  "Escalation"
+ ],
+ "shots": [],
+ "problem": "A shared inbox mixes billing questions, outages and noise, and a person has to read all of it first.",
+ "thinking": "Let the model classify. Let thresholds and people decide what happens next.",
+ "decisions": [
+  {
+   "title": "Three bands",
+   "text": "At 85% confidence or more, an auto-reply goes out. From 75 to 84%, the email goes to a Notion review queue. Below 75%, a second pass runs at temperature 0."
+  },
+  {
+   "title": "A tiebreaker",
+   "text": "When an email is both billing and support, billing wins."
+  },
+  {
+   "title": "Invalid is not an error",
+   "text": "If the model returns something invalid, the email is forced to other / medium with confidence capped at 0.5, so a human sees it."
+  },
+  {
+   "title": "The email is data",
+   "text": "The email body is treated as content to classify, never as instructions, as a defence against prompt injection."
+  }
+ ],
+ "limits": [
+  "The recorded action reflects the API’s decision, not a confirmed Gmail send."
+ ],
+ "leadShot": 0,
+ "video": {
+  "alt": "Screen recording: an urgent email is received and an automatic reply with a category and confidence appears in Slack.",
+  "caption": "An urgent email arrives; the classified, auto-replied result lands in Slack.",
+  "w": 1280,
+  "h": 616
+ },
+ "built": "Two Gemini passes classify each email; confidence bands decide between an auto-reply, a Notion review queue and a Slack alert.",
+ "facts": {
+  "who": "Whoever reads a shared inbox",
+  "when": "Thirty unread emails, and no idea which one is urgent",
+  "why": "A person has to read all of it first."
+ },
+ "tradeoff": {
+  "pick": "Thresholds and people decide the action",
+  "over": "The model deciding what happens"
+ },
+ "homeDecision": 3,
+ "keyDecisions": [
+  0,
+  2,
+  3
+ ],
+ "flowNotes": [
+  "Watches the inbox",
+  "The model classifies; confidence picks the band",
+  "85% or more: auto-reply. 75 to 84%: Notion review queue. Below 75%: a second pass at temperature 0",
+  "Critical messages alert Slack"
+ ],
+ "fr": {
+  "summary": "Surveille Gmail, classe chaque message en deux passes Gemini, répond quand il est sûr, envoie les cas incertains vers Notion et alerte Slack pour les cas critiques.",
+  "problem": "Une boîte partagée mélange questions de facturation, pannes et bruit, et une personne doit tout lire d’abord.",
+  "thinking": "Laisser le modèle classer. Laisser des seuils et des personnes décider de la suite.",
+  "built": "Deux passes Gemini classent chaque e-mail ; des bandes de confiance départagent entre réponse automatique, file de revue Notion et alerte Slack.",
+  "decisions": [
+   {
+    "title": "Trois bandes",
+    "text": "À partir de 85 % de confiance, une réponse automatique part. De 75 à 84 %, l’e-mail va dans une file de revue Notion. En dessous de 75 %, une seconde passe tourne à température 0."
+   },
+   {
+    "title": "Un départage",
+    "text": "Quand un e-mail relève à la fois de la facturation et du support, la facturation l’emporte."
+   },
+   {
+    "title": "Invalide n’est pas une erreur",
+    "text": "Si le modèle renvoie quelque chose d’invalide, l’e-mail est forcé en other / medium avec une confiance plafonnée à 0,5, pour qu’un humain le voie."
+   },
+   {
+    "title": "L’e-mail est une donnée",
+    "text": "Le corps de l’e-mail est traité comme un contenu à classer, jamais comme des instructions, en défense contre l’injection de prompt."
+   }
+  ],
+  "limits": [
+   "L’action enregistrée reflète la décision de l’API, pas un envoi Gmail confirmé."
+  ],
+  "flow": [
+   "Gmail",
+   "Classification",
+   "Action",
+   "Escalade"
+  ],
+  "flowNotes": [
+   "Surveille la boîte de réception",
+   "Le modèle classe ; la confiance choisit la bande",
+   "85 % ou plus : réponse automatique. 75 à 84 % : file de revue Notion. Moins de 75 % : seconde passe à température 0",
+   "Les messages critiques alertent Slack"
+  ],
+  "facts": {
+   "who": "Quiconque lit une boîte de réception partagée",
+   "when": "Trente e-mails non lus, et aucune idée duquel est urgent",
+   "why": "Une personne doit tout lire d’abord."
+  },
+  "tradeoff": {
+   "pick": "Des seuils et des personnes décident de l’action",
+   "over": "Le modèle qui décide de ce qui se passe"
+  },
+  "video": {
+   "alt": "Enregistrement d’écran : un e-mail urgent est reçu et une réponse automatique avec une catégorie et une confiance apparaît dans Slack.",
+   "caption": "Un e-mail urgent arrive ; le résultat classé et répondu automatiquement atterrit dans Slack."
+  },
+  "origin": "Gmail fait du bon travail pour séparer le spam du reste, mais les entreprises reçoivent encore des e-mails qui passent à travers de façon maligne : prospection à froid, messages sans importance, et d’autres très urgents. On ouvre la boîte de réception, on voit 30 e-mails non lus, et on est perdu. Qu’est-ce qui est urgent, qu’est-ce qui ne l’est pas ? On peut perdre du temps sur un e-mail récent sans importance pendant qu’une échéance urgente se rapproche. Trievo est un compagnon qui trie la boîte du plus urgent au moins urgent, et envoie une notification Slack quand quelque chose est critique."
+ },
+ "origin": "Gmail does a good job separating spam from the rest, but companies still get emails that slip past it in clever ways: cold outreach, unimportant messages, and very urgent ones. You open the inbox, see 30 unread emails, and feel lost. What is urgent, what is not? You can waste time on a recent unimportant email while an urgent deadline gets tighter. Trievo is a companion that sorts the inbox from most urgent down, and sends a Slack notification when something is critical."
+}

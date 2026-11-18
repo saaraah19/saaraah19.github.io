@@ -1,0 +1,213 @@
+{
+ "title": "Uni-Lib",
+ "category": "web-products",
+ "tier": "supporting",
+ "status": "live",
+ "order": 40,
+ "summary": "A searchable catalogue with availability and a loan workflow for students and library staff.",
+ "technologies": [
+  "React",
+  "Express",
+  "MongoDB"
+ ],
+ "github": "https://github.com/saaraah19/Uni-Lib",
+ "problem": "At the University of Oran 2, the library catalogue lived in a poorly formatted Word document, with duplicates and gaps, that staff searched by hand. Students had to ask in person, during working hours, whether a book existed.",
+ "flow": [
+  "Word catalogue",
+  "Searchable system",
+  "Loan workflow"
+ ],
+ "live": "https://book-hub.onrender.com",
+ "shots": [
+  {
+   "src": "../../assets/projects/uni-lib/01-landing.webp",
+   "alt": "Uni-Lib: The landing page hero.",
+   "caption": "The landing page.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/02-catalog.webp",
+   "alt": "Uni-Lib: The catalogue with filters.",
+   "caption": "The catalogue, with filters.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/03-book.webp",
+   "alt": "Uni-Lib: A book detail page.",
+   "caption": "A book page, with availability.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/04-loans.webp",
+   "alt": "Uni-Lib: The my-loans page.",
+   "caption": "A student’s loans.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/05-staff.webp",
+   "alt": "Uni-Lib: The staff dashboard.",
+   "caption": "The staff dashboard.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/06-requests.webp",
+   "alt": "Uni-Lib: The pending loan requests list.",
+   "caption": "Staff review pending loan requests.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/07-dark.webp",
+   "alt": "Uni-Lib: Dark mode.",
+   "caption": "Dark mode.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/08-mobile.webp",
+   "alt": "Uni-Lib: The mobile catalogue.",
+   "caption": "The catalogue on a phone.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/uni-lib/09-waking.webp",
+   "alt": "Uni-Lib: The cold-start banner.",
+   "caption": "The banner shown while the free-tier server wakes up.",
+   "role": "edge"
+  }
+ ],
+ "thinking": "The catalogue is the easy part. The hard part is the loan: two students must never borrow the last copy.",
+ "solution": "About 11,000 titles, searchable with filters, and a loan workflow from request to return for students and staff. The interface is in French.",
+ "decisions": [
+  {
+   "title": "The last copy",
+   "text": "Lending is one atomic conditional update, so two students asking at the same instant cannot both get the last copy."
+  },
+  {
+   "title": "No double requests",
+   "text": "A partial unique index blocks duplicate pending requests for the same book."
+  },
+  {
+   "title": "Staff are granted, not assumed",
+   "text": "No account is staff automatically, and the role is re-read from the database on every request."
+  },
+  {
+   "title": "Free hosting, handled",
+   "text": "A boot splash, an early wake-up call, a request gate and a banner after 1.2 seconds. POST, PUT and DELETE are never replayed automatically."
+  }
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "built": "A catalogue of about 11,000 titles with filters, availability and a loan workflow in which the last copy can only be claimed once.",
+ "facts": {
+  "who": "Students and staff of the University of Oran 2 library",
+  "when": "Searching the catalogue or borrowing a book",
+  "why": "The catalogue lived in a Word document that staff searched by hand."
+ },
+ "tradeoff": {
+  "pick": "One atomic loan update",
+  "over": "Check, then write"
+ },
+ "homeDecision": 0,
+ "keyDecisions": [
+  0,
+  1,
+  3
+ ],
+ "flowNotes": [
+  "The old way: a Word document searched by hand",
+  "About 11,000 titles, searchable, with live availability",
+  "Request, staff review, return; the last copy is claimed atomically"
+ ],
+ "unfinished": [
+  "The first idea was logging in with the student card QR code; this first version uses a classic login.",
+  "App-wide rate limiting, fuller aria-label coverage, an audit trail and integration tests are still on the list."
+ ],
+ "fr": {
+  "summary": "Un catalogue consultable avec disponibilité et un circuit de prêt pour les étudiants et le personnel de la bibliothèque.",
+  "problem": "À l’Université d’Oran 2, le catalogue de la bibliothèque vivait dans un document Word mal mis en forme, avec des doublons et des trous, que le personnel parcourait à la main. Les étudiants devaient demander sur place, pendant les heures de travail, si un livre existait.",
+  "thinking": "Le catalogue est la partie facile. La partie difficile, c’est le prêt : deux étudiants ne doivent jamais emprunter le dernier exemplaire.",
+  "solution": "Environ 11 000 titres, consultables avec des filtres, et un circuit de prêt de la demande au retour pour les étudiants et le personnel. L’interface est en français.",
+  "built": "Un catalogue d’environ 11 000 titres avec filtres, disponibilité et un circuit de prêt où le dernier exemplaire ne peut être réservé qu’une seule fois.",
+  "decisions": [
+   {
+    "title": "Le dernier exemplaire",
+    "text": "Le prêt est une seule mise à jour conditionnelle atomique : deux étudiants qui le demandent au même instant ne peuvent pas obtenir tous les deux le dernier exemplaire."
+   },
+   {
+    "title": "Pas de doubles demandes",
+    "text": "Un index unique partiel bloque les demandes en attente en double pour le même livre."
+   },
+   {
+    "title": "Le personnel est désigné, pas présumé",
+    "text": "Aucun compte n’est membre du personnel automatiquement, et le rôle est relu dans la base de données à chaque requête."
+   },
+   {
+    "title": "Hébergement gratuit, maîtrisé",
+    "text": "Un écran de démarrage, un appel de réveil anticipé, une barrière de requêtes et une bannière après 1,2 seconde. Les requêtes POST, PUT et DELETE ne sont jamais rejouées automatiquement."
+   }
+  ],
+  "unfinished": [
+   "L’idée de départ était de se connecter avec le QR code de la carte étudiante ; cette première version utilise une connexion classique.",
+   "Limitation de débit sur toute l’application, couverture plus complète des aria-label, journal d’audit et tests d’intégration restent sur la liste."
+  ],
+  "flow": [
+   "Catalogue Word",
+   "Système consultable",
+   "Circuit de prêt"
+  ],
+  "flowNotes": [
+   "L’ancienne méthode : un document Word parcouru à la main",
+   "Environ 11 000 titres, consultables, avec disponibilité en direct",
+   "Demande, validation par le personnel, retour ; le dernier exemplaire est réservé de façon atomique"
+  ],
+  "facts": {
+   "who": "Étudiants et personnel de la bibliothèque de l’Université d’Oran 2",
+   "when": "Chercher dans le catalogue ou emprunter un livre",
+   "why": "Le catalogue vivait dans un document Word que le personnel parcourait à la main."
+  },
+  "tradeoff": {
+   "pick": "Une seule mise à jour atomique du prêt",
+   "over": "Vérifier, puis écrire"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Uni-Lib : le bandeau d’accueil.",
+    "caption": "La page d’accueil."
+   },
+   {
+    "alt": "Uni-Lib : le catalogue avec filtres.",
+    "caption": "Le catalogue, avec filtres."
+   },
+   {
+    "alt": "Uni-Lib : la page d’un livre.",
+    "caption": "La page d’un livre, avec sa disponibilité."
+   },
+   {
+    "alt": "Uni-Lib : la page « mes prêts ».",
+    "caption": "Les prêts d’un étudiant."
+   },
+   {
+    "alt": "Uni-Lib : le tableau de bord du personnel.",
+    "caption": "Le tableau de bord du personnel."
+   },
+   {
+    "alt": "Uni-Lib : la liste des demandes de prêt en attente.",
+    "caption": "Le personnel examine les demandes de prêt en attente."
+   },
+   {
+    "alt": "Uni-Lib : le mode sombre.",
+    "caption": "Le mode sombre."
+   },
+   {
+    "alt": "Uni-Lib : le catalogue sur mobile.",
+    "caption": "Le catalogue sur un téléphone."
+   },
+   {
+    "alt": "Uni-Lib : la bannière de démarrage à froid.",
+    "caption": "La bannière affichée pendant que le serveur gratuit se réveille."
+   }
+  ],
+  "origin": "J’ai été surprise par le côté démodé de la bibliothèque de la faculté des langues étrangères. Pour emprunter un livre, les étudiants étaient accueillis par un membre du personnel qui demandait le titre. Sans titre en tête, il fallait d’abord chercher un livre, puis revenir lui demander, pendant les heures de travail, si elle l’avait. Le processus était long et épuisant. Et la base de données du personnel était un document Word mal mis en forme, avec des doublons et des données manquantes. J’ai donc construit Uni-Lib : les étudiants se connectent à tout moment, de chez eux, de l’université ou d’ailleurs, parcourent le catalogue, voient quels livres sont disponibles, les enregistrent en favoris et demandent un prêt. Une fois approuvé, ils récupèrent le livre à la bibliothèque, sans papier. Le personnel gère le catalogue (ajout, modification, suppression) et approuve ou refuse les prêts."
+ },
+ "origin": "I was surprised by how old-fashioned the foreign languages faculty library was. To borrow a book, students were met by a staff member who asked for the title. If you had no title in mind, you first had to search for a book and come back to ask her, within working hours, whether she had it. The process was long and exhausting. And the staff's database was a Word document, poorly formatted, with duplicates and missing data. So I built Uni-Lib: students log in at any time, from home, from the university or from anywhere, browse the catalogue, see which books are available, save favourites and request a loan. Once it is approved, they collect the book at the library, with no paper. Staff manage the catalogue (add, edit, delete) and approve or reject loans."
+}

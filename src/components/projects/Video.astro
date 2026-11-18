@@ -1,0 +1,33 @@
+---
+// A looping demo. Muted, inline, and it stops moving for people who ask for less motion.
+import { langOf, useT } from '../../i18n';
+const V = useT(langOf(Astro)).video;
+const { id, video } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<figure class="vid">
+  <div class="frame" style={`aspect-ratio:${video.w}/${video.h}`}>
+    <video muted loop playsinline autoplay preload="metadata" poster={`${b}/media/${id}/demo.webp`} aria-label={video.alt} data-demo>
+      <source src={`${b}/media/${id}/demo.mp4`} type="video/mp4" />
+    </video>
+  </div>
+  <figcaption class="mono">{video.caption} <button type="button" class="vtoggle" data-toggle data-play={V.play} data-pause={V.pause}>{V.pause}</button></figcaption>
+</figure>
+<style>
+.vid{margin:0}
+.frame{border:1px solid var(--line);background:var(--bg);line-height:0;overflow:hidden}
+video{display:block;width:100%;height:100%;object-fit:cover}
+figcaption{margin-top:8px}
+.vtoggle{font:inherit;border:0;border-bottom:1px solid var(--ink);padding:0;margin-left:10px;color:var(--ink)}
+.vtoggle:hover{background:var(--acc);color:var(--acc-ink)}
+</style>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLVideoElement>('video[data-demo]').forEach((v) => {
+    const btn = v.closest('figure')?.querySelector<HTMLButtonElement>('[data-toggle]');
+    const sync = () => { if (btn) btn.textContent = v.paused ? btn.dataset.play! : btn.dataset.pause!; };
+    if (reduce) { v.removeAttribute('autoplay'); v.pause(); }
+    btn?.addEventListener('click', () => { v.paused ? v.play() : v.pause(); });
+    v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+  });
+</script>

@@ -1,0 +1,90 @@
+---
+import CatFigure from '../cats/CatFigure.astro';
+import { langOf, useT, href } from '../../i18n';
+const lang = langOf(Astro);
+const H = useT(lang).hero;
+const keys = ['hmm', 'inspect', 'aha', 'told'];
+const xs = [150, 380, 610, 830];
+---
+<section class="hero" aria-labelledby="hero-h">
+  <div class="wrap">
+    <p class="who"><span>Sarra Sawsene Sahraoui</span><span class="role">{H.role}</span></p>
+    <h1 id="hero-h">{H.h1a}<span class="hl">{H.h1hl}</span></h1>
+    <div class="cv"><svg id="hc" viewBox="0 0 1000 200" role="img" aria-label={H.curveAria} data-moods={JSON.stringify(H.moods)}>
+      <line class="ax" x1="0" y1="100" x2="1000" y2="100" />
+      <path id="hp" d="" />
+      {H.points.map((t, i) => <g class="pt" data-x={xs[i]} data-mood={keys[i]} data-index={i} tabindex="0" role="button" aria-label={`${H.reaction}${t}`}><circle r="6" /><text text-anchor="middle" dy="-16">{t}</text></g>)}
+      <g id="hcat" transform="translate(892 -10) scale(.8)" style="color:var(--ink)"><g id="hcat-pose"><CatFigure /></g></g>
+      <text id="cat-note" x="900" y="6" text-anchor="middle" class="cat-note" aria-hidden="true">{H.moods[0]}</text>
+    </svg></div>
+    <p class="mono go"><a class="link" href="#work">{H.go}</a></p>
+  </div>
+</section>
+<style>
+.hero{padding:64px 0 24px;border-bottom:1px solid var(--line)}
+.who{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;margin:0 0 28px;font:600 1.1rem var(--head)}
+h1{font-size:clamp(1.9rem,4.6vw,3.3rem);line-height:1.1;letter-spacing:-.02em;max-width:22ch;margin:0}
+.cv{margin:32px 0 0;touch-action:pan-y}svg{width:100%;height:auto;overflow:visible;display:block}
+.ax{stroke:var(--line);stroke-width:1}#hp{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round}
+.pt{cursor:pointer;outline:none}.pt circle{fill:var(--acc);stroke:var(--ink);stroke-width:1.4;transition:r .18s,fill .18s}.pt text{font:12px var(--mono);fill:var(--ink2);pointer-events:none}.pt:hover circle,.pt:focus-visible circle{r:9;fill:var(--ink)}.pt:focus-visible{outline:none}.pt:focus-visible text{fill:var(--acc)}
+#hcat-pose{transform-box:fill-box;transform-origin:50% 85%;transition:transform .24s cubic-bezier(.2,.8,.2,1)}.eye{transform-box:fill-box;transform-origin:center;animation:cat-blink 7s infinite}@keyframes cat-blink{0%,43%,45%,78%,80%,100%{transform:scaleY(1)}44%,79%{transform:scaleY(.12)}}#hcat[data-mood="inspect"] #hcat-pose{transform:rotate(-5deg) translateY(-2px)}#hcat[data-mood="aha"] #hcat-pose{transform:rotate(4deg) translateY(-3px)}#hcat[data-mood="told"] #hcat-pose{transform:translateY(-5px) scale(1.04)}.cat-note{font:18px var(--hand);fill:var(--ink2);opacity:1;transition:opacity .18s;pointer-events:none}#hcat[data-mood="told"]~#cat-note{fill:var(--acc)}
+.role{font:500 1.1rem var(--head);color:var(--ink2);border-left:1px solid var(--line);padding-left:16px}
+.go{margin:0 0 20px}
+@media (max-width:640px){.role{border-left:0;padding-left:0;flex-basis:100%}.pt text{font-size:30px}.cat-note{font-size:24px}#hp{stroke-width:3}.pt circle{r:11}}
+@media (prefers-reduced-motion:reduce){#hcat-pose,.pt circle{transition:none}.eye{animation:none}}
+</style>
+<script>
+  const hero = document.querySelector('.hero') as HTMLElement | null;
+  const path = document.getElementById('hp');
+  const pts = [...document.querySelectorAll<SVGGElement>('.pt')];
+  const cat = document.getElementById('hcat');
+  const pose = document.getElementById('hcat-pose');
+  const note = document.getElementById('cat-note');
+  const pupils = [...(cat?.querySelectorAll<SVGElement>('.pu') ?? [])];
+  const keys = ['hmm', 'inspect', 'aha', 'told'];
+  const labels: string[] = JSON.parse(document.getElementById('hc')?.getAttribute('data-moods') ?? '[]');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Keep the timeline calm and still. Only the pupils and tiny pose react.
+  const f = (x: number) => 100 - 34 * Math.sin(x / 130 + 0.6) * Math.exp(-x / 2200);
+  if (path) {
+    let d = '';
+    for (let x = 0; x <= 1000; x += 8) d += (x ? 'L' : 'M') + x + ' ' + f(x).toFixed(1);
+    path.setAttribute('d', d);
+  }
+  pts.forEach((g) => {
+    const x = Number(g.dataset.x ?? 0);
+    g.setAttribute('transform', `translate(${x} ${f(x).toFixed(1)})`);
+  });
+
+  const react = (index: number) => {
+    cat?.setAttribute('data-mood', keys[index] ?? keys[0]);
+    if (note) note.textContent = labels[index] ?? labels[0];
+    pts.forEach((point, i) => point.classList.toggle('is-active', i === index));
+  };
+  const reset = () => {
+    cat?.setAttribute('data-mood', keys[0]);
+    if (note) note.textContent = labels[0];
+    pts.forEach((point) => point.classList.remove('is-active'));
+  };
+  pts.forEach((point, index) => {
+    point.addEventListener('pointerenter', () => react(index));
+    point.addEventListener('focus', () => react(index));
+    point.addEventListener('click', () => react(index));
+    point.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        react(index);
+      }
+    });
+  });
+  hero?.addEventListener('pointerleave', reset);
+  hero?.addEventListener('pointermove', (event) => {
+    if (reducedMotion || !cat) return;
+    const box = cat.getBoundingClientRect();
+    const dx = event.clientX - (box.left + box.width / 2);
+    const dy = event.clientY - (box.top + box.height * 0.3);
+    const norm = Math.hypot(dx, dy) || 1;
+    pupils.forEach((pupil) => pupil.setAttribute('transform', `translate(${(dx / norm) * 2.2} ${(dy / norm) * 1.8})`));
+  });
+</script>

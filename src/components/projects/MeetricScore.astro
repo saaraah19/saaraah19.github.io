@@ -1,0 +1,18 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+const q = fr ? ['besoin', 'budget', 'délai', 'contact'] : ['need', 'budget', 'timeline', 'contact'];
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg viewBox="0 0 680 200" role="img" aria-label={t(`A conversation in English, French or Arabic yields need, budget, timeline and contact. The lead is scored hot, warm or cold, and a hot lead can be offered a real calendar slot. Schematic.`, `Une conversation en anglais, en français ou en arabe fait ressortir besoin, budget, délai et contact. Le prospect est noté chaud, tiède ou froid, et un prospect chaud peut se voir proposer un vrai créneau d’agenda. Schéma.`)}>
+  <path class="p" d="M20 62 H90 M50 84 H120 M20 106 H100"/>
+  {q.map((t, i) => <><path class="p" d={`M130 84 C180 84 190 ${60 + i * 24} 228 ${60 + i * 24}`}/><circle class="n" cx="232" cy={60 + i * 24} r="4.5"/><text x="244" y={64 + i * 24}>{t}</text></>)}
+  {q.map((_, i) => <path class="p" d={`M308 ${60 + i * 24} C350 ${60 + i * 24} 370 84 398 84`} style="opacity:.35"/>)}
+  <path class="ax" d="M400 44 V150"/>
+  <circle class="n hi" cx="400" cy="56" r="7"/><circle class="n" cx="400" cy="97" r="4.5"/><circle class="n" cx="400" cy="138" r="4.5"/>
+  <text x="414" y="60">{t(`hot`, `chaud`)}</text><text x="414" y="101">{t(`warm`, `tiède`)}</text><text x="414" y="142">{t(`cold`, `froid`)}</text>
+  <path class="p" d="M442 56 C490 56 510 100 548 100"/><path class="p dash" d="M548 100 H640"/>
+  <circle class="n" cx="560" cy="100" r="4.5"/><circle class="n hi" cx="590" cy="100" r="7"/><circle class="n" cx="620" cy="100" r="4.5"/>
+  <text x="20" y="182">{t(`conversation`, `conversation`)}</text><text class="sm" x="20" y="194">{t(`English, French, Arabic`, `anglais, français, arabe`)}</text>
+  <text x="232" y="182">{t(`qualification`, `qualification`)}</text><text x="400" y="182">{t(`score`, `score`)}</text><text x="560" y="182">{t(`calendar`, `agenda`)}</text><text class="sm" x="560" y="194">{t(`a real slot`, `un vrai créneau`)}</text>
+</svg></div>

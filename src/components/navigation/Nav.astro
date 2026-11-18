@@ -1,0 +1,101 @@
+---
+import { langOf, useT, href, switchHref } from '../../i18n';
+const lang = langOf(Astro);
+const t = useT(lang);
+const other = lang === 'fr' ? 'en' : 'fr';
+const items = ['about', 'work', 'experiments', 'contact'] as const;
+---
+<header class="site-head">
+  <div class="wrap bar">
+    <a class="brand" href={href(lang, '/')}>Sarra Sawsene Sahraoui</a>
+    <nav aria-label={t.nav.primary}>
+      {items.map((id) => <a href={href(lang, `/#${id}`)}>{t.nav[id]}</a>)}
+      <a class="toggle lang" href={switchHref(Astro.url.pathname, other)} lang={other} hreflang={other} aria-label={t.switchTo.aria}>{t.switchTo.label}</a>
+      <button class="toggle tcatbtn" id="theme" type="button" aria-label={t.theme.aria} data-dark={t.theme.dark} data-light={t.theme.light}>
+        <svg class="tcat" viewBox="0 0 76 46" width="38" height="23" aria-hidden="true" focusable="false">
+          <g stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path class="tc-tail" d="M62 40 C73 40 74 28 67 25" fill="none"/>
+            <g class="tc-body"><path d="M20 40 C16 25 31 17 47 18 C63 19 69 29 64 40 Z" style="fill:var(--bg)"/>
+              <path d="M36 21 q3 5 1.5 11 M47 20 q3 5 2 11 M57 23 q2 4 1 9" fill="none" style="stroke:var(--acc)" stroke-width="2.8"/></g>
+            <g class="tc-head">
+              <path d="M9 27 L10 12 L20 21 Z" style="fill:var(--bg)"/><path d="M31 27 L30 12 L20 21 Z" style="fill:var(--bg)"/>
+              <path d="M11.4 22 L11.6 16 L16 20 Z M28.6 22 L28.4 16 L24 20 Z" stroke="none" style="fill:var(--cheek)"/>
+              <ellipse cx="20" cy="31" rx="13" ry="10.5" style="fill:var(--bg)"/>
+              <ellipse cx="10.5" cy="34.5" rx="3" ry="1.9" stroke="none" opacity=".85" style="fill:var(--cheek)"/><ellipse cx="29.5" cy="34.5" rx="3" ry="1.9" stroke="none" opacity=".85" style="fill:var(--cheek)"/>
+              <g class="tc-eyes-z" fill="none" stroke-width="1.8"><path d="M12.5 30.5 q3 3.2 6 0"/><path d="M22 30.5 q3 3.2 6 0"/></g>
+              <g class="tc-eyes-o" stroke="none" style="fill:var(--ink)"><ellipse cx="15.5" cy="30" rx="2.4" ry="3.1"/><ellipse cx="25" cy="30" rx="2.4" ry="3.1"/><circle cx="16.3" cy="28.7" r=".9" style="fill:var(--bg)"/><circle cx="25.8" cy="28.7" r=".9" style="fill:var(--bg)"/></g>
+              <path d="M18.2 34.3 h3.6 l-1.8 2.1 z" style="fill:var(--ink)" stroke-width="1"/>
+              <path d="M20 36.4 q-1.6 2 -3.4 .5 M20 36.4 q1.6 2 3.4 .5" fill="none" stroke-width="1.2"/>
+            </g>
+            <ellipse cx="14" cy="42.2" rx="5.5" ry="2.8" style="fill:var(--bg)"/><ellipse cx="27" cy="42.2" rx="5.5" ry="2.8" style="fill:var(--bg)"/>
+          </g>
+          <g class="tc-zs" fill="var(--ink2)" style="font:700 10px var(--head)"><text x="37" y="15">z</text><text x="45" y="10" style="font-size:12px">z</text><text x="54" y="5" style="font-size:14px">Z</text></g>
+          <text class="tc-bang" x="42" y="12" fill="var(--acc)" stroke="var(--ink)" stroke-width=".6" style="font:800 16px var(--head)">!</text>
+        </svg>
+        <span id="theme-label">{t.theme.dark}</span>
+      </button>
+    </nav>
+  </div>
+</header>
+<script>
+  const root = document.documentElement, btn = document.getElementById('theme')!;
+  const current = () => root.dataset.theme || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  const label = document.getElementById('theme-label')!;
+  const sync = () => { label.textContent = current() === 'dark' ? btn.dataset.light! : btn.dataset.dark!; };
+  let timer: number | undefined;
+  btn.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    // The cat reacts: it wakes up going to light, and settles down going to dark.
+    btn.classList.remove('tc-wake', 'tc-doze'); void btn.offsetWidth;
+    btn.classList.add(next === 'light' ? 'tc-wake' : 'tc-doze');
+    clearTimeout(timer); timer = window.setTimeout(() => btn.classList.remove('tc-wake', 'tc-doze'), 1100);
+    sync();
+  });
+  sync();
+</script>
+
+<style is:global>
+  .tcatbtn{display:inline-flex;align-items:center;gap:6px;padding:0 9px 0 4px;line-height:1}
+  .tcat{display:block;overflow:visible}
+  .tcat .tc-zs,.tcat .tc-bang,.tcat .tc-eyes-z{opacity:0}
+  .tcat .tc-eyes-o{opacity:1}
+  .tcat .tc-body,.tcat .tc-head,.tcat .tc-tail{transform-box:fill-box}
+  .tcat .tc-head{transform-origin:50% 100%}.tcat .tc-body{transform-origin:50% 100%}.tcat .tc-tail{transform-origin:0% 100%}
+  /* awake (light): eyes open, tail swishes, a slow blink */
+  .tcat .tc-tail{animation:tc-swish 2.6s ease-in-out infinite}
+  .tcat .tc-eyes-o{animation:tc-blink 5s infinite;transform-box:fill-box;transform-origin:50% 55%}
+  /* asleep (dark): eyes closed, breathing, drifting zzz */
+  :root[data-theme="dark"] .tcat .tc-eyes-o{opacity:0}
+  :root[data-theme="dark"] .tcat .tc-eyes-z,:root[data-theme="dark"] .tcat .tc-zs{opacity:1}
+  :root[data-theme="dark"] .tcat .tc-tail{animation:none}
+  :root[data-theme="dark"] .tcat .tc-body{animation:tc-breathe 3.6s ease-in-out infinite}
+  :root[data-theme="dark"] .tcat .tc-head{animation:tc-nod 3.6s ease-in-out infinite}
+  :root[data-theme="dark"] .tcat .tc-zs text{animation:tc-z 3.6s ease-in-out infinite}
+  :root[data-theme="dark"] .tcat .tc-zs text:nth-child(2){animation-delay:.5s}
+  :root[data-theme="dark"] .tcat .tc-zs text:nth-child(3){animation-delay:1s}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .tcat .tc-eyes-o{opacity:0}
+    :root:not([data-theme="light"]) .tcat .tc-eyes-z,:root:not([data-theme="light"]) .tcat .tc-zs{opacity:1}
+    :root:not([data-theme="light"]) .tcat .tc-tail{animation:none}
+    :root:not([data-theme="light"]) .tcat .tc-body{animation:tc-breathe 3.6s ease-in-out infinite}
+    :root:not([data-theme="light"]) .tcat .tc-head{animation:tc-nod 3.6s ease-in-out infinite}
+    :root:not([data-theme="light"]) .tcat .tc-zs text{animation:tc-z 3.6s ease-in-out infinite}
+    :root:not([data-theme="light"]) .tcat .tc-zs text:nth-child(2){animation-delay:.5s}
+    :root:not([data-theme="light"]) .tcat .tc-zs text:nth-child(3){animation-delay:1s}
+  }
+  @media (max-width:640px){.site-head nav{gap:12px 16px}.tcatbtn{padding:0 6px 0 3px}.tcatbtn #theme-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.tcatbtn .tcat{width:38px;height:23px}}
+  /* the moment of the switch */
+  .tcatbtn.tc-wake .tcat{animation:tc-hop .7s cubic-bezier(.3,1.6,.5,1)}
+  .tcatbtn.tc-wake .tcat .tc-bang{animation:tc-bang 1s ease-out}
+  .tcatbtn.tc-doze .tcat{animation:tc-droop .9s ease-in-out}
+  @keyframes tc-swish{0%,100%{transform:rotate(0)}50%{transform:rotate(14deg)}}
+  @keyframes tc-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+  @keyframes tc-breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.02,1.07)}}
+  @keyframes tc-nod{0%,100%{transform:translateY(0)}50%{transform:translateY(.8px)}}
+  @keyframes tc-z{0%{opacity:0;transform:translate(0,3px)}30%{opacity:1}100%{opacity:0;transform:translate(3px,-5px)}}
+  @keyframes tc-hop{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-6px) scale(1.12,.92)}100%{transform:translateY(0) scale(1)}}
+  @keyframes tc-bang{0%{opacity:0;transform:translateY(4px)}20%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0}}
+  @keyframes tc-droop{0%{transform:rotate(0)}40%{transform:rotate(-6deg) translateY(1px)}100%{transform:rotate(0)}}
+</style>

@@ -1,0 +1,219 @@
+{
+ "title": "Invoice Processor",
+ "category": "ai-automation",
+ "tier": "featured",
+ "status": "live",
+ "order": 20,
+ "summary": "Drop in one invoice or a batch. Gemini Vision extracts the fields, code scores the confidence, and results export to CSV or Excel.",
+ "technologies": [
+  "Gemini Vision",
+  "FastAPI",
+  "Pydantic",
+  "SQLite",
+  "Docker"
+ ],
+ "github": "https://github.com/saaraah19/ai-invoice-extractor",
+ "thinking": "Models grade themselves badly. So the model extracts, and ordinary code decides how far to trust it.",
+ "flow": [
+  "Invoice",
+  "Extraction",
+  "Validation",
+  "Confidence",
+  "Export"
+ ],
+ "live": "https://ai-invoice-extractor-1gn1.onrender.com",
+ "composition": "split",
+ "build": [
+  "Extracts vendor, invoice number, date, line items, subtotal, tax, total, IBAN, currency and notes.",
+  "Batches run in a thread pool with progress tracked in a SQLite job store; duplicates are caught by MD5 hash.",
+  "Exports CSV and Excel. Covered by pytest and rate limited."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/invoice-processor/01-selected.webp",
+   "alt": "Invoice Processor: Invoice files selected for upload.",
+   "caption": "Choose a batch of invoice images.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/invoice-processor/02-processing.webp",
+   "alt": "Invoice Processor: The processing screen.",
+   "caption": "The batch is processed file by file.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/invoice-processor/03-results.webp",
+   "alt": "Invoice Processor: The results table with confidence per invoice.",
+   "caption": "Four approved, one needs review, one error, with a confidence for every file.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/invoice-processor/04-excel-approved.webp",
+   "alt": "Invoice Processor: Excel tab for approved invoices.",
+   "caption": "The Excel export, first tab: approved invoices.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/invoice-processor/05-excel-review.webp",
+   "alt": "Invoice Processor: Excel tab for invoices to review.",
+   "caption": "Second tab: invoices that need a human look.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/invoice-processor/06-excel-errors.webp",
+   "alt": "Invoice Processor: Excel tab for errors.",
+   "caption": "Third tab: files that could not be read.",
+   "role": "edge"
+  }
+ ],
+ "problem": "Invoices arrive as photos and scans, and someone retypes them into a spreadsheet. A vision model can read them, but it will also read a blurry total with complete confidence.",
+ "decisions": [
+  {
+   "title": "Confidence is computed, not asked for",
+   "text": "The score comes from field completeness and arithmetic: subtotal plus tax has to equal the total within 0.05. If the maths fails, confidence is capped at 0.5."
+  },
+  {
+   "title": "Three outcomes",
+   "text": "Approved at 0.75 or above, To review between 0.2 and 0.75, and Errors for files that could not be read. One bad file never stops the batch."
+  },
+  {
+   "title": "No double entry",
+   "text": "Files are fingerprinted with MD5, so the same invoice uploaded twice is processed once."
+  },
+  {
+   "title": "What the score means",
+   "text": "It measures consistency, not accuracy. An invoice can add up and still be wrong, which is why a review tier exists."
+  }
+ ],
+ "result": "In the demo batch of six files: four approved, one sent to review, one error. Exports as detailed CSV, summary CSV, or a three-tab Excel file.",
+ "limits": [
+  "Handwriting is not handled.",
+  "It runs on the free Gemini tier at 15 requests per minute, so thirty invoices can take minutes.",
+  "Storage is ephemeral.",
+  "There is no login; each batch gets its own job token."
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 2,
+ "video": {
+  "alt": "Screen recording: a batch of invoices is uploaded, processed and the results appear sorted by confidence.",
+  "caption": "A batch goes in; results come back sorted by confidence.",
+  "w": 1280,
+  "h": 648
+ },
+ "built": "Gemini Vision extracts the fields. Plain code checks the arithmetic and sets the confidence, so each file is approved, sent to review, or flagged as an error.",
+ "facts": {
+  "who": "Whoever retypes invoices into a spreadsheet",
+  "when": "A total is blurry, or the arithmetic does not add up",
+  "why": "A confident misread slips quietly into the spreadsheet."
+ },
+ "tradeoff": {
+  "pick": "Confidence computed by code",
+  "over": "Confidence the model reports about itself"
+ },
+ "homeDecision": 0,
+ "keyDecisions": [
+  0,
+  1,
+  3
+ ],
+ "flowNotes": [
+  "One image or a whole batch",
+  "Gemini Vision reads vendor, number, date, line items, totals, IBAN",
+  "Subtotal plus tax has to equal the total within 0.05",
+  "Completeness and arithmetic set the score; failed maths caps it at 0.5",
+  "Detailed CSV, summary CSV, or a three-tab Excel file"
+ ],
+ "evidence": "demo",
+ "fr": {
+  "summary": "Déposez une facture ou un lot. Gemini Vision extrait les champs, le code calcule la confiance, et les résultats s’exportent en CSV ou Excel.",
+  "problem": "Les factures arrivent en photos et en scans, et quelqu’un les retape dans un tableur. Un modèle de vision sait les lire, mais il lira aussi un total flou avec une confiance totale.",
+  "thinking": "Les modèles s’évaluent mal eux-mêmes. Donc le modèle extrait, et du code ordinaire décide jusqu’où lui faire confiance.",
+  "result": "Dans le lot de démo de six fichiers : quatre approuvés, un envoyé en vérification, une erreur. Export en CSV détaillé, CSV récapitulatif ou fichier Excel à trois onglets.",
+  "built": "Gemini Vision extrait les champs. Du code simple vérifie l’arithmétique et fixe la confiance : chaque fichier est approuvé, envoyé en vérification ou signalé en erreur.",
+  "decisions": [
+   {
+    "title": "La confiance est calculée, pas demandée",
+    "text": "Le score vient de la complétude des champs et de l’arithmétique : sous-total plus taxe doit égaler le total à 0,05 près. Si le calcul échoue, la confiance est plafonnée à 0,5."
+   },
+   {
+    "title": "Trois issues",
+    "text": "Approuvée à partir de 0,75, À vérifier entre 0,2 et 0,75, et Erreurs pour les fichiers illisibles. Un mauvais fichier n’arrête jamais le lot."
+   },
+   {
+    "title": "Pas de double saisie",
+    "text": "Les fichiers sont empreints en MD5, donc la même facture téléversée deux fois n’est traitée qu’une fois."
+   },
+   {
+    "title": "Ce que veut dire le score",
+    "text": "Il mesure la cohérence, pas l’exactitude. Une facture peut être cohérente et pourtant fausse, c’est pourquoi un niveau « à vérifier » existe."
+   }
+  ],
+  "build": [
+   "Extrait le fournisseur, le numéro de facture, la date, les lignes, le sous-total, la taxe, le total, l’IBAN, la devise et les notes.",
+   "Les lots tournent dans un pool de threads avec la progression suivie dans un magasin de tâches SQLite ; les doublons sont détectés par empreinte MD5.",
+   "Exporte en CSV et Excel. Couvert par pytest et protégé par une limitation de débit."
+  ],
+  "limits": [
+   "L’écriture manuscrite n’est pas prise en charge.",
+   "Il tourne sur l’offre gratuite de Gemini à 15 requêtes par minute, donc trente factures peuvent prendre plusieurs minutes.",
+   "Le stockage est éphémère.",
+   "Il n’y a pas de connexion ; chaque lot reçoit son propre jeton de tâche."
+  ],
+  "flow": [
+   "Facture",
+   "Extraction",
+   "Validation",
+   "Confiance",
+   "Export"
+  ],
+  "flowNotes": [
+   "Une image ou tout un lot",
+   "Gemini Vision lit fournisseur, numéro, date, lignes, totaux, IBAN",
+   "Sous-total plus taxe doit égaler le total à 0,05 près",
+   "La complétude et l’arithmétique fixent le score ; un calcul faux le plafonne à 0,5",
+   "CSV détaillé, CSV récapitulatif ou fichier Excel à trois onglets"
+  ],
+  "facts": {
+   "who": "Quiconque retape des factures dans un tableur",
+   "when": "Un total est flou, ou le calcul ne tombe pas juste",
+   "why": "Une erreur de lecture sûre d’elle se glisse discrètement dans le tableur."
+  },
+  "tradeoff": {
+   "pick": "Une confiance calculée par le code",
+   "over": "Une confiance que le modèle déclare sur lui-même"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Invoice Processor : fichiers de factures sélectionnés pour le téléversement.",
+    "caption": "Choisissez un lot d’images de factures."
+   },
+   {
+    "alt": "Invoice Processor : l’écran de traitement.",
+    "caption": "Le lot est traité fichier par fichier."
+   },
+   {
+    "alt": "Invoice Processor : le tableau de résultats avec la confiance de chaque facture.",
+    "caption": "Quatre approuvées, une à vérifier, une erreur, avec une confiance pour chaque fichier."
+   },
+   {
+    "alt": "Invoice Processor : onglet Excel des factures approuvées.",
+    "caption": "L’export Excel, premier onglet : les factures approuvées."
+   },
+   {
+    "alt": "Invoice Processor : onglet Excel des factures à vérifier.",
+    "caption": "Deuxième onglet : les factures qui demandent un regard humain."
+   },
+   {
+    "alt": "Invoice Processor : onglet Excel des erreurs.",
+    "caption": "Troisième onglet : les fichiers qui n’ont pas pu être lus."
+   }
+  ],
+  "video": {
+   "alt": "Enregistrement d’écran : un lot de factures est téléversé, traité, et les résultats apparaissent triés par confiance.",
+   "caption": "Un lot entre ; les résultats ressortent triés par confiance."
+  },
+  "origin": "Les entreprises reçoivent des centaines, voire des milliers de factures, et les trier, les ouvrir et les traiter demande beaucoup de temps et de main-d’œuvre. J’ai donc construit un outil qui en extrait les données, et qui peut être personnalisé selon les besoins d’un client et ses formats de facture. L’IA ne décide pas seule de ce qui est ou non une facture : elle extrait, et un score de confiance dit dans quelle mesure faire confiance à chaque résultat. La construire a été un voyage amusant dans le monde de l’OCR."
+ },
+ "origin": "Companies receive hundreds, even thousands of invoices, and sorting, opening and handling them takes a lot of time and labour. So I built a processor that pulls the data out of each one, and it can be customised to a client's needs and to their invoice formats. The AI does not get to decide on its own what is or is not an invoice: it extracts, and a confidence score says how far to trust each result. Building it was a fun trip into the OCR world."
+}

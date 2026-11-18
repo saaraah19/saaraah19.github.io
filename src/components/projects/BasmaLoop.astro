@@ -1,0 +1,14 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg style="color:var(--ink)" viewBox="0 0 680 200" role="img" aria-label={t(`Admin edits content, content is shown on the public site, and client requests travel from the public site back to the admin.`, `L’admin modifie le contenu, le contenu s’affiche sur le site public, et les demandes des clients repartent du site public vers l’admin.`)}>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L9 5 L1 9" fill="none" stroke="currentColor" stroke-width="1.5"/></marker></defs>
+  <path class="p" marker-end="url(#ah)" d="M572 92 C520 36 400 36 350 92"/>
+  <path class="p" marker-end="url(#ah)" d="M330 92 C280 36 160 36 108 92"/>
+  <path class="p dash" marker-end="url(#ah)" d="M100 108 C200 190 480 190 572 108"/>
+  <circle class="n" cx="100" cy="100" r="7"/><circle class="n hi" cx="340" cy="100" r="9"/><circle class="n" cx="580" cy="100" r="7"/>
+  <text x="88" y="104" text-anchor="end">{t(`public site`, `site public`)}</text><text x="340" y="130" text-anchor="middle">{t(`content`, `contenu`)}</text><text x="592" y="104">{t(`admin`, `admin`)}</text>
+  <text class="sm" x="460" y="44" text-anchor="middle">{t(`edits`, `modifie`)}</text><text class="sm" x="220" y="44" text-anchor="middle">{t(`shown`, `affiché`)}</text><text class="sm" x="340" y="178" text-anchor="middle">{t(`client requests`, `demandes clients`)}</text>
+</svg></div>

@@ -1,0 +1,46 @@
+---
+import StatusTag from './StatusTag.astro';
+import FlowCurve from './FlowCurve.astro';
+import Links from './Links.astro';
+import TechChips from './TechChips.astro';
+import Shot from './Shot.astro';
+import LiveNotice from './LiveNotice.astro';
+import { langOf, useT, href } from '../../i18n';
+const lang = langOf(Astro);
+const S = useT(lang).spread;
+const { p, comp = 'flow' } = Astro.props;
+const lead = p.shots?.[p.leadShot ?? 0];
+const dec = p.decisions?.[p.homeDecision ?? -1];
+const firstSentence = (t: string) => (t.split(/(?<=[.?!])\s+(?=[A-Z“])/)[0] ?? t);
+---
+<article class={`spread c-${comp}`} id={p.id}>
+  <div class="txt">
+    <h3>{p.title} <StatusTag status={p.status} href={p.live} title={p.title} /></h3>
+    <p class="sum">{p.summary}</p>
+    <dl class="rows">
+      {(p.facts?.why || p.problem) && <div><dt class="mono up">{S.problem}</dt><dd>{p.facts?.why ?? firstSentence(p.problem)}</dd></div>}
+      {p.built && <div class="built"><dt class="mono up">{S.built}</dt><dd>{p.built}</dd></div>}
+      {dec && <div><dt class="mono up">{S.decision}</dt><dd><b>{dec.title}.</b> {dec.text}</dd></div>}
+    </dl>
+    <Links live={p.live} github={p.github} story={href(lang, `/work/${p.id}`)} />
+    <LiveNotice url={p.live} wake={p.wake} compact />
+  </div>
+  <div class="vis">
+    {lead ? <Shot shot={lead} lead sizes="(max-width: 820px) 100vw, 600px" /> : p.flow && <FlowCurve steps={p.flow} label={p.title} />}
+    <TechChips items={p.technologies} />
+  </div>
+</article>
+<style>
+.spread{padding:56px 0;border-top:1px solid var(--line);display:grid;gap:28px clamp(24px,5vw,72px)}
+h3{font-size:clamp(1.5rem,3vw,2rem);display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.sum{margin:0 0 16px;max-width:52ch;font-size:1.125rem}
+.rows{margin:0 0 4px;max-width:56ch}.rows>div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:0 16px;padding:11px 0;border-top:1px solid var(--line)}
+.rows dt{padding-top:3px;line-height:1.4}.rows dd{margin:0;color:var(--ink2);font-size:.9375rem;line-height:1.55}.rows .built dd{color:var(--ink)}.rows dd b{color:var(--ink);font-weight:600}
+@media (max-width:520px){.rows>div{grid-template-columns:1fr;gap:2px}}
+.c-split{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center}
+.c-split .vis{order:2}
+.c-flow,.c-offset{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start}
+.c-offset{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.c-offset .vis{order:-1}
+@media (max-width:820px){.c-split,.c-flow,.c-offset{grid-template-columns:1fr}.c-split .vis,.c-offset .vis{order:0}}
+</style>

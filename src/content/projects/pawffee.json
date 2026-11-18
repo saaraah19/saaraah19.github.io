@@ -1,0 +1,111 @@
+{
+ "title": "Pawffee",
+ "category": "web-products",
+ "tier": "supporting",
+ "status": "live",
+ "order": 50,
+ "summary": "A digital home for recipes that almost did not survive: paper, index cards and handwritten notes, kept with technique notes, failures and honest verdicts.",
+ "technologies": [
+  "Photo-first",
+  "Printable"
+ ],
+ "live": "https://pawffee-aan0.onrender.com/",
+ "shots": [
+  {
+   "src": "../../assets/projects/pawffee/01-latest.webp",
+   "alt": "Pawffee: The latest-recipes page.",
+   "caption": "Latest recipes.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/pawffee/02-open.webp",
+   "alt": "Pawffee: An opened recipe.",
+   "caption": "A recipe page: times, servings and difficulty at a glance.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawffee/03-details.webp",
+   "alt": "Pawffee: Recipe details and notes.",
+   "caption": "Ingredients by component, a “before you start” note, then numbered steps.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawffee/04-instructions.webp",
+   "alt": "Pawffee: An instruction step with a photo.",
+   "caption": "Each step can carry its own photo.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawffee/05-search.webp",
+   "alt": "Pawffee: The recipe search.",
+   "caption": "Search by name, ingredient or category.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawffee/06-categories.webp",
+   "alt": "Pawffee: The categories page.",
+   "caption": "Browse by mood.",
+   "role": "context"
+  }
+ ],
+ "problem": "Recipes live on paper and index cards, and the notes that made them work (technique, what to check first) do not survive being retyped.",
+ "thinking": "A recipe page should keep the notes next to the steps.",
+ "solution": "Photo-first recipe pages with a “before you start” note, step-by-step photos, search, categories and a PDF download.",
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "built": "Photo-first recipe pages with a “before you start” note and a photo for each step, searchable by name, ingredient or category.",
+ "facts": {
+  "who": "Anyone with recipes on paper and index cards",
+  "when": "A recipe gets retyped",
+  "why": "The technique notes that made it work do not survive."
+ },
+ "tradeoff": {
+  "pick": "Notes kept beside the steps",
+  "over": "A clean retyped list"
+ },
+ "fr": {
+  "summary": "Une maison numérique pour des recettes qui ont failli ne pas survivre : papier, fiches bristol et notes manuscrites, conservées avec des notes de technique, des ratés et des verdicts honnêtes.",
+  "problem": "Les recettes vivent sur du papier et des fiches, et les notes qui les faisaient marcher (la technique, ce qu’il faut vérifier d’abord) ne survivent pas à la retape.",
+  "thinking": "Une page de recette devrait garder les notes à côté des étapes.",
+  "solution": "Des pages de recettes centrées sur la photo, avec une note « avant de commencer », des photos étape par étape, une recherche, des catégories et un téléchargement en PDF.",
+  "built": "Des pages de recettes centrées sur la photo, avec une note « avant de commencer » et une photo pour chaque étape, consultables par nom, ingrédient ou catégorie.",
+  "facts": {
+   "who": "Quiconque a des recettes sur papier et sur des fiches",
+   "when": "Une recette est retapée",
+   "why": "Les notes de technique qui la faisaient marcher ne survivent pas."
+  },
+  "tradeoff": {
+   "pick": "Des notes gardées à côté des étapes",
+   "over": "Une liste propre retapée"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Pawffee : la page des dernières recettes.",
+    "caption": "Dernières recettes."
+   },
+   {
+    "alt": "Pawffee : une recette ouverte.",
+    "caption": "Une page de recette : durées, portions et difficulté en un coup d’œil."
+   },
+   {
+    "alt": "Pawffee : détails et notes d’une recette.",
+    "caption": "Les ingrédients par composant, une note « avant de commencer », puis des étapes numérotées."
+   },
+   {
+    "alt": "Pawffee : une étape d’instruction avec une photo.",
+    "caption": "Chaque étape peut avoir sa propre photo."
+   },
+   {
+    "alt": "Pawffee : la recherche de recettes.",
+    "caption": "Recherche par nom, ingrédient ou catégorie."
+   },
+   {
+    "alt": "Pawffee : la page des catégories.",
+    "caption": "Parcourir selon l’humeur."
+   }
+  ],
+  "origin": "La cuisine est l’un de mes passe-temps préférés, et Pawffee est le nom de mon coffee shop de rêve (paw + coffee). J’essaie beaucoup de recettes, puis je les perds. J’enregistre des photos, et je les perds aussi, et partager une recette en photographiant une page manuscrite moche et à moitié mouillée n’a rien de pratique. Je détestais avoir une pile de carnets et ne rien pouvoir retrouver. J’ai donc créé un endroit où ajouter mes recettes avec tous leurs détails et leurs photos, puis les trier et chercher ce que je veux."
+ },
+ "origin": "Cooking is one of my favourite hobbies, and Pawffee is my dream coffee shop name (paw + coffee). I try a lot of recipes and then lose them. I save photos and lose those too, and sharing a recipe by photographing an ugly, half-wet handwritten page is not convenient. I hated having a pile of notebooks and not being able to find anything. So I made a place where I can add my recipes with all their details and pictures, then sort and search for whatever I want."
+}

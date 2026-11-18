@@ -1,0 +1,235 @@
+{
+ "title": "Meetric",
+ "category": "ai-automation",
+ "tier": "featured",
+ "status": "live",
+ "order": 30,
+ "summary": "A chatbot that qualifies inbound leads in English, French and Arabic, scores them hot, warm or cold, and books discovery calls into Google Calendar.",
+ "technologies": [
+  "FastAPI",
+  "Gemini",
+  "Google Calendar",
+  "Slack",
+  "Notion"
+ ],
+ "github": "https://github.com/saaraah19/Meetric",
+ "problem": "Freelancers, small businesses and startups lose leads because follow-up is slow: a lead left hanging goes to whoever answers first. And many messages are not leads at all, while the first conversation (who this is, what they need, whether they can afford it) is the same every time.",
+ "flow": [
+  "Conversation",
+  "Qualification",
+  "Score",
+  "Calendar"
+ ],
+ "live": "https://meetric-61sn.onrender.com",
+ "composition": "offset",
+ "build": [
+  "Pulls need, budget, timeline and contact details out of the conversation.",
+  "Scores each lead hot, warm or cold.",
+  "Offers a real booking slot and creates the Google Calendar event.",
+  "Integrates with Slack and Notion. FastAPI, Gemini 2.5 Flash-Lite and SQLite underneath."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/meetric/01-chat-start.webp",
+   "alt": "Meetric: The chat opening: need, then budget.",
+   "caption": "A visitor asks about online ordering for a restaurant; the bot asks for a budget range.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/meetric/02-chat-middle.webp",
+   "alt": "Meetric: The chat middle: timeline, contact and slots.",
+   "caption": "Timeline, then contact details, then a few real time slots.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/meetric/03-chat-end.webp",
+   "alt": "Meetric: The chat end: booking confirmed.",
+   "caption": "The visitor picks a slot and gets a booking confirmation.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/meetric/04-slack.webp",
+   "alt": "Meetric: A Slack hot-lead alert.",
+   "caption": "Hot leads land in Slack with need, budget, timeline and contact.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/meetric/05-notion.webp",
+   "alt": "Meetric: The Notion leads database.",
+   "caption": "Every lead also becomes a row in Notion, with its score.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/meetric/06-calendar.webp",
+   "alt": "Meetric: The generated Google Calendar invite.",
+   "caption": "And a 15-minute discovery call appears in Google Calendar.",
+   "role": "result"
+  }
+ ],
+ "thinking": "A chatbot that wanders is useless to a sales team. This one has to be a short, strict conversation that ends in a decision.",
+ "decisions": [
+  {
+   "title": "A stage machine, not a free chat",
+   "text": "greeting, need, budget, timeline, contact, scoring, booking, closed. Each stage has its own prompt and a list of things it must not do."
+  },
+  {
+   "title": "A conservative fallback",
+   "text": "If the model’s extraction fails, a regex fallback steps in. A missed field only makes the bot ask again, while a wrong guess would pollute the CRM, so it prefers asking."
+  },
+  {
+   "title": "Hot is two numbers",
+   "text": "A budget of $1,000 or more and a timeline of four weeks or less. Hot goes to Slack and booking, warm to Notion and booking, cold gets a polite close."
+  },
+  {
+   "title": "One slot, one winner",
+   "text": "The database claims the slot (a UNIQUE slot_time) before the calendar call. Two customers racing for the same time produce exactly one booking."
+  },
+  {
+   "title": "A bug only the real calendar showed",
+   "text": "Building a time with pytz’s tzinfo= booked 2:00 PM as 2:48 PM. It never appeared in tests, only against Google Calendar."
+  },
+  {
+   "title": "Notifications don’t block",
+   "text": "Slack and Notion are fire-and-forget, which took the reply from about 4 seconds to under 100 ms."
+  }
+ ],
+ "result": "In the recorded demo, one conversation ends as a Slack alert, a Notion row and a 15-minute invite in Google Calendar.",
+ "limits": [
+  "SQLite is used synchronously.",
+  "Day names are English only."
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 1,
+ "video": {
+  "alt": "Screen recording: a visitor chats with the bot, then the lead appears in Slack.",
+  "caption": "From the first message to a Slack alert.",
+  "w": 1280,
+  "h": 618
+ },
+ "built": "A strict stage-by-stage chatbot. It collects need, budget, timeline and contact, scores the lead, claims a real slot and creates the calendar event.",
+ "facts": {
+  "who": "Freelancers, business owners and startups with inbound messages",
+  "when": "A visitor messages and nobody answers quickly",
+  "why": "Slow follow-up loses the lead, and the first conversation is the same every time."
+ },
+ "tradeoff": {
+  "pick": "A short, strict conversation",
+  "over": "A flexible chat that wanders"
+ },
+ "homeDecision": 4,
+ "keyDecisions": [
+  1,
+  3,
+  4
+ ],
+ "flowNotes": [
+  "Free text in English, French or Arabic, one stage at a time",
+  "Need, budget, timeline and contact pulled out; a regex fallback asks again rather than guessing",
+  "Hot is $1,000+ within four weeks. Hot goes to Slack and booking, warm to Notion and booking, cold gets a polite close",
+  "The slot is claimed in the database first, then the Google event is created"
+ ],
+ "evidence": "demo",
+ "unfinished": [
+  "No confirmation email goes out after booking."
+ ],
+ "fr": {
+  "summary": "Un chatbot qui qualifie les leads entrants en anglais, en français et en arabe, les classe chaud, tiède ou froid, et réserve des appels de découverte dans Google Calendar.",
+  "problem": "Les freelances, petites entreprises et startups perdent des prospects parce que le suivi est lent : un prospect laissé sans réponse va voir celui qui répond en premier. Et beaucoup de messages ne sont pas des prospects, alors que la première conversation (qui est-ce, que veut-il, en a-t-il les moyens) est toujours la même.",
+  "thinking": "Un chatbot qui part dans tous les sens est inutile pour une équipe commerciale. Celui-ci doit être une conversation courte et stricte qui se termine par une décision.",
+  "result": "Dans la démo enregistrée, une conversation aboutit à une alerte Slack, une ligne Notion et une invitation de 15 minutes dans Google Calendar.",
+  "built": "Un chatbot strict, étape par étape. Il recueille besoin, budget, délai et contact, note le lead, réserve un vrai créneau et crée l’événement dans le calendrier.",
+  "decisions": [
+   {
+    "title": "Une machine à états, pas un chat libre",
+    "text": "accueil, besoin, budget, délai, contact, scoring, réservation, clôture. Chaque étape a son propre prompt et une liste de choses qu’elle n’a pas le droit de faire."
+   },
+   {
+    "title": "Un repli prudent",
+    "text": "Si l’extraction du modèle échoue, une expression régulière prend le relais. Un champ manqué fait seulement reposer la question au bot, alors qu’une mauvaise supposition polluerait le CRM : il préfère donc redemander."
+   },
+   {
+    "title": "Chaud, ce sont deux chiffres",
+    "text": "Un budget de 1 000 $ ou plus et un délai de quatre semaines ou moins. Chaud va vers Slack et la réservation, tiède vers Notion et la réservation, froid reçoit une clôture polie."
+   },
+   {
+    "title": "Un créneau, un seul gagnant",
+    "text": "La base de données réserve le créneau (un slot_time UNIQUE) avant l’appel au calendrier. Deux clients qui se disputent la même heure produisent exactement une réservation."
+   },
+   {
+    "title": "Un bug que seul le vrai calendrier a révélé",
+    "text": "Construire une heure avec tzinfo= de pytz réservait 14 h 00 comme 14 h 48. Il n’est jamais apparu dans les tests, seulement face à Google Calendar."
+   },
+   {
+    "title": "Les notifications ne bloquent pas",
+    "text": "Slack et Notion partent en « fire-and-forget », ce qui a fait passer la réponse d’environ 4 secondes à moins de 100 ms."
+   }
+  ],
+  "build": [
+   "Extrait le besoin, le budget, le délai et les coordonnées de la conversation.",
+   "Classe chaque lead chaud, tiède ou froid.",
+   "Propose un vrai créneau de réservation et crée l’événement Google Calendar.",
+   "S’intègre à Slack et Notion. FastAPI, Gemini 2.5 Flash-Lite et SQLite en dessous."
+  ],
+  "limits": [
+   "SQLite est utilisé de façon synchrone.",
+   "Les noms de jours sont uniquement en anglais."
+  ],
+  "unfinished": [
+   "Aucun e-mail de confirmation n’est envoyé après la réservation."
+  ],
+  "flow": [
+   "Conversation",
+   "Qualification",
+   "Score",
+   "Calendrier"
+  ],
+  "flowNotes": [
+   "Texte libre en anglais, en français ou en arabe, une étape à la fois",
+   "Besoin, budget, délai et contact extraits ; un repli par regex redemande plutôt que de deviner",
+   "Chaud : 1 000 $ et plus sous quatre semaines. Chaud va vers Slack et la réservation, tiède vers Notion et la réservation, froid reçoit une clôture polie",
+   "Le créneau est d’abord réservé dans la base de données, puis l’événement Google est créé"
+  ],
+  "facts": {
+   "who": "Freelances, chefs d’entreprise et startups qui reçoivent des messages",
+   "when": "Un visiteur écrit et personne ne répond vite",
+   "why": "Un suivi lent fait perdre le prospect, et la première conversation est toujours la même."
+  },
+  "tradeoff": {
+   "pick": "Une conversation courte et stricte",
+   "over": "Un chat flexible qui divague"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Meetric : l’ouverture du chat : le besoin, puis le budget.",
+    "caption": "Un visiteur s’informe sur la commande en ligne pour un restaurant ; le bot demande une fourchette de budget."
+   },
+   {
+    "alt": "Meetric : le milieu du chat : délai, contact et créneaux.",
+    "caption": "Le délai, puis les coordonnées, puis quelques vrais créneaux horaires."
+   },
+   {
+    "alt": "Meetric : la fin du chat : réservation confirmée.",
+    "caption": "Le visiteur choisit un créneau et reçoit une confirmation de réservation."
+   },
+   {
+    "alt": "Meetric : une alerte Slack pour un lead chaud.",
+    "caption": "Les leads chauds arrivent dans Slack avec le besoin, le budget, le délai et le contact."
+   },
+   {
+    "alt": "Meetric : la base de leads Notion.",
+    "caption": "Chaque lead devient aussi une ligne dans Notion, avec son score."
+   },
+   {
+    "alt": "Meetric : l’invitation Google Calendar générée.",
+    "caption": "Et un appel de découverte de 15 minutes apparaît dans Google Calendar."
+   }
+  ],
+  "video": {
+   "alt": "Enregistrement d’écran : un visiteur discute avec le bot, puis le lead apparaît dans Slack.",
+   "caption": "Du premier message à l’alerte Slack."
+  },
+  "origin": "Les freelances, les chefs d’entreprise et les startups reçoivent beaucoup de messages. Certaines personnes sont simplement curieuses, d’autres posent des questions hors sujet, d’autres ne sont pas des prospects, et les vrais prospects se perdent quand on les laisse si longtemps sans réponse qu’ils vont voir quelqu’un de plus rapide. Meetric répond à toute heure, sans week-end ni heures creuses, va droit au but, identifie le besoin, le budget et l’échéance, recueille les coordonnées, classe le prospect chaud, tiède ou froid, et réserve un rendez-vous sur-le-champ quand c’est urgent."
+ },
+ "origin": "Freelancers, business owners and startups get a lot of messages. Some people are just curious, some ask unrelated questions, some were never leads, and real leads get lost when they are left hanging so long that they go and find someone who answers faster. Meetric answers at any hour, with no weekends and no off-the-clock, goes straight to the point, learns the need, the budget and the deadline, takes the contact details, sorts the lead hot, warm or cold, and books a meeting on the spot when it is urgent."
+}

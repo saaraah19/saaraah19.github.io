@@ -1,0 +1,217 @@
+{
+ "title": "PawLedger",
+ "category": "web-products",
+ "tier": "featured",
+ "status": "dev",
+ "order": 30,
+ "summary": "A private finance observatory. It compares two periods as second minus first and reports what changed, never why.",
+ "technologies": [
+  "React",
+  "TypeScript",
+  "Express"
+ ],
+ "github": "https://github.com/saaraah19/PawLedger",
+ "thinking": "Money is stored as integer minor units, and observations come from deterministic rules, not AI.",
+ "flow": [
+  "Transactions",
+  "Aggregation",
+  "Observation"
+ ],
+ "composition": "flow",
+ "build": [
+  "Observations come from deterministic rules: spending changes, unusual highs, top categories and largest purchases.",
+  "React, TypeScript and Tailwind client; Express and TypeScript server organised as routes, controllers, services and models."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/pawledger/01-home.webp",
+   "alt": "PawLedger: The home screen with example data.",
+   "caption": "Home: this month at a glance. Example data.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/pawledger/02-add-expense.webp",
+   "alt": "PawLedger: The add-expense form.",
+   "caption": "Adding an expense, with line items that have to reconcile.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/pawledger/03-analyze.webp",
+   "alt": "PawLedger: The analyze screen.",
+   "caption": "Analyze: where the money went.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawledger/04-compare.webp",
+   "alt": "PawLedger: The compare screen.",
+   "caption": "Compare: September against October, second period minus first.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/pawledger/05-plan.webp",
+   "alt": "PawLedger: The plan screen.",
+   "caption": "Plan.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/pawledger/06-inventory.webp",
+   "alt": "PawLedger: The inventory screen.",
+   "caption": "Inventory.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/pawledger/07-mobile-home.webp",
+   "alt": "PawLedger: The mobile home screen.",
+   "caption": "The same app on a phone.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/pawledger/08-waking.webp",
+   "alt": "PawLedger: The wake-up screen.",
+   "caption": "The wake-up screen on free-tier hosting.",
+   "role": "edge"
+  }
+ ],
+ "problem": "Money apps tend to scold, score and advise. I wanted one that keeps honest books and says what changed.",
+ "decisions": [
+  {
+   "title": "Integer minor units",
+   "text": "8,500 DZD is stored as 850000. No floating point, so totals cannot drift by a fraction."
+  },
+  {
+   "title": "Receipts must reconcile",
+   "text": "Line items have to add up exactly to the total, or the entry is rejected."
+  },
+  {
+   "title": "Dates are days, not instants",
+   "text": "A date is stored as noon UTC on a calendar day, so no timezone can push an expense into yesterday."
+  },
+  {
+   "title": "Archive, don’t delete",
+   "text": "Categories are referenced by ID and archived, so history never loses its labels."
+  },
+  {
+   "title": "Compare is subtraction",
+   "text": "Second period minus first. A category that was zero before is labelled new instead of a meaningless percentage."
+  },
+  {
+   "title": "Observations are rules",
+   "text": "Plain deterministic rules, silent when there is too little data (fewer than three expenses). It observes; it never scolds, scores or advises."
+  }
+ ],
+ "solution": "A private app for one household’s money. Every screenshot here uses clearly marked example data, not real finances.",
+ "leadShot": 0,
+ "built": "A private ledger that compares two periods (second minus first) and reports what changed through deterministic rules, never advice.",
+ "facts": {
+  "who": "One household managing its own money",
+  "when": "Looking back over a month of spending",
+  "why": "Money apps scold, score and advise. This one keeps honest books."
+ },
+ "tradeoff": {
+  "pick": "Whole numbers and plain rules",
+  "over": "Floating point and AI commentary"
+ },
+ "homeDecision": 0,
+ "keyDecisions": [
+  0,
+  1,
+  5
+ ],
+ "flowNotes": [
+  "Stored as integer minor units; receipts must reconcile",
+  "Two periods compared as second minus first",
+  "Deterministic rules; silent when there are fewer than three expenses"
+ ],
+ "fr": {
+  "summary": "Un observatoire financier privé. Il compare deux périodes (la seconde moins la première) et dit ce qui a changé, jamais pourquoi.",
+  "problem": "Les applis d’argent ont tendance à gronder, à noter et à conseiller. Je voulais en avoir une qui tient des comptes honnêtes et dit ce qui a changé.",
+  "thinking": "L’argent est stocké en unités mineures entières, et les observations viennent de règles déterministes, pas d’une IA.",
+  "solution": "Une appli privée pour l’argent d’un foyer. Chaque capture d’écran ici utilise des données d’exemple clairement signalées, pas de vraies finances.",
+  "built": "Un registre privé qui compare deux périodes (la seconde moins la première) et dit ce qui a changé à l’aide de règles déterministes, jamais de conseils.",
+  "decisions": [
+   {
+    "title": "Unités mineures entières",
+    "text": "8 500 DZD est stocké sous la forme 850000. Pas de virgule flottante : les totaux ne peuvent pas dériver d’une fraction."
+   },
+   {
+    "title": "Les reçus doivent se réconcilier",
+    "text": "Les lignes doivent s’additionner exactement au total, sinon la saisie est rejetée."
+   },
+   {
+    "title": "Les dates sont des jours, pas des instants",
+    "text": "Une date est stockée comme midi UTC d’un jour du calendrier, si bien qu’aucun fuseau horaire ne peut pousser une dépense à la veille."
+   },
+   {
+    "title": "Archiver, ne pas supprimer",
+    "text": "Les catégories sont référencées par identifiant et archivées, de sorte que l’historique ne perd jamais ses libellés."
+   },
+   {
+    "title": "Comparer, c’est soustraire",
+    "text": "Seconde période moins première. Une catégorie qui valait zéro auparavant est étiquetée « nouvelle » au lieu d’afficher un pourcentage dénué de sens."
+   },
+   {
+    "title": "Les observations sont des règles",
+    "text": "De simples règles déterministes, silencieuses quand il y a trop peu de données (moins de trois dépenses). Il observe ; il ne gronde, ne note ni ne conseille jamais."
+   }
+  ],
+  "build": [
+   "Les observations viennent de règles déterministes : variations de dépenses, pics inhabituels, principales catégories et plus gros achats.",
+   "Client React, TypeScript et Tailwind ; serveur Express et TypeScript organisé en routes, contrôleurs, services et modèles."
+  ],
+  "flow": [
+   "Transactions",
+   "Agrégation",
+   "Observation"
+  ],
+  "flowNotes": [
+   "Stockées en unités mineures entières ; les reçus doivent se réconcilier",
+   "Deux périodes comparées : seconde moins première",
+   "Règles déterministes ; silencieuses avec moins de trois dépenses"
+  ],
+  "facts": {
+   "who": "Un foyer qui gère son propre argent",
+   "when": "En regardant un mois de dépenses",
+   "why": "Les applis d’argent grondent, notent et conseillent. Celle-ci tient des comptes honnêtes."
+  },
+  "tradeoff": {
+   "pick": "Des nombres entiers et des règles simples",
+   "over": "La virgule flottante et le commentaire d’IA"
+  },
+  "shots": [
+   {
+    "alt": "PawLedger : l’écran d’accueil avec des données d’exemple.",
+    "caption": "Accueil : ce mois-ci en un coup d’œil. Données d’exemple."
+   },
+   {
+    "alt": "PawLedger : le formulaire d’ajout de dépense.",
+    "caption": "Ajout d’une dépense, avec des lignes qui doivent se réconcilier."
+   },
+   {
+    "alt": "PawLedger : l’écran d’analyse.",
+    "caption": "Analyser : où est passé l’argent."
+   },
+   {
+    "alt": "PawLedger : l’écran de comparaison.",
+    "caption": "Comparer : septembre contre octobre, seconde période moins première."
+   },
+   {
+    "alt": "PawLedger : l’écran de planification.",
+    "caption": "Planifier."
+   },
+   {
+    "alt": "PawLedger : l’écran d’inventaire.",
+    "caption": "Inventaire."
+   },
+   {
+    "alt": "PawLedger : l’écran d’accueil sur mobile.",
+    "caption": "La même appli sur un téléphone."
+   },
+   {
+    "alt": "PawLedger : l’écran de réveil.",
+    "caption": "L’écran de réveil sur l’hébergement gratuit."
+   }
+  ],
+  "origin": "Je n’ai jamais réussi à suivre précisément où va mon argent. J’ai essayé des applis, des portefeuilles, des outils de suivi, tout ce que j’ai trouvé, et aucun ne convenait à moi et à mon système. J’ai donc construit PawLedger autour de mes besoins : planifier, faire l’inventaire, suivre, analyser, comparer, et garder un historique auquel revenir."
+ },
+ "origin": "I have never managed to track accurately where my money goes. I tried apps, wallets and trackers, everything I could find, and none of them suited me and my system. So I built PawLedger around what I need: planning, inventory, tracking, analysing, comparing, and a history to look back on."
+}

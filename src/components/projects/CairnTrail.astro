@@ -1,0 +1,13 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+const steps = fr ? ['Planifier', 'Préparer', 'Vivre', 'Noter', 'Se souvenir'] : ['Plan', 'Prepare', 'Live', 'Record', 'Remember'], xs = [40, 180, 320, 460, 600], ys = [140, 86, 120, 70, 110];
+let d = `M${xs[0]} ${ys[0]}`;
+for (let i = 1; i < 5; i++) { const m = (xs[i - 1] + xs[i]) / 2; d += ` C${m} ${ys[i - 1]} ${m} ${ys[i]} ${xs[i]} ${ys[i]}`; }
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg viewBox="0 0 680 200" role="img" aria-label={t(`A trail through plan, prepare, live, record and remember, ending in a small stack of stones, a cairn.`, `Un sentier à travers planifier, préparer, vivre, noter et se souvenir, qui finit sur un petit empilement de pierres : un cairn.`)}>
+  <path class="p" d={d}/>
+  {steps.map((s, i) => <>{i < 4 && <circle class="n" cx={xs[i]} cy={ys[i]} r="5.5"/>}<text x={xs[i]} y={ys[i] + 26} text-anchor="middle">{s}</text></>)}
+  <ellipse class="n" cx="600" cy="104" rx="18" ry="6"/><ellipse class="n" cx="600" cy="93" rx="13" ry="5"/><ellipse class="n hi" cx="600" cy="83" rx="8" ry="4"/>
+</svg></div>

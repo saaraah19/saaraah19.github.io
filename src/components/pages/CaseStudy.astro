@@ -1,0 +1,231 @@
+---
+import Base from '../../layouts/Base.astro';
+import StatusTag from '../projects/StatusTag.astro';
+import Links from '../projects/Links.astro';
+import LiveNotice from '../projects/LiveNotice.astro';
+import DataFlow from '../projects/DataFlow.astro';
+import Decision from '../projects/Decision.astro';
+import FlowCurve from '../projects/FlowCurve.astro';
+import TechChips from '../projects/TechChips.astro';
+import Shot from '../projects/Shot.astro';
+import Video from '../projects/Video.astro';
+import InvoiceConfidence from '../projects/InvoiceConfidence.astro';
+import PawLedgerDelta from '../projects/PawLedgerDelta.astro';
+import MeetricScore from '../projects/MeetricScore.astro';
+import TalignHub from '../projects/TalignHub.astro';
+import BasmaLoop from '../projects/BasmaLoop.astro';
+import CairnTrail from '../projects/CairnTrail.astro';
+import MarginaliaFork from '../projects/MarginaliaFork.astro';
+import TrievoThreshold from '../projects/TrievoThreshold.astro';
+import { langOf, useT, href, localizeProject } from '../../i18n';
+const lang = langOf(Astro);
+const T = useT(lang);
+const C = T.case;
+const p = localizeProject(Astro.props.p, lang);
+const cat = C.cats[p.category];
+const bespoke: Record<string, any> = { marginalia: MarginaliaFork, 'invoice-processor': InvoiceConfidence, pawledger: PawLedgerDelta, meetric: MeetricScore, talign: TalignHub, 'basma-miamaria': BasmaLoop, cairn: CairnTrail, trievo: TrievoThreshold };
+const Visual = bespoke[p.id];
+const li = p.leadShot ?? 0;
+const lead = p.shots[li];
+// With a video the video leads and every screenshot goes to the proof; otherwise the lead screenshot opens the page.
+const rank: Record<string, number> = { strongest: 0, workflow: 1, edge: 2, result: 3, context: 4 };
+const roleName = C.roles;
+const gallery = (p.video ? p.shots : p.shots.filter((_: any, i: number) => i !== li))
+  .map((s: any, i: number) => ({ s, i }))
+  .sort((a: any, b: any) => (rank[a.s.role ?? 'context'] - rank[b.s.role ?? 'context']) || a.i - b.i)
+  .map((x: any) => x.s);
+const keys: number[] = p.keyDecisions ?? [0, 1, 2].filter((i) => i < (p.decisions?.length ?? 0));
+const keyDec = (p.decisions ?? []).map((d: any, i: number) => ({ d, i })).filter((x: any) => keys.includes(x.i));
+const moreDec = (p.decisions ?? []).map((d: any, i: number) => ({ d, i })).filter((x: any) => !keys.includes(x.i));
+const evidence = C.evidence;
+const chapters: { id: string; t: string }[] = [];
+if (p.problem) chapters.push({ id: 'problem', t: C.ch.problem });
+if (p.thinking || p.tradeoff || Visual) chapters.push({ id: 'thinking', t: C.ch.thinking });
+if (p.decisions?.length) chapters.push({ id: 'decisions', t: C.ch.decisions });
+if (p.built || p.solution || p.flow) chapters.push({ id: 'solution', t: C.ch.solution });
+if (p.result) chapters.push({ id: 'result', t: C.ch.result });
+if (p.build?.length) chapters.push({ id: 'build', t: C.ch.build });
+if (gallery.length) chapters.push({ id: 'proof', t: C.ch.proof });
+if (p.limits?.length || p.unfinished?.length) chapters.push({ id: 'limits', t: C.ch.limits });
+const has = (id: string) => chapters.some((c) => c.id === id);
+const bridge = C.bridge;
+const num = (id: string) => String(chapters.findIndex((c) => c.id === id) + 1).padStart(2, '0');
+---
+<Base title={`${p.title} · Sarra Sawsene Sahraoui`} description={p.summary}>
+  <script is:inline>document.documentElement.classList.add('js')</script>
+  <div class="wrap page">
+    <p class="mono"><a class="link" href={href(lang, '/#work')}>{C.back}</a></p>
+    <p class="mono cat">{cat}</p>
+    <h1>{p.title} <StatusTag status={p.status} href={p.live} title={p.title} /></h1>
+    <p class="sum">{p.summary}</p>
+    <Links live={p.live} github={p.github} />
+    <LiveNotice url={p.live} wake={p.wake} auto />
+    <TechChips items={p.technologies} />
+    {(p.video || lead) && <div class="lead">{p.video ? <Video id={p.id} video={p.video} /> : <Shot shot={lead} lead eager label={lead.role === 'strongest' || !lead.role ? C.strongest : roleName[lead.role]} sizes="(max-width: 900px) 100vw, 1000px" />}</div>}
+
+    <div class="storywrap">
+      <nav class="rail" aria-label={C.chaptersAria} style="--p:0">
+        <p class="now mono" aria-hidden="true"><span data-now-n>01</span> / {String(chapters.length).padStart(2, '0')} · <span data-now-t>{chapters[0]?.t}</span></p>
+        <ol>{chapters.map((c, i) => <li><a href={`#${c.id}`} data-rail={c.id}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{c.t}</a></li>)}</ol>
+      </nav>
+      <div class="chs">
+        {has('problem') && <section class="ch" id="problem" data-ch aria-labelledby="problem-h">
+          <h2 id="problem-h"><span class="mono">{num('problem')}</span>{C.ch.problem}</h2>
+          <p class="pull">{p.problem}</p>
+          {p.origin && <p class="origin"><span class="mono up">{C.origin}</span>{p.origin}</p>}
+          {p.facts && <dl class="facts">
+            <div><dt class="mono">{C.who}</dt><dd>{p.facts.who}</dd></div>
+            <div><dt class="mono">{C.when}</dt><dd>{p.facts.when}</dd></div>
+            <div><dt class="mono">{C.why}</dt><dd>{p.facts.why}</dd></div>
+          </dl>}
+        </section>}
+
+        {has('thinking') && <><p class="bridge hand" aria-hidden="true">{bridge.thinking}</p>
+        <section class="ch" id="thinking" data-ch aria-labelledby="thinking-h">
+          <h2 id="thinking-h"><span class="mono">{num('thinking')}</span>{C.ch.thinking}</h2>
+          {p.tradeoff && <p class="trade" aria-label={C.tradeoffAria(p.tradeoff.pick, p.tradeoff.over)}><span class="mono up">{C.chose}</span><span class="chosen hl">{p.tradeoff.pick}</span><span class="mono up over">{C.over}</span><span class="rej">{p.tradeoff.over}</span></p>}
+          {p.thinking && <p class="pull small">{p.thinking}</p>}
+          {Visual && <div class="vis"><Visual /></div>}
+        </section></>}
+
+        {has('decisions') && <><p class="bridge hand" aria-hidden="true">{bridge.decisions}</p>
+        <section class="ch" id="decisions" data-ch aria-labelledby="decisions-h">
+          <h2 id="decisions-h"><span class="mono">{num('decisions')}</span>{C.ch.decisions}</h2>
+          <ol class="dec">{keyDec.map((x: any, k: number) => <Decision d={x.d} i={k} />)}</ol>
+          {moreDec.length > 0 && <details class="more"><summary class="mono">{C.moreDec(moreDec.length)}</summary>
+            <ol class="dec">{moreDec.map((x: any, k: number) => <Decision d={x.d} i={keyDec.length + k} />)}</ol></details>}
+        </section></>}
+
+        {has('solution') && <><p class="bridge hand" aria-hidden="true">{bridge.solution}</p>
+        <section class="ch" id="solution" data-ch aria-labelledby="solution-h">
+          <h2 id="solution-h"><span class="mono">{num('solution')}</span>{C.ch.solution}</h2>
+          {p.built && <p class="pull small"><span class="mono up">{C.built}</span>{p.built}</p>}
+          {p.solution && <p class="body">{p.solution}</p>}
+          {p.flow && p.flowNotes ? <div class="flow"><p class="mono up">{C.moves}</p><DataFlow steps={p.flow} notes={p.flowNotes} label={p.title} /></div> : p.flow && <div class="flow"><FlowCurve steps={p.flow} label={p.title} /></div>}
+        </section></>}
+
+        {has('result') && <><p class="bridge hand" aria-hidden="true">{bridge.result}</p>
+        <section class="ch" id="result" data-ch aria-labelledby="result-h">
+          <h2 id="result-h"><span class="mono">{num('result')}</span>{C.ch.result}</h2>
+          {p.evidence && <p class="stamp mono"><span aria-hidden="true">✓</span> {evidence[p.evidence]}</p>}
+          <p class="pull small">{p.result}</p>
+        </section></>}
+
+        {has('build') && <><p class="bridge hand" aria-hidden="true">{bridge.build}</p>
+        <section class="ch" id="build" data-ch aria-labelledby="build-h">
+          <h2 id="build-h"><span class="mono">{num('build')}</span>{C.ch.build}</h2>
+          <details class="deep"><summary class="mono">{C.deep}</summary>
+            <ul>{p.build.map((t: string) => <li>{t}</li>)}</ul></details>
+        </section></>}
+
+        {has('proof') && <><p class="bridge hand" aria-hidden="true">{bridge.proof}</p>
+        <section class="ch" id="proof" data-ch aria-labelledby="proof-h">
+          <h2 id="proof-h"><span class="mono">{num('proof')}</span>{C.proofH}</h2>
+          <div class="gal">{gallery.map((s: any, i: number) => <Shot shot={s} label={`${String(i + 1).padStart(2, '0')} · ${roleName[s.role ?? 'context']}`} />)}</div>
+        </section></>}
+
+        {has('limits') && <><p class="bridge hand" aria-hidden="true">{bridge.limits}</p>
+        <section class="ch" id="limits" data-ch aria-labelledby="limits-h">
+          <h2 id="limits-h"><span class="mono">{num('limits')}</span>{C.ch.limits}</h2>
+          <div class="lims">
+            {p.limits?.length > 0 && <div><h3 class="mono up">{C.real}</h3><p class="lead2">{C.realSub}</p><ul class="real">{p.limits.map((t: string) => <li>{t}</li>)}</ul></div>}
+            {p.unfinished?.length > 0 && <div><h3 class="mono up">{C.todo}</h3><p class="lead2">{C.todoSub}</p><ul class="todo">{p.unfinished.map((t: string) => <li>{t}</li>)}</ul></div>}
+          </div>
+        </section></>}
+      </div>
+    </div>
+  </div>
+</Base>
+<style>
+.page{padding-top:48px}.cat{margin:40px 0 8px}
+h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.02em;display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.sum{font-size:1.25rem;max-width:44ch;margin:0 0 22px}
+.lead{margin:40px 0 8px}
+.storywrap{display:grid;grid-template-columns:190px minmax(0,1fr);gap:0 clamp(16px,4vw,48px);margin-top:64px;align-items:start}
+/* rail: a thread that fills as you read */
+.rail{position:sticky;top:24px;align-self:start}
+.rail ol{list-style:none;margin:0;padding:0 0 0 18px;position:relative;display:grid;gap:2px}
+.rail ol::before,.rail ol::after{content:"";position:absolute;left:4px;top:8px;width:0;border-left:1.5px solid var(--line);bottom:8px}
+.rail ol::after{border-color:var(--ink);bottom:auto;height:calc((100% - 16px) * var(--p))}
+.rail a{display:flex;gap:10px;align-items:baseline;text-decoration:none;padding:5px 0;font:400 .875rem/1.35 var(--head);color:var(--ink2);position:relative}
+.rail a::before{content:"";position:absolute;left:-18px;top:.75em;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1.5px solid var(--ink2);transition:background .2s,border-color .2s,transform .2s}
+.rail a .mono{font-size:.6875rem}
+.rail a:hover{color:var(--ink)}
+.rail a[aria-current="true"]{color:var(--ink);font-weight:600}
+.rail a[aria-current="true"]::before{background:var(--acc);border-color:var(--ink);transform:scale(1.25)}
+.rail .now{display:none}
+.chs{min-width:0}
+.ch{scroll-margin-top:70px}
+.ch h2{font:600 clamp(1.5rem,3vw,2rem)/1.15 var(--head);letter-spacing:-.015em;display:flex;gap:14px;align-items:baseline;margin:0 0 18px}
+.ch h2 .mono{font-size:.8125rem;color:var(--ink2);font-weight:400}
+.pull{font:500 clamp(1.25rem,2.4vw,1.6rem)/1.4 var(--head);letter-spacing:-.01em;margin:0 0 22px;max-width:40ch}
+.pull.small{font-size:clamp(1.1rem,2vw,1.3rem);max-width:46ch}
+.pull .up{display:block;margin-bottom:6px}
+.origin{margin:0 0 24px;max-width:58ch;padding:2px 0 2px 16px;border-left:2px solid var(--acc);color:var(--ink)}.origin .up{display:block;margin-bottom:6px;color:var(--ink2)}
+.body{margin:0 0 24px;max-width:58ch}
+.up{text-transform:uppercase;letter-spacing:.09em;font-size:.6875rem}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:8px 0 0;border-top:1px solid var(--ink)}
+.facts div{padding:12px 18px 0 0}.facts div+div{border-left:1px solid var(--line);padding-left:18px}
+.facts dt{text-transform:uppercase;letter-spacing:.09em;font-size:.6875rem;margin-bottom:4px}.facts dd{margin:0;font-size:.9375rem;line-height:1.5}
+.trade{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin:0 0 20px;font:500 clamp(1.15rem,2.2vw,1.45rem)/1.3 var(--head)}
+.trade .mono{color:var(--ink2)}.trade .rej{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--acc);text-decoration-thickness:2px}
+.vis{margin:26px 0 0}
+.dec{list-style:none;margin:0;padding:0}
+.more{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.more summary,.deep summary{cursor:pointer;color:var(--ink);padding:4px 0}
+.more summary:hover,.deep summary:hover{background:color-mix(in srgb,var(--acc) var(--hl),transparent)}
+.more .dec{margin-top:10px}
+.flow{margin-top:26px}.flow>.up{margin:0 0 14px}
+.stamp{display:inline-flex;gap:8px;align-items:center;border:1.5px solid var(--ink);border-radius:3px 10px 3px 10px;padding:3px 12px;margin:0 0 16px;color:var(--ink);text-transform:uppercase;letter-spacing:.09em;font-size:.6875rem;transform:rotate(-1deg);background:color-mix(in srgb,var(--acc) 32%,var(--bg))}
+.deep ul{list-style:none;margin:10px 0 0;padding:0}.deep li{padding:10px 0;border-top:1px solid var(--line);max-width:62ch}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:36px clamp(20px,3vw,40px);align-items:start;margin-top:8px}
+.lims{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+.lims h3{font-weight:500;color:var(--ink);margin:0 0 2px}.lead2{margin:0 0 10px;color:var(--ink2);font-size:.9375rem}
+.lims ul{list-style:none;margin:0;padding:0}.lims li{padding:9px 0 9px 22px;border-top:1px solid var(--line);position:relative;max-width:50ch}
+.lims li::before{content:"";position:absolute;left:0;top:1.05em;width:9px;height:9px}
+.real li::before{background:var(--ink)}.todo li::before{border:1.5px dashed var(--ink);border-radius:50%}
+/* bridges between chapters: a handwritten hand-off, drawn on the thread */
+.bridge{margin:30px 0 30px;font:400 1.55rem/1.1 var(--hand);color:var(--ink2);display:flex;gap:10px;align-items:center}
+.bridge::before{content:"";flex:none;width:34px;height:14px;background:no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 14'><path d='M1 7 C9 1 15 13 24 7 M20 2 L26 7 L20 12' fill='none' stroke='%238E9AA3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>")}
+@media (min-width:821px){.chs>.ch+.bridge{margin-left:0}}
+@media (prefers-reduced-motion:no-preference){
+  .js .ch:not(.in){opacity:0;transform:translateY(16px)}
+  .ch{transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  .js .bridge{opacity:.0;transition:opacity .6s .1s}.js .bridge.in{opacity:1}
+}
+@media (max-width:900px){
+  .storywrap{grid-template-columns:1fr;margin-top:48px}
+  .rail{top:0;z-index:5;background:var(--bg);margin:0 calc(var(--gutter) * -1) 28px;padding:10px var(--gutter);border-bottom:1px solid var(--line)}
+  .rail ol{display:none}
+  .rail .now{display:block;margin:0;color:var(--ink)}
+  .rail::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:calc(var(--p) * 100%);background:var(--acc)}
+  .facts{grid-template-columns:1fr}.facts div+div{border-left:0;border-top:1px solid var(--line);padding-left:0;margin-top:12px}
+  .ch{scroll-margin-top:56px}
+}
+</style>
+<script>
+  const rail = document.querySelector<HTMLElement>('.rail');
+  const chs = [...document.querySelectorAll<HTMLElement>('[data-ch]')];
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-rail]')];
+  const nowN = document.querySelector<HTMLElement>('[data-now-n]'), nowT = document.querySelector<HTMLElement>('[data-now-t]');
+  // Reveal once, as each chapter (and each hand-off) enters the viewport.
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  document.querySelectorAll('.ch, .bridge, .df').forEach((el) => io.observe(el));
+  // Thread fill + active chapter, from scroll position.
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    if (!rail || !chs.length) return;
+    const probe = innerHeight * 0.38;
+    let cur = 0;
+    chs.forEach((c, i) => { if (c.getBoundingClientRect().top <= probe) cur = i; });
+    const first = chs[0].getBoundingClientRect().top + scrollY, last = chs[chs.length - 1];
+    const end = last.getBoundingClientRect().bottom + scrollY;
+    const p = Math.max(0, Math.min(1, (scrollY + probe - first) / Math.max(1, end - first)));
+    rail.style.setProperty('--p', String(p));
+    links.forEach((a, i) => (i === cur ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+    if (nowN && nowT) { nowN.textContent = String(cur + 1).padStart(2, '0'); nowT.textContent = links[cur]?.textContent?.replace(/^\d+/, '') ?? ''; }
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll); update();
+</script>

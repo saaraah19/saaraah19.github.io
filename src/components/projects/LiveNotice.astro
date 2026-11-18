@@ -1,0 +1,116 @@
+---
+// The free-tier hosting notice, as a small live status instead of a footnote.
+// It keeps the honest sentence ("30–60s to wake") and adds a best-effort warm-up: when a visitor
+// hovers, focuses or taps "Try it live" (or lands on the case page), a background request nudges the
+// server awake. The timer is an estimate and says so; we cannot read a cross-origin response.
+// To switch the warm-up request off, set WARM to false.
+import { langOf, useT } from '../../i18n';
+const N = useT(langOf(Astro)).notice;
+const { url, wake, compact = false, auto = false } = Astro.props;
+const WARM = true;
+const id = `ln-${Math.random().toString(36).slice(2, 8)}`;
+---
+{url && wake && <div class={`ln${compact ? ' compact' : ''}`} id={id} data-ln data-url={url} data-warm={WARM ? '1' : '0'} data-auto={auto ? '1' : '0'} data-state="idle" data-text={wake}
+  data-t-waking={N.waking('{n}')} data-t-waking-sub={N.wakingSub} data-t-waking-live={N.wakingLive} data-t-ready={N.ready} data-t-ready-sub={N.readySub} data-t-ready-live={N.readyLive}>
+  <svg class="zz" viewBox="0 0 76 46" width="76" height="46" aria-hidden="true" focusable="false">
+    <g stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path class="tail" d="M62 40 C73 40 74 28 67 25" fill="none"/>
+      <g class="body"><path d="M20 40 C16 25 31 17 47 18 C63 19 69 29 64 40 Z" style="fill:var(--bg)"/>
+        <path d="M36 21 q3 5 1.5 11 M47 20 q3 5 2 11 M57 23 q2 4 1 9" fill="none" style="stroke:var(--acc)" stroke-width="2.6"/></g>
+      <g class="head">
+        <path d="M9 27 L10 12 L20 21 Z" style="fill:var(--bg)"/><path d="M31 27 L30 12 L20 21 Z" style="fill:var(--bg)"/>
+        <path d="M11.4 22 L11.6 16 L16 20 Z M28.6 22 L28.4 16 L24 20 Z" stroke="none" style="fill:var(--cheek)"/>
+        <ellipse cx="20" cy="31" rx="13" ry="10.5" style="fill:var(--bg)"/>
+        <ellipse cx="10.5" cy="34.5" rx="3" ry="1.9" stroke="none" opacity=".85" style="fill:var(--cheek)"/><ellipse cx="29.5" cy="34.5" rx="3" ry="1.9" stroke="none" opacity=".85" style="fill:var(--cheek)"/>
+        <g class="eyes-z" fill="none" stroke-width="1.7"><path d="M12.5 30.5 q3 3.2 6 0"/><path d="M22 30.5 q3 3.2 6 0"/></g>
+        <g class="eyes-o" stroke="none" style="fill:var(--ink)"><ellipse cx="15.5" cy="30" rx="2.3" ry="3"/><ellipse cx="25" cy="30" rx="2.3" ry="3"/><circle cx="16.2" cy="28.8" r=".8" style="fill:var(--bg)"/><circle cx="25.7" cy="28.8" r=".8" style="fill:var(--bg)"/></g>
+        <path d="M18.2 34.3 h3.6 l-1.8 2.1 z" style="fill:var(--ink)" stroke-width="1"/>
+        <path d="M20 36.4 q-1.6 2 -3.4 .5 M20 36.4 q1.6 2 3.4 .5" fill="none" stroke-width="1.2"/>
+        <path d="M8 34 L2 33 M8 36.5 L2.5 38 M32 34 L38 33 M32 36.5 L37.5 38" fill="none" stroke-width="1" opacity=".7"/>
+      </g>
+      <ellipse cx="14" cy="42.2" rx="5.5" ry="2.8" style="fill:var(--bg)"/><ellipse cx="27" cy="42.2" rx="5.5" ry="2.8" style="fill:var(--bg)"/>
+    </g>
+    <g class="zs" fill="var(--ink2)" style="font:700 9px var(--head)"><text x="36" y="12">z</text><text x="44" y="7" style="font-size:11px">z</text><text x="53" y="3" style="font-size:13px">Z</text></g>
+  </svg>
+  <div class="tx">
+    <p class="line" data-line>{wake}</p>
+    <div class="pb" aria-hidden="true"><span data-fill></span></div>
+    <p class="sub mono" data-sub></p>
+  </div>
+  <p class="sr" role="status" data-live></p>
+</div>}
+<style>
+.ln{display:flex;gap:12px;align-items:flex-start;max-width:54ch;margin:14px 0 0;color:var(--ink2);font:400 .8125rem/1.5 var(--mono)}
+.ln.compact{margin-top:10px;max-width:46ch;font-size:.78rem}
+.zz{flex:none;margin-top:0;overflow:visible}.eyes-o{display:none}
+.body{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.4s ease-in-out infinite}@keyframes breathe{50%{transform:scaleY(1.05)}}
+.head{transform-box:fill-box;transform-origin:50% 100%;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}[data-state="ready"] .head,[data-state="waking"] .head{transform:translateY(-2px)}
+.zs{opacity:.9}.zs text{animation:zz 2.6s ease-in-out infinite}.zs text:nth-child(2){animation-delay:.5s}.zs text:nth-child(3){animation-delay:1s}
+@keyframes zz{0%,100%{opacity:.25;transform:translateY(2px)}50%{opacity:1;transform:translateY(-1px)}}
+.tx{min-width:0}.line{margin:0;color:var(--ink)}.sub{margin:4px 0 0;font-size:.75rem}.sub:empty{display:none}
+.pb{height:5px;border:1px solid var(--ink);border-radius:3px;margin:8px 0 0;overflow:hidden;display:none;max-width:260px}
+.pb span{display:block;height:100%;width:0;background:var(--acc);transition:width 1s linear}
+[data-state="waking"] .pb,[data-state="ready"] .pb{display:block}
+[data-state="waking"] .zs text{animation-duration:1.2s}
+[data-state="ready"] .eyes-z,[data-state="waking"] .eyes-z{display:none}[data-state="ready"] .eyes-o,[data-state="waking"] .eyes-o{display:inline}
+[data-state="ready"] .body{animation:none}
+[data-state="ready"] .zs{display:none}
+[data-state="ready"] .pb span{width:100%!important}
+.ln.compact .pb{max-width:180px}
+@media (prefers-reduced-motion:reduce){.zs text{animation:none;opacity:.7}.body{animation:none}.head{transition:none}}
+</style>
+<script>
+  // One shared warm-up per server; every notice for that URL follows the same state.
+  const WAKE_SECONDS = 60;
+  const runs = new Map<string, { t0: number; timer: number; done: boolean }>();
+  const notices = () => [...document.querySelectorAll<HTMLElement>('[data-ln]')];
+  const paint = (url: string, state: 'waking' | 'ready', secs: number) => {
+    for (const n of notices().filter((x) => x.dataset.url === url)) {
+      n.dataset.state = state;
+      const line = n.querySelector<HTMLElement>('[data-line]')!, sub = n.querySelector<HTMLElement>('[data-sub]')!;
+      const fill = n.querySelector<HTMLElement>('[data-fill]')!, live = n.querySelector<HTMLElement>('[data-live]')!;
+      if (state === 'waking') {
+        line.textContent = n.dataset.tWaking!.replace('{n}', String(secs));
+        sub.textContent = n.classList.contains('compact') ? '' : n.dataset.tWakingSub!;
+        fill.style.width = `${Math.min(100, (secs / WAKE_SECONDS) * 100)}%`;
+        if (secs === 0) live.textContent = n.dataset.tWakingLive!;
+      } else {
+        line.textContent = n.dataset.tReady!;
+        sub.textContent = n.classList.contains('compact') ? '' : n.dataset.tReadySub!;
+        live.textContent = n.dataset.tReadyLive!;
+      }
+    }
+  };
+  const warm = (url: string) => {
+    if (!url || runs.has(url)) return;
+    const conn = (navigator as any).connection;
+    if (conn?.saveData) return;
+    const run = { t0: Date.now(), timer: 0, done: false };
+    runs.set(url, run);
+    // A no-cors request is enough to wake the host; we never read the answer.
+    fetch(url, { mode: 'no-cors', cache: 'no-store', credentials: 'omit' }).catch(() => {
+      // Blocked, offline or ad-blocked: say nothing we cannot back up. Back to the plain notice.
+      if (run.done) return;
+      clearInterval(run.timer); run.done = true;
+      for (const n of notices().filter((x) => x.dataset.url === url)) {
+        n.dataset.state = 'idle';
+        n.querySelector<HTMLElement>('[data-line]')!.textContent = n.dataset.text ?? '';
+        n.querySelector<HTMLElement>('[data-sub]')!.textContent = '';
+      }
+    });
+    paint(url, 'waking', 0);
+    run.timer = window.setInterval(() => {
+      const s = Math.round((Date.now() - run.t0) / 1000);
+      if (s >= WAKE_SECONDS) { clearInterval(run.timer); run.done = true; paint(url, 'ready', s); } else paint(url, 'waking', s);
+    }, 1000);
+  };
+  const urlFor = (el: EventTarget | null) => {
+    const a = (el as HTMLElement | null)?.closest?.('a[data-warm]') as HTMLAnchorElement | null;
+    return a?.dataset.warm === '1' ? a.href : '';
+  };
+  const norm = (u: string) => u.replace(/\/$/, '');
+  const start = (u: string) => { const n = notices().find((x) => norm(x.dataset.url ?? '') === norm(u)); if (n && n.dataset.warm === '1') warm(n.dataset.url!); };
+  for (const ev of ['pointerover', 'focusin', 'touchstart'] as const) document.addEventListener(ev, (e) => { const u = urlFor(e.target); if (u) start(u); }, { passive: true });
+  const auto = notices().find((n) => n.dataset.auto === '1' && n.dataset.warm === '1');
+  if (auto) (window.requestIdleCallback ?? ((f: () => void) => setTimeout(f, 800)))(() => warm(auto.dataset.url!));
+</script>

@@ -1,0 +1,40 @@
+---
+import '@fontsource-variable/outfit';
+import '@fontsource/just-another-hand';
+import '../styles/global.css';
+import Nav from '../components/navigation/Nav.astro';
+import { langOf, useT, switchHref } from '../i18n';
+const lang = langOf(Astro);
+const t = useT(lang);
+const defaultDesc = lang === 'fr' ? 'Sarra Sawsene Sahraoui, Creative Builder.' : 'Sarra Sawsene Sahraoui, Creative Builder.';
+const { title = 'Sarra Sawsene Sahraoui', description = defaultDesc, noAlt = false } = Astro.props;
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const site = Astro.site ? Astro.site.origin : '';
+const alt = (l) => site + switchHref(Astro.url.pathname, l);
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {!noAlt && site && <>
+    <link rel="alternate" hreflang="en" href={alt('en')} />
+    <link rel="alternate" hreflang="fr" href={alt('fr')} />
+    <link rel="alternate" hreflang="x-default" href={alt('en')} />
+  </>}
+  <link rel="icon" href={`${b}/favicon.svg`} type="image/svg+xml" />
+  <link rel="icon" href={`${b}/favicon.ico`} sizes="48x48" />
+  <link rel="apple-touch-icon" href={`${b}/apple-touch-icon.png`} />
+  <script is:inline>
+    try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">{t.skip}</a>
+  <Nav />
+  <main id="main"><slot /></main>
+  <footer class="site-foot"><div class="wrap mono">Sarra Sawsene Sahraoui · 2026</div></footer>
+</body>
+</html>

@@ -1,0 +1,221 @@
+{
+ "title": "Pawgress",
+ "category": "ai-automation",
+ "tier": "supporting",
+ "status": "live",
+ "order": 60,
+ "summary": "A conversational productivity app. Talk or type a brain dump and get organised tasks, built on the belief that productivity systems fail when they punish inconsistency.",
+ "technologies": [
+  "FastAPI",
+  "React",
+  "TypeScript",
+  "PostgreSQL",
+  "Groq"
+ ],
+ "github": "https://github.com/saaraah19/Pawgress",
+ "shots": [
+  {
+   "src": "../../assets/projects/pawgress/01-brain-dump.webp",
+   "alt": "Pawgress: The capture box with a messy paragraph.",
+   "caption": "A brain-dump, typed in the way people actually think.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawgress/02-tasks.webp",
+   "alt": "Pawgress: The extracted task list.",
+   "caption": "Every task field is editable in place.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawgress/03-goals.webp",
+   "alt": "Pawgress: The goals hierarchy.",
+   "caption": "Goals: an optional hierarchy, built only as far as you need.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawgress/04-habits.webp",
+   "alt": "Pawgress: The weekly habits table.",
+   "caption": "Habits: a weekly checklist. A blank cell is just a blank cell.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/pawgress/05-empty.webp",
+   "alt": "Pawgress: The empty state.",
+   "caption": "The empty state: a sleeping cat and a calm line.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/pawgress/06-progress.webp",
+   "alt": "Pawgress: The progress screen.",
+   "caption": "Progress and unlockables, which only ever go up.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/pawgress/07-voice.webp",
+   "alt": "Pawgress: The voice recording state.",
+   "caption": "Recording a voice note.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/pawgress/08-calendar.webp",
+   "alt": "Pawgress: The calendar view.",
+   "caption": "A read-only Google Calendar connection.",
+   "role": "workflow"
+  }
+ ],
+ "problem": "Most productivity tools fail not from lacking features, but because they punish inconsistency until people abandon them.",
+ "thinking": "No streak counter, no red overdue badge, no “you missed a day” copy anywhere in the app.",
+ "decisions": [
+  {
+   "title": "Capture first",
+   "text": "A messy paragraph, typed or spoken, becomes individually editable tasks with a category, priority and time estimate. No setup first."
+  },
+  {
+   "title": "Never trusted silently",
+   "text": "A voice note is transcribed back into the same text box, so a misheard word is as cheap to fix as a typo."
+  },
+  {
+   "title": "Computed, not stored",
+   "text": "Progress and the companion’s mood come from completion history, so nothing can drift out of sync, and nothing ever goes down."
+  },
+  {
+   "title": "A modular monolith",
+   "text": "Separate modules for tasks, goals, habits, journal, calendar, planner and progress, talking through explicit interfaces. Chosen over microservices on purpose."
+  }
+ ],
+ "limits": [
+  "Google Calendar sync needs the connecting account to be an approved test user, since the consent screen has not been through public verification."
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "video": {
+  "alt": "Screen recording: a spoken or typed brain-dump becomes a list of tasks.",
+  "caption": "A brain-dump goes in; tasks come out.",
+  "w": 1280,
+  "h": 754
+ },
+ "live": "https://pawgress-tz7o.onrender.com",
+ "built": "A brain dump becomes editable tasks. Progress and the companion's mood are computed from history, so nothing ever counts down.",
+ "facts": {
+  "who": "Anyone who has abandoned a productivity system",
+  "when": "After a few missed days",
+  "why": "Tools that punish inconsistency get dropped."
+ },
+ "tradeoff": {
+  "pick": "No streaks, no overdue badge",
+  "over": "Engagement through pressure"
+ },
+ "homeDecision": 2,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flow": [
+  "Brain dump",
+  "Tasks",
+  "Completion",
+  "Progress"
+ ],
+ "flowNotes": [
+  "Typed or spoken; a voice note is transcribed into the same box",
+  "Editable in place: category, priority, time estimate",
+  "Recorded as history; a blank cell is just blank",
+  "Computed from history, so it only ever goes up"
+ ],
+ "unfinished": [
+  "Password-reset email is not wired to a real provider yet."
+ ],
+ "fr": {
+  "summary": "Une appli de productivité conversationnelle. Parlez ou écrivez un vrai fouillis d’idées et obtenez des tâches organisées, fondée sur l’idée que les systèmes de productivité échouent quand ils punissent l’irrégularité.",
+  "problem": "La plupart des outils de productivité échouent non par manque de fonctionnalités, mais parce qu’ils punissent l’irrégularité jusqu’à ce qu’on les abandonne.",
+  "thinking": "Pas de compteur de séries, pas de pastille rouge « en retard », pas de phrase « vous avez raté un jour » nulle part dans l’appli.",
+  "built": "Un fouillis d’idées devient des tâches modifiables. La progression et l’humeur du compagnon sont calculées à partir de l’historique : rien ne décompte jamais.",
+  "decisions": [
+   {
+    "title": "Capturer d’abord",
+    "text": "Un paragraphe en désordre, écrit ou dicté, devient des tâches modifiables une à une, avec catégorie, priorité et estimation de durée. Aucune configuration au préalable."
+   },
+   {
+    "title": "Jamais cru les yeux fermés",
+    "text": "Une note vocale est retranscrite dans la même zone de texte, donc un mot mal entendu se corrige aussi facilement qu’une faute de frappe."
+   },
+   {
+    "title": "Calculé, pas stocké",
+    "text": "La progression et l’humeur du compagnon viennent de l’historique des tâches accomplies, donc rien ne peut se désynchroniser, et rien ne redescend jamais."
+   },
+   {
+    "title": "Un monolithe modulaire",
+    "text": "Des modules séparés pour les tâches, les objectifs, les habitudes, le journal, le calendrier, le planificateur et la progression, qui se parlent par des interfaces explicites. Choisi plutôt que des microservices, volontairement."
+   }
+  ],
+  "limits": [
+   "La synchronisation avec Google Agenda exige que le compte qui se connecte soit un testeur approuvé, l’écran de consentement n’ayant pas passé la vérification publique."
+  ],
+  "unfinished": [
+   "L’e-mail de réinitialisation du mot de passe n’est pas encore relié à un vrai fournisseur."
+  ],
+  "flow": [
+   "Fouillis d’idées",
+   "Tâches",
+   "Accomplissement",
+   "Progression"
+  ],
+  "flowNotes": [
+   "Écrit ou dicté ; une note vocale est retranscrite dans la même zone",
+   "Modifiables sur place : catégorie, priorité, estimation de durée",
+   "Enregistré dans l’historique ; une case vide est simplement vide",
+   "Calculée à partir de l’historique, donc elle ne fait que monter"
+  ],
+  "facts": {
+   "who": "Quiconque a abandonné un système de productivité",
+   "when": "Après quelques jours manqués",
+   "why": "Les outils qui punissent l’irrégularité finissent abandonnés."
+  },
+  "tradeoff": {
+   "pick": "Pas de séries, pas de pastille de retard",
+   "over": "L’engagement par la pression"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Pawgress : la zone de saisie avec un paragraphe en désordre.",
+    "caption": "Un fouillis d’idées, écrit comme les gens pensent vraiment."
+   },
+   {
+    "alt": "Pawgress : la liste de tâches extraite.",
+    "caption": "Chaque champ d’une tâche est modifiable sur place."
+   },
+   {
+    "alt": "Pawgress : la hiérarchie des objectifs.",
+    "caption": "Objectifs : une hiérarchie facultative, construite seulement aussi loin que nécessaire."
+   },
+   {
+    "alt": "Pawgress : le tableau hebdomadaire des habitudes.",
+    "caption": "Habitudes : une liste hebdomadaire. Une case vide est simplement une case vide."
+   },
+   {
+    "alt": "Pawgress : l’état vide.",
+    "caption": "L’état vide : un chat endormi et une phrase calme."
+   },
+   {
+    "alt": "Pawgress : l’écran de progression.",
+    "caption": "Progression et éléments à débloquer, qui ne font que monter."
+   },
+   {
+    "alt": "Pawgress : l’état d’enregistrement vocal.",
+    "caption": "Enregistrement d’une note vocale."
+   },
+   {
+    "alt": "Pawgress : la vue calendrier.",
+    "caption": "Une connexion Google Agenda en lecture seule."
+   }
+  ],
+  "video": {
+   "alt": "Enregistrement d’écran : un fouillis d’idées dicté ou écrit devient une liste de tâches.",
+   "caption": "Un fouillis d’idées entre ; des tâches sortent."
+  },
+  "origin": "Parfois je me sens submergée en pensant à tout ce que je dois faire, et mes pensées vont plus vite que mes mains. Je me suis donc demandé : et si je pouvais déverser tout ce que j’ai en tête et le retrouver organisé en liste de tâches, de l’urgent au moins urgent ? Et si mes mains n’arrivent pas à suivre mon esprit, je peux parler et il note à ma place. Comme je suis obsédée par le suivi de ma progression, j’ai ajouté le suivi des habitudes, des objectifs reliés aux tâches, et une connexion à Google Agenda pour ne rien manquer et ne pas faire des allers-retours. Et bien sûr, rien de ce que je construis ne se fait sans une touche de miaou."
+ },
+ "origin": "Sometimes I get overwhelmed thinking about everything I need to do, and my thoughts race faster than my hands can keep up. So I asked myself: what if I could dump whatever is in my head and have it organised into a to-do list, sorted from urgent to not? And if my hands can't keep up with my mind, I can use my voice and it writes things down. As someone obsessed with tracking progress, I added habit tracking, goals linked to tasks, and a Google Calendar connection so I don't miss anything or go back and forth. And of course, nothing I build comes without a touch of meow."
+}

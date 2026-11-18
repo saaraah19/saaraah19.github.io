@@ -1,0 +1,232 @@
+{
+ "title": "Talign",
+ "category": "ai-automation",
+ "tier": "featured",
+ "status": "dev",
+ "order": 40,
+ "summary": "An AI-native talent operating system. One entry point, Compass, assists recruiters, hiring managers, employees and candidates while consequential HR decisions stay with people.",
+ "technologies": [
+  "Next.js",
+  "FastAPI",
+  "PostgreSQL",
+  "pgvector"
+ ],
+ "github": "https://github.com/saaraah19/TAlign",
+ "thinking": "AI assists, humans decide. Not an HR platform with AI, but an AI platform specialised in HR.",
+ "flow": [
+  "People",
+  "Compass",
+  "Specialised agents",
+  "Human decision"
+ ],
+ "composition": "flow",
+ "build": [
+  "Compass is the single entry point, in front of a workflow engine and specialised reasoning agents.",
+  "The backend is layered as API, services, repositories and models, with role management, logging and a provider-agnostic LLM layer.",
+  "Next.js 15 client; FastAPI, SQLAlchemy, PostgreSQL and pgvector behind it.",
+  "Still in development."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/talign/01-landing.webp",
+   "alt": "Talign: The landing page.",
+   "caption": "The landing page: a platform that recommends while the team decides.",
+   "role": "strongest"
+  },
+  {
+   "src": "../../assets/projects/talign/02-assessment.webp",
+   "alt": "Talign: A candidate assessment with a score of 100.",
+   "caption": "A strong match: the score, the evidence behind it, and a line saying it is a signal, not a decision. Screenshots use a stand-in model.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/talign/03-weak-match.webp",
+   "alt": "Talign: A candidate assessment with a weak match.",
+   "caption": "A weak match scores 15, and says why.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/talign/04-no-answer.webp",
+   "alt": "Talign: The knowledge assistant, answering and declining.",
+   "caption": "Policy answers quote their source. The dress code isn’t in the knowledge base, so it says so.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/talign/05-hire.webp",
+   "alt": "Talign: The hire workflow.",
+   "caption": "The hire workflow, once a candidate reaches the offer stage.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/talign/06-refused.webp",
+   "alt": "Talign: A permission refusal.",
+   "caption": "A hiring manager tries to reject a candidate and is told they do not have permission.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/talign/07-isolation.webp",
+   "alt": "Talign: Another company’s pipeline.",
+   "caption": "A second company’s pipeline, kept completely separate from the first.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/talign/08-waking.webp",
+   "alt": "Talign: The wake-up screen.",
+   "caption": "What a visitor sees while the free-tier server wakes up: it usually takes under a minute.",
+   "role": "edge"
+  }
+ ],
+ "problem": "Hiring is full of judgement calls, and “AI in HR” too easily becomes a black box that decides things about people.",
+ "decisions": [
+  {
+   "title": "Scores computed by code",
+   "text": "The model judges each skill on its own; ordinary code turns those judgements into a score, weighted 60 / 25 / 15."
+  },
+  {
+   "title": "Answers cite their source",
+   "text": "Knowledge answers quote the passage they came from. Below a relevance floor the model is not called at all and the answer is “I don’t have that information.”"
+  },
+  {
+   "title": "Walls between roles and companies",
+   "text": "A hiring manager cannot do what HR can, and one company’s data is invisible to another."
+  },
+  {
+   "title": "Hiring converts in place",
+   "text": "Hiring turns a candidate account into an employee account instead of creating a second identity."
+  }
+ ],
+ "limits": [
+  "The screenshots use a stand-in for the real language model; real model quality has not been evaluated.",
+  "There is no OCR, so scanned résumés are reported as unreadable rather than guessed."
+ ],
+ "leadShot": 0,
+ "live": "https://talign.onrender.com",
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "built": "Compass routes each request to specialised agents. The model judges skills, code computes the score, and consequential decisions stay with people.",
+ "facts": {
+  "who": "Recruiters, hiring managers, employees and candidates",
+  "when": "Hiring decisions that come down to judgement calls",
+  "why": "Decisions about people need to stay with people."
+ },
+ "tradeoff": {
+  "pick": "A score with its evidence",
+  "over": "A verdict with no explanation"
+ },
+ "homeDecision": 0,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flowNotes": [
+  "Four kinds of user, one entry point",
+  "Compass sits in front of a workflow engine",
+  "The model judges each skill; code weights the score 60 / 25 / 15",
+  "The score is a signal; role permissions and people take it from there"
+ ],
+ "evidence": "behaviour",
+ "result": "Shown in the screenshots: a weak match scores 15 and says why, a hiring manager's attempt to reject a candidate is refused with a permission message, and a second company's pipeline stays separate. All of it runs on a stand-in model.",
+ "unfinished": [
+  "Known defects remain.",
+  "Still in development."
+ ],
+ "fr": {
+  "summary": "Un système d’exploitation du talent natif de l’IA. Un seul point d’entrée, Compass, assiste recruteurs, managers, employés et candidats, tandis que les décisions RH importantes restent aux personnes.",
+  "problem": "Le recrutement est plein de jugements, et « l’IA dans les RH » devient trop facilement une boîte noire qui décide de choses concernant des personnes.",
+  "thinking": "L’IA assiste, les humains décident. Pas une plateforme RH avec de l’IA, mais une plateforme d’IA spécialisée dans les RH.",
+  "result": "Visible dans les captures : une correspondance faible obtient 15 et en donne la raison, la tentative d’un manager de rejeter un candidat est refusée avec un message de permission, et le pipeline d’une seconde entreprise reste séparé. Le tout tourne sur un modèle de substitution.",
+  "built": "Compass oriente chaque demande vers des agents spécialisés. Le modèle juge les compétences, le code calcule le score, et les décisions importantes restent aux personnes.",
+  "decisions": [
+   {
+    "title": "Des scores calculés par le code",
+    "text": "Le modèle juge chaque compétence séparément ; du code ordinaire transforme ces jugements en un score pondéré 60 / 25 / 15."
+   },
+   {
+    "title": "Les réponses citent leur source",
+    "text": "Les réponses de connaissance citent le passage dont elles viennent. Sous un seuil de pertinence, le modèle n’est pas appelé du tout et la réponse est « Je n’ai pas cette information »."
+   },
+   {
+    "title": "Des murs entre les rôles et entre les entreprises",
+    "text": "Un manager ne peut pas faire ce que les RH peuvent faire, et les données d’une entreprise sont invisibles pour une autre."
+   },
+   {
+    "title": "L’embauche convertit sur place",
+    "text": "Une embauche transforme un compte candidat en compte employé au lieu de créer une seconde identité."
+   }
+  ],
+  "build": [
+   "Compass est l’unique point d’entrée, devant un moteur de workflow et des agents de raisonnement spécialisés.",
+   "Le backend est organisé en API, services, dépôts et modèles, avec gestion des rôles, journalisation et une couche LLM indépendante du fournisseur.",
+   "Client Next.js 15 ; FastAPI, SQLAlchemy, PostgreSQL et pgvector derrière.",
+   "Toujours en développement."
+  ],
+  "limits": [
+   "Les captures utilisent un modèle de substitution à la place du vrai modèle de langage ; la qualité du vrai modèle n’a pas été évaluée.",
+   "Il n’y a pas d’OCR : les CV scannés sont signalés comme illisibles plutôt que devinés."
+  ],
+  "unfinished": [
+   "Des défauts connus subsistent.",
+   "Toujours en développement."
+  ],
+  "flow": [
+   "Personnes",
+   "Compass",
+   "Agents spécialisés",
+   "Décision humaine"
+  ],
+  "flowNotes": [
+   "Quatre types d’utilisateurs, un seul point d’entrée",
+   "Compass se place devant un moteur de workflow",
+   "Le modèle juge chaque compétence ; le code pondère le score 60 / 25 / 15",
+   "Le score est un signal ; les permissions par rôle et les personnes prennent le relais"
+  ],
+  "facts": {
+   "who": "Recruteurs, managers, employés et candidats",
+   "when": "Des décisions de recrutement qui reposent sur des jugements",
+   "why": "Les décisions concernant des personnes doivent rester aux personnes."
+  },
+  "tradeoff": {
+   "pick": "Un score accompagné de ses preuves",
+   "over": "Un verdict sans explication"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Talign : la page d’accueil.",
+    "caption": "La page d’accueil : une plateforme qui recommande pendant que l’équipe décide."
+   },
+   {
+    "alt": "Talign : une évaluation de candidat avec un score de 100.",
+    "caption": "Une forte correspondance : le score, les preuves derrière, et une ligne précisant que c’est un signal, pas une décision. Captures avec un modèle de substitution."
+   },
+   {
+    "alt": "Talign : une évaluation de candidat avec une faible correspondance.",
+    "caption": "Une faible correspondance obtient 15, et dit pourquoi."
+   },
+   {
+    "alt": "Talign : l’assistant de connaissances, qui répond et décline.",
+    "caption": "Les réponses sur les règles citent leur source. Le code vestimentaire n’est pas dans la base de connaissances, donc il le dit."
+   },
+   {
+    "alt": "Talign : le workflow d’embauche.",
+    "caption": "Le workflow d’embauche, une fois qu’un candidat atteint l’étape de l’offre."
+   },
+   {
+    "alt": "Talign : un refus de permission.",
+    "caption": "Un manager essaie de rejeter un candidat et se voit répondre qu’il n’en a pas la permission."
+   },
+   {
+    "alt": "Talign : le pipeline d’une autre entreprise.",
+    "caption": "Le pipeline d’une seconde entreprise, complètement séparé du premier."
+   },
+   {
+    "alt": "Talign : l’écran de réveil.",
+    "caption": "Ce que voit un visiteur pendant que le serveur gratuit se réveille : cela prend en général moins d’une minute."
+   }
+  ],
+  "origin": "Tout est parti de mon premier chatbot IA, un bot de questions-réponses sur PDF (Marginalia en est la version avancée). On lui donne un règlement intérieur ou un contrat, et un employé peut simplement demander combien de jours de congé il a. On devient paresseux à faire défiler un PDF, et l’idée a continué de grandir. Et si une plateforme transparente réunissait employés et employeurs au même endroit, avec une IA qui simplifie les choses pour tous ? C’est devenu une plateforme de recrutement de talents, toujours en développement et qui a encore besoin de fonctionnalités et de croissance. Le nom vient de talent + align : aligner le bon talent avec le bon poste.",
+  "solution": "Un recruteur publie une offre, et chaque CV (PDF, Word ou texte brut) est analysé par rapport à elle : un score avec la preuve pour chaque compétence, et un rapport de retour. Le recruteur fait passer le candidat à l’étape suivante ou le refuse, et la plateforme rédige l’e-mail, de sorte que tout le processus reste dans Talign. L’IA n’embauche, ne refuse et n’envoie jamais rien."
+ },
+ "origin": "It started with my first AI chatbot, a PDF question-and-answer bot (Marginalia is its advanced version). You feed it an employee handbook or a contract, and an employee can simply ask how many days of leave they get. People grow lazy scrolling through a PDF, and the idea kept developing. What if one transparent platform brought employees and employers into the same space, with AI making things easier for everyone? It became a talent hiring platform, still in development and still needing features and growth. The name is talent + align: aligning the right talent with the right position.",
+ "solution": "A recruiter publishes a job, and each résumé (PDF, Word or plain text) is analysed against it: a score with the evidence for each skill, and a feedback report. The recruiter moves the candidate to the next stage or rejects them, and the platform drafts the email, so the whole process stays inside Talign. The AI never hires, rejects or sends anything."
+}

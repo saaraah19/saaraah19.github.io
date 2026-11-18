@@ -1,0 +1,50 @@
+---
+// Bean: a small editorial cat, drawn as one reusable SVG character.
+// Keep the face readable at hero size; pupils can follow the pointer.
+const { variant = 'sitting' } = Astro.props;
+---
+<g class={`cf cf-${variant}`} stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink)">
+  <!-- A loose curled tail, with a tiny sketch-line echo for an inked-by-hand feel. -->
+  <path d="M79 91 C94 101 108 91 105 78 C103 69 96 67 92 72 C89 76 92 81 96 80" fill="none"/>
+  <path d="M81 94 C95 103 111 92 108 78" fill="none" stroke-width=".8" opacity=".42"/>
+
+  <!-- Seated body and little paws -->
+  <path d="M35 76 C30 83 29 94 33 103 C36 110 43 113 49 109 C54 106 58 107 62 109 C68 113 76 111 81 105 C86 98 84 86 79 77 C70 82 45 82 35 76 Z" style="fill:var(--bg)"/>
+  <path d="M38 101 C42 105 47 105 51 102 M65 103 C70 106 75 104 78 100" fill="none" stroke-width="1.45" opacity=".72"/>
+  <path d="M33 88 C30 96 33 105 39 108 M82 88 C85 96 82 103 78 107" fill="none" stroke-width=".85" opacity=".45"/>
+
+  <!-- Head and ears: one continuous silhouette, slightly asymmetrical on purpose. -->
+  <path d="M25 48 L22 18 Q22 14 26 17 L45 31 C50 28 55 27 61 28 C67 27 72 29 77 31 L96 16 Q100 14 99 19 L96 49 C101 59 98 73 91 81 C83 90 72 93 60 93 C47 93 36 89 29 81 C21 73 19 59 25 48 Z" style="fill:var(--bg)"/>
+
+  <!-- Inner ears and tiny fur marks -->
+  <path d="M29 25 L42 35 L31 43 Z M92 25 L79 35 L91 43 Z" stroke="none" style="fill:var(--cheek)" opacity=".92"/>
+  <path d="M27 20 L29 32 M95 20 L93 31" fill="none" stroke-width=".9" opacity=".5"/>
+  <path d="M48 31 Q52 34 55 32 M65 32 Q69 34 73 31" fill="none" stroke-width="1.05" opacity=".55"/>
+
+  <!-- Curious eyebrows and eyes -->
+  <path d="M35 47 Q42 42 50 47 M70 47 Q78 42 85 47" fill="none" stroke-width="1.65"/>
+  <ellipse class="eye" cx="43.5" cy="56" rx="5.4" ry="7" stroke="none" style="fill:var(--ink)"/>
+  <ellipse class="eye" cx="77" cy="56" rx="5.4" ry="7" stroke="none" style="fill:var(--ink)"/>
+  <circle class="pu" cx="45" cy="53.8" r="1.9" stroke="none" style="fill:var(--bg)"/>
+  <circle class="pu" cx="78.5" cy="53.8" r="1.9" stroke="none" style="fill:var(--bg)"/>
+
+  <!-- Muzzle, nose, smile and whisker freckles -->
+  <path d="M51 64 C54 61 57 62 60 64 C63 62 67 61 70 64 C69 70 65 73 60 73 C55 73 52 70 51 64 Z" stroke="none" style="fill:var(--cheek)" opacity=".78"/>
+  <path d="M57 63 L63 63 L60 67 Z" stroke="none" style="fill:var(--ink)"/>
+  <path d="M60 67 Q57 73 52 70 M60 67 Q63 73 68 70" fill="none" stroke-width="1.55"/>
+  <circle cx="49" cy="67" r=".8" stroke="none" style="fill:var(--ink)"/>
+  <circle cx="71" cy="67" r=".8" stroke="none" style="fill:var(--ink)"/>
+  <ellipse cx="40.5" cy="71" rx="5.2" ry="3" stroke="none" style="fill:var(--cheek)" opacity=".68"/>
+  <ellipse cx="80" cy="71" rx="5.2" ry="3" stroke="none" style="fill:var(--cheek)" opacity=".68"/>
+  <path d="M29 65 L16 61 M29 70 L17 72 M91 65 L104 61 M91 70 L103 72" fill="none" stroke-width="1.25" opacity=".86"/>
+
+  <!-- Signature orange scarf: a soft, simple shape, not a superhero costume. -->
+  <path d="M34 78 C43 84 52 85 60 84 C69 85 78 82 85 77 L82 86 C75 91 68 92 60 91 C50 92 41 89 36 85 Z" stroke="none" style="fill:var(--acc)"/>
+  <path d="M35 79 C46 85 73 87 84 78 M43 87 Q48 90 53 90" fill="none" stroke-width="1.15" opacity=".8"/>
+  <path d="M82 83 L89 89 L82 90 Z" stroke="none" style="fill:var(--acc)"/>
+
+  <!-- A couple of deliberate pencil-like marks keep the drawing tactile, not noisy. -->
+  <path d="M22 54 L19 53 M98 53 L101 52 M30 78 L27 80" fill="none" stroke-width=".85" opacity=".45"/>
+
+  {variant === 'phones' && <g class="headphones"><path d="M24 55 C19 14 101 14 96 55" fill="none" stroke-width="4"/><rect x="16" y="48" width="13" height="23" rx="5" style="fill:var(--acc)"/><rect x="91" y="48" width="13" height="23" rx="5" style="fill:var(--acc)"/><path d="M18 59 h9 M93 59 h9" stroke-width="1.2"/></g>}
+</g>

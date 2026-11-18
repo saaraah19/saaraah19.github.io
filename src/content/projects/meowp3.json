@@ -1,0 +1,115 @@
+{
+ "title": "MeowP3",
+ "category": "web-products",
+ "tier": "experiment",
+ "status": "desktop",
+ "order": 10,
+ "summary": "Distrust of random online downloaders led to a small desktop app. Paste a YouTube link, click once, and a cat in headphones dances when the MP3 is ready.",
+ "technologies": [
+  "Python",
+  "customtkinter",
+  "yt-dlp",
+  "FFmpeg"
+ ],
+ "github": "https://github.com/saaraah19/MeowP3",
+ "cat": "phones",
+ "shots": [],
+ "problem": "Most converters live on websites full of ads, or want an account.",
+ "thinking": "It should run entirely on your machine: no server, no account, no ads.",
+ "decisions": [
+  {
+   "title": "Local first",
+   "text": "Paste a YouTube link, get an MP3. It runs on your computer with customtkinter, yt-dlp and FFmpeg."
+  },
+  {
+   "title": "Four cat moods",
+   "text": "The cat reacts to what is happening, and errors are written to be friendly instead of alarming."
+  },
+  {
+   "title": "A responsible-use note",
+   "text": "Only convert audio you have the rights to, or that is freely licensed. It says so on screen."
+  }
+ ],
+ "leadShot": 0,
+ "video": {
+  "alt": "Screen recording of the desktop app converting a YouTube link into an MP3.",
+  "caption": "A link goes in; an MP3 lands in your folder.",
+  "w": 1280,
+  "h": 632
+ },
+ "built": "A desktop app built on yt-dlp and FFmpeg: paste a link, click once, and a cat reacts to each stage.",
+ "facts": {
+  "who": "Anyone who wants an MP3 from a link",
+  "when": "Converting a YouTube link",
+  "why": "Random online downloaders are hard to trust."
+ },
+ "tradeoff": {
+  "pick": "Everything on your machine",
+  "over": "A server, an account and ads"
+ },
+ "homeDecision": 1,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flow": [
+  "Link",
+  "yt-dlp",
+  "FFmpeg",
+  "MP3"
+ ],
+ "flowNotes": [
+  "Pasted into the window",
+  "Fetches the audio",
+  "Converts it, locally",
+  "Saved; the cat dances"
+ ],
+ "fr": {
+  "summary": "La méfiance envers les téléchargeurs en ligne au hasard a donné une petite application de bureau. Collez un lien YouTube, cliquez une fois, et un chat avec un casque danse quand le MP3 est prêt.",
+  "problem": "La plupart des convertisseurs vivent sur des sites pleins de publicités, ou exigent un compte.",
+  "thinking": "Il devrait tourner entièrement sur votre machine : pas de serveur, pas de compte, pas de pub.",
+  "built": "Une application de bureau construite sur yt-dlp et FFmpeg : collez un lien, cliquez une fois, et un chat réagit à chaque étape.",
+  "decisions": [
+   {
+    "title": "Local d’abord",
+    "text": "Collez un lien YouTube, obtenez un MP3. Tout tourne sur votre ordinateur avec customtkinter, yt-dlp et FFmpeg."
+   },
+   {
+    "title": "Quatre humeurs de chat",
+    "text": "Le chat réagit à ce qui se passe, et les erreurs sont écrites pour être aimables plutôt qu’alarmantes."
+   },
+   {
+    "title": "Une note d’usage responsable",
+    "text": "Ne convertissez que de l’audio dont vous avez les droits, ou sous licence libre. C’est écrit à l’écran."
+   }
+  ],
+  "flow": [
+   "Lien",
+   "yt-dlp",
+   "FFmpeg",
+   "MP3"
+  ],
+  "flowNotes": [
+   "Collé dans la fenêtre",
+   "Récupère l’audio",
+   "Le convertit, en local",
+   "Enregistré ; le chat danse"
+  ],
+  "facts": {
+   "who": "Quiconque veut un MP3 à partir d’un lien",
+   "when": "En convertissant un lien YouTube",
+   "why": "Les téléchargeurs en ligne au hasard inspirent peu confiance."
+  },
+  "tradeoff": {
+   "pick": "Tout sur votre machine",
+   "over": "Un serveur, un compte et des pubs"
+  },
+  "video": {
+   "alt": "Enregistrement d’écran de l’application de bureau qui convertit un lien YouTube en MP3.",
+   "caption": "Un lien entre ; un MP3 atterrit dans votre dossier."
+  },
+  "origin": "Les pirates trouvent sans cesse de nouvelles façons d’installer des virus sur nos ordinateurs, alors je fais attention à ce qui entre sur le mien. J’adore la musique, et je voulais en télécharger sans faire confiance à un site de téléchargement suspect plein de publicités. J’ai donc fait le mien : une application de bureau qui télécharge de la musique depuis YouTube, et un chat danse en chemin."
+ },
+ "origin": "Attackers keep finding new ways to get malware onto laptops, so I am careful about what goes onto mine. I love music, and I wanted to download it without trusting some suspicious downloader site full of ads. So I made my own: a desktop app that downloads music from YouTube, and a cat dances along the way."
+}

@@ -1,0 +1,55 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+---
+<div class="box" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}>
+  <svg id="fork" data-b="answer" viewBox="0 0 680 190" role="img" aria-label={t(`Question, retrieval, evidence, then either a grounded answer or a refusal. A cat sleeps when the answer exists and wakes when it does not.`, `Question, recherche, preuves, puis soit une réponse sourcée, soit un refus. Un chat dort quand la réponse existe et se réveille quand elle n’existe pas.`)}>
+    <path class="glow g-a" d="M330 96 C380 96 400 50 470 50"/><path class="glow g-r" d="M330 96 C380 96 400 142 470 142"/>
+    <path class="p" d="M30 96 C90 96 100 70 150 70 C200 70 210 118 260 118 C290 118 300 96 330 96"/>
+    <path class="p" d="M330 96 C380 96 400 50 470 50"/><path class="p dash" d="M330 96 C380 96 400 142 470 142"/>
+    <circle class="n" cx="30" cy="96" r="6"/><circle class="n" cx="150" cy="70" r="6"/><circle class="n" cx="260" cy="118" r="6"/><circle class="n" cx="330" cy="96" r="6"/>
+    <circle class="n" cx="470" cy="50" r="6"/><rect class="n" x="465" y="137" width="10" height="10" transform="rotate(45 470 142)"/>
+    <text x="10" y="120">{t(`question`, `question`)}</text><text x="118" y="52">{t(`retrieval`, `recherche`)}</text><text x="222" y="146">{t(`evidence`, `preuves`)}</text>
+    <text x="484" y="54">{t(`answer, grounded`, `réponse sourcée`)}</text><text x="484" y="146">{t(`refusal`, `refus`)}</text>
+    <text class="sm" x="484" y="160">{t(`not in the document`, `absent du document`)}</text><text class="sm" x="484" y="172">{t(`evidence = ∅`, `preuves = ∅`)}</text>
+    <path class="p" d="M604 178 H676"/>
+    <g transform="translate(620 145) scale(.38)" stroke="var(--ink)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+      <path class="ear" d="M30 44 L26 14 L53 30 Z" style="fill:var(--bg)"/><path class="ear" d="M90 44 L94 14 L67 30 Z" style="fill:var(--bg)"/>
+      <ellipse cx="60" cy="58" rx="37" ry="29" style="fill:var(--bg)"/>
+      <path class="eyes-s" fill="none" d="M38 58 q7 -8 14 0 M68 58 q7 -8 14 0"/>
+      <g class="eyes-o" stroke="none"><circle cx="45" cy="57" r="5.5"/><circle cx="75" cy="57" r="5.5"/></g>
+      <ellipse cx="33" cy="67" rx="6.5" ry="4" stroke="none" opacity=".85" style="fill:var(--cheek)"/><ellipse cx="87" cy="67" rx="6.5" ry="4" stroke="none" opacity=".85" style="fill:var(--cheek)"/>
+      <path d="M57 64 h6 l-3 3.2 z" style="fill:var(--ink)" stroke="none"/><path d="M60 67.5 q-3.5 5 -7.5 1.5 M60 67.5 q3.5 5 7.5 1.5" fill="none" stroke-width="2.6"/>
+    </g>
+  </svg>
+  <div class="pick" role="group" aria-label={t(`Show a branch`, `Afficher une branche`)}>
+    <button type="button" aria-pressed="true" data-b="answer">{t(`the answer is there`, `la réponse y est`)}</button>
+    <button type="button" aria-pressed="false" data-b="refusal">{t(`it isn't`, `elle n’y est pas`)}</button>
+  </div>
+  <p class="note"><span class="hand">{t(`refusing is a result too, not a failure`, `refuser est aussi un résultat, pas un échec`)}</span></p>
+</div>
+<style>
+.box{overflow-x:auto;padding:14px 4px 4px}
+svg{width:100%;min-width:560px;height:auto;overflow:visible;display:block;transform:rotate(-.7deg)}
+.p{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round}.n{fill:var(--bg);stroke:var(--ink);stroke-width:1.5}
+.dash{stroke-dasharray:4 5;stroke:var(--ink2)}
+.glow{fill:none;stroke:var(--acc);stroke-width:9;stroke-linecap:round;opacity:0;transition:opacity .3s}
+svg[data-b="answer"] .g-a,svg[data-b="refusal"] .g-r{opacity:1}
+text{font:11px var(--mono);fill:var(--ink)}.sm{fill:var(--ink2);font-size:9.5px}
+.eyes-o{display:none;fill:var(--ink)}svg[data-b="refusal"] .eyes-o{display:inline}svg[data-b="refusal"] .eyes-s{display:none}
+.ear{transform-box:fill-box;transform-origin:50% 100%}
+svg[data-b="refusal"] .ear{animation:tw .6s .15s 1}
+@keyframes tw{30%{transform:rotate(-16deg)}60%{transform:rotate(5deg)}}
+.pick{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.pick button{font:500 .75rem var(--mono);border:1px solid var(--line);border-radius:3px;padding:5px 11px}
+.pick button[aria-pressed="true"]{border-color:var(--ink);background:var(--acc);color:var(--acc-ink)}
+.note{margin:10px 0 0;text-align:right;padding-right:10%}
+</style>
+<script>
+  const fork = document.getElementById('fork')!, btns = document.querySelectorAll<HTMLButtonElement>('.pick button');
+  btns.forEach((x) => x.addEventListener('click', () => {
+    fork.dataset.b = x.dataset.b;
+    btns.forEach((y) => y.setAttribute('aria-pressed', String(y === x)));
+  }));
+</script>

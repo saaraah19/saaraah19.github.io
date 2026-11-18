@@ -1,0 +1,31 @@
+---
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+---
+<div class="dg" tabindex="0" role="group" aria-label={t(`Diagram, scrollable`, `Schéma, défilable`)}><svg id="inv" data-s="ok" viewBox="0 0 680 200" role="img" aria-label={t(`An invoice is extracted. Two checks, fields complete and arithmetic adds up, feed a confidence computed in code. The model's own claim is not the score. If the arithmetic fails, the score drops.`, `Une facture est extraite. Deux contrôles, champs complets et calculs justes, alimentent une confiance calculée dans le code. La déclaration du modèle n’est pas le score. Si le calcul est faux, le score baisse.`)}>
+  <path class="p" d="M30 100 H150"/>
+  <path class="p" d="M150 100 C210 100 230 52 300 52"/><path class="p" d="M150 100 C210 100 230 148 300 148"/>
+  <path class="p" d="M300 52 C380 52 400 100 470 100"/><path class="p pa" d="M300 148 C380 148 400 100 470 100"/>
+  <path class="p" d="M470 100 H620"/>
+  <path class="p dash" d="M150 100 C190 60 260 22 400 22"/><path class="p" d="M396 18 l8 8 M404 18 l-8 8"/>
+  <circle class="n" cx="30" cy="100" r="6"/><circle class="n" cx="150" cy="100" r="6"/><circle class="n" cx="300" cy="52" r="6"/><circle class="n an" cx="300" cy="148" r="6"/>
+  <circle class="n hi cn" cx="470" cy="100" r="8"/><circle class="n" cx="620" cy="100" r="6"/>
+  <text x="10" y="124">{t(`invoice`, `facture`)}</text><text x="150" y="124" text-anchor="middle">{t(`extraction`, `extraction`)}</text>
+  <text x="312" y="44">{t(`fields complete?`, `champs complets ?`)}</text><text x="312" y="172">{t(`arithmetic adds up?`, `calculs justes ?`)}</text>
+  <text x="470" y="126" text-anchor="middle">{t(`confidence`, `confiance`)}</text>
+  <text class="sm t-ok" x="470" y="140" text-anchor="middle">{t(`computed in code`, `calculée dans le code`)}</text><text class="sm t-bad" x="470" y="140" text-anchor="middle">{t(`arithmetic fails, score drops`, `calcul faux, le score baisse`)}</text>
+  <text x="620" y="124" text-anchor="middle">{t(`export`, `export`)}</text>
+  <text class="sm" x="412" y="26">{t(`model's own claim, not the score`, `déclaration du modèle, pas le score`)}</text>
+</svg>
+<div class="pick" role="group" aria-label={t(`Try it`, `Essayer`)}><button type="button" aria-pressed="true" data-s="ok">{t(`the totals add up`, `les totaux collent`)}</button><button type="button" aria-pressed="false" data-s="bad">{t(`they don't`, `ils ne collent pas`)}</button></div>
+<p class="mono" style="margin:10px 0 0">{t(`Illustration of the idea, not a live demo.`, `Illustration de l’idée, pas une démo en direct.`)}</p></div>
+<style>
+.t-bad{display:none}svg[data-s="bad"] .t-bad{display:inline}svg[data-s="bad"] .t-ok{display:none}
+svg[data-s="bad"] .an{fill:var(--ink)}svg[data-s="bad"] .pa{stroke-dasharray:4 5}svg[data-s="bad"] .cn{fill:var(--bg)}
+.cn,.an{transition:fill .3s}
+</style>
+<script>
+  const inv = document.getElementById('inv')!, bs = inv.parentElement!.querySelectorAll<HTMLButtonElement>('.pick button');
+  bs.forEach((x) => x.addEventListener('click', () => { inv.dataset.s = x.dataset.s; bs.forEach((y) => y.setAttribute('aria-pressed', String(y === x))); }));
+</script>

@@ -1,0 +1,39 @@
+[
+ {
+  "name": "Machine Learning Specialization",
+  "status": "in-progress"
+ },
+ {
+  "name": "Web development",
+  "issuer": "Brainerx School",
+  "date": "June 2025"
+ },
+ {
+  "name": "Flutter & Dart",
+  "issuer": "Udemy",
+  "date": "2024"
+ },
+ {
+  "name": "Mathematics for Machine Learning: calculus, algebra, probability & statistics",
+  "issuer": "Coursera, DeepLearning.AI"
+ },
+ {
+  "name": "Mobile application development",
+  "issuer": "SmartVilla",
+  "date": "March 2021"
+ },
+ {
+  "name": "Mobile application development",
+  "issuer": "Meziane Dahou",
+  "date": "2021"
+ },
+ {
+  "name": "Website development with PHP and related technologies",
+  "issuer": "SmartVilla"
+ },
+ {
+  "name": "Software development with WinDev",
+  "issuer": "SmartVilla",
+  "date": "December 2020"
+ }
+]

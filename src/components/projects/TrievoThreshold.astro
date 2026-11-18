@@ -1,0 +1,35 @@
+---
+// Drag a confidence score and see what Trievo would do with the email.
+import { langOf } from '../../i18n';
+const fr = langOf(Astro) === 'fr';
+const t = (a: string, b: string) => (fr ? b : a);
+---
+<div class="dg trv" data-m1={t(`Auto-reply goes out, and the result is logged.`, `La réponse automatique part, et le résultat est consigné.`)} data-m2={t(`Held for a person: it lands in the Notion review queue.`, `Retenu pour une personne : il arrive dans la file de relecture Notion.`)} data-m3={t(`Below the line. A second pass runs at temperature 0 before anything is decided.`, `Sous le seuil. Une deuxième passe tourne à température 0 avant toute décision.`)}>
+  <label class="mono" for="trv-r">{t(`drag the classifier's confidence`, `faites glisser la confiance du classifieur`)}</label>
+  <input id="trv-r" type="range" min="40" max="100" value="90" />
+  <div class="bar" aria-hidden="true"><span class="b b1">{t(`second pass`, `deuxième passe`)}</span><span class="b b2">{t(`review`, `revue`)}</span><span class="b b3">{t(`auto-reply`, `réponse auto`)}</span><i id="trv-m"></i></div>
+  <p class="out" aria-live="polite"><span class="n" id="trv-n">90%</span> <span id="trv-t"></span></p>
+</div>
+<style>
+.trv{padding:0}
+.trv input{width:100%;max-width:560px;display:block;margin:10px 0 18px;accent-color:var(--ink)}
+.trv .bar{position:relative;display:flex;max-width:560px;border:1px solid var(--ink);font:11px var(--mono)}
+.trv .b{padding:10px 8px;text-align:center;border-right:1px solid var(--ink)}
+.trv .b:last-of-type{border-right:0}
+.trv .b1{width:calc((75 - 40) / 60 * 100%)}.trv .b2{width:calc(10 / 60 * 100%)}.trv .b3{flex:1;background:var(--acc);color:var(--acc-ink)}
+.trv .b2{overflow:hidden;white-space:nowrap;text-overflow:clip;padding-inline:2px}
+.trv i{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--ink)}
+.trv .out{margin:18px 0 0;max-width:56ch;min-height:3.2em}.trv .n{font:500 1.4rem var(--head);margin-right:8px}
+</style>
+<script>
+  const r = document.getElementById('trv-r') as HTMLInputElement | null;
+  if (r) {
+    const m = document.getElementById('trv-m')!, n = document.getElementById('trv-n')!, t = document.getElementById('trv-t')!;
+    const go = () => {
+      const v = +r.value; n.textContent = v + '%'; m.style.left = ((v - 40) / 60) * 100 + '%';
+      const d = r.closest<HTMLElement>('.trv')!.dataset;
+      t.textContent = v >= 85 ? d.m1! : v >= 75 ? d.m2! : d.m3!;
+    };
+    r.addEventListener('input', go); go();
+  }
+</script>

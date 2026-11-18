@@ -1,0 +1,35 @@
+---
+import tools from '../../data/tools.json';
+import { langOf, useT, frData, tr } from '../../i18n';
+const lang = langOf(Astro);
+const T = useT(lang).tools;
+---
+<section id="tools" class="tools" aria-labelledby="tools-h">
+  <div class="cols">
+    <div>
+      <h2 id="tools-h" class="mono">{T.h}</h2>
+      <p class="mono key"><span class="k solid"></span>{T.used}<br /><span class="k dashed"></span>{T.learned}</p>
+    </div>
+    <div class="groups">
+      {tools.map((g) => (
+        <div class="g">
+          <h3 class="mono up">{tr(lang, frData.groups, g.group)}</h3>
+          <ul>{g.items.map((t: { n: string; c?: boolean }) => <li class={t.c ? 'c' : ''}>{t.n}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+.tools{padding:88px 0 0}.cols{display:grid;grid-template-columns:170px minmax(0,1fr);gap:clamp(16px,4vw,48px);align-items:start}
+h2{font-weight:400;margin:0}.key{margin:14px 0 0;line-height:2}
+.k{display:inline-block;width:22px;height:14px;border:1px solid var(--ink);border-radius:4px;margin-right:8px;vertical-align:-2px;background:color-mix(in srgb,var(--acc) 20%,var(--bg))}
+.k.dashed{border-style:dashed;background:none}
+.groups{display:grid;gap:20px}
+.g{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 20px;align-items:baseline;padding-top:14px;border-top:1px solid var(--line)}
+.g h3{font-weight:500;margin:0}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px}
+li{font:500 .875rem var(--body);color:var(--ink);border:1px solid var(--ink);border-radius:4px;padding:3px 11px;background:color-mix(in srgb,var(--acc) 20%,var(--bg))}
+li.c{border-style:dashed;background:none}
+@media (max-width:760px){.cols{grid-template-columns:1fr}.g{grid-template-columns:1fr}}
+</style>

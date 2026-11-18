@@ -1,0 +1,217 @@
+{
+ "title": "Cairn",
+ "category": "web-products",
+ "tier": "featured",
+ "status": "dev",
+ "order": 20,
+ "summary": "A calm, personal-first outdoor platform for hikers, trekkers and campers.",
+ "technologies": [
+  "React",
+  "Vite",
+  "Express",
+  "MongoDB"
+ ],
+ "github": "https://github.com/saaraah19/Cairn",
+ "flow": [
+  "Plan",
+  "Prepare",
+  "Live",
+  "Record",
+  "Remember"
+ ],
+ "live": "https://cairn-client.onrender.com",
+ "composition": "offset",
+ "build": [
+  "React and Vite client, Express and MongoDB behind it, Google Cloud OAuth for sign-in."
+ ],
+ "shots": [
+  {
+   "src": "../../assets/projects/cairn/01-activities.webp",
+   "alt": "Cairn: The activities list.",
+   "caption": "My Outdoors: every activity, searchable and sortable.",
+   "role": "context"
+  },
+  {
+   "src": "../../assets/projects/cairn/02-welcome.webp",
+   "alt": "Cairn: The welcome screen.",
+   "caption": "The home screen: recent adventures, what is planned and photo memories.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/cairn/03-gear.webp",
+   "alt": "Cairn: The gear closet.",
+   "caption": "A personal gear closet.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/cairn/04-pack.webp",
+   "alt": "Cairn: The pack-my-bag screen.",
+   "caption": "Pack my bag: tick gear for an upcoming trip and the weight adds up.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/cairn/05-need-to-buy.webp",
+   "alt": "Cairn: The need-to-buy list.",
+   "caption": "Need to buy: gear wishlist with budgets and options considered.",
+   "role": "workflow"
+  },
+  {
+   "src": "../../assets/projects/cairn/06-stats.webp",
+   "alt": "Cairn: The statistics page.",
+   "caption": "Statistics computed from the activity records.",
+   "role": "result"
+  },
+  {
+   "src": "../../assets/projects/cairn/07-community.webp",
+   "alt": "Cairn: The community feed.",
+   "caption": "Explore: public adventures shared by other hikers.",
+   "role": "edge"
+  },
+  {
+   "src": "../../assets/projects/cairn/08-public-view.webp",
+   "alt": "Cairn: A public activity view.",
+   "caption": "A public activity page, with kudos and comments.",
+   "role": "edge"
+  }
+ ],
+ "problem": "Hikes, gear and plans end up in separate places. Putting them in one app raises a question I wanted to answer deliberately: who gets to see what?",
+ "thinking": "Privacy is a model, not a settings page.",
+ "decisions": [
+  {
+   "title": "Visible is not discoverable",
+   "text": "Who can see an activity is decoupled from whether your profile can be found. You can share one hike without publishing yourself."
+  },
+  {
+   "title": "Derived, never typed",
+   "text": "Statistics and gear history are always computed from the records, so they cannot drift from them."
+  },
+  {
+   "title": "Enforced on the server",
+   "text": "Per-user isolation lives in the API, not in the interface."
+  },
+  {
+   "title": "Counters that survive failure",
+   "text": "Denormalised counters are paired with compensating rollbacks, so a failed write does not leave a wrong number behind."
+  }
+ ],
+ "wake": "Free-tier hosting: the first request after a period of inactivity may take 30–60s to wake the server back up.",
+ "leadShot": 0,
+ "built": "A trip, gear and activity tracker where visibility is separate from discoverability, and every statistic is computed from the records.",
+ "facts": {
+  "who": "Hikers, trekkers and campers",
+  "when": "Hikes, gear and plans live in separate places",
+  "why": "Putting them together raises one question: who gets to see what?"
+ },
+ "tradeoff": {
+  "pick": "Privacy as a model",
+  "over": "Privacy as a settings page"
+ },
+ "homeDecision": 0,
+ "keyDecisions": [
+  0,
+  1,
+  2
+ ],
+ "flowNotes": [
+  "An upcoming activity",
+  "Tick gear from your closet; the pack weight adds up",
+  "The hike itself",
+  "The activity is saved as a record",
+  "Statistics and photo memories, computed from the records"
+ ],
+ "unfinished": [
+  "Still in active development.",
+  "GPS tracking, a core feature, is planned for a mobile app that is still in progress."
+ ],
+ "fr": {
+  "summary": "Une plateforme outdoor calme et centrée sur soi pour randonneurs, trekkeurs et campeurs.",
+  "problem": "Les randonnées, le matériel et les projets finissent dans des endroits séparés. Les réunir dans une seule appli soulève une question à laquelle je voulais répondre délibérément : qui a le droit de voir quoi ?",
+  "thinking": "La confidentialité est un modèle, pas une page de réglages.",
+  "built": "Un outil de suivi de sorties, de matériel et d’activités où la visibilité est distincte de la découvrabilité, et où chaque statistique est calculée à partir des enregistrements.",
+  "decisions": [
+   {
+    "title": "Visible n’est pas découvrable",
+    "text": "Qui peut voir une activité est découplé du fait que votre profil puisse être trouvé. Vous pouvez partager une randonnée sans vous publier vous-même."
+   },
+   {
+    "title": "Dérivé, jamais saisi",
+    "text": "Les statistiques et l’historique du matériel sont toujours calculés à partir des enregistrements, donc ils ne peuvent pas s’en écarter."
+   },
+   {
+    "title": "Appliqué côté serveur",
+    "text": "L’isolation par utilisateur vit dans l’API, pas dans l’interface."
+   },
+   {
+    "title": "Des compteurs qui survivent aux échecs",
+    "text": "Les compteurs dénormalisés sont associés à des annulations compensatoires, si bien qu’une écriture qui échoue ne laisse pas un chiffre faux derrière elle."
+   }
+  ],
+  "build": [
+   "Client React et Vite, Express et MongoDB derrière, Google Cloud OAuth pour la connexion."
+  ],
+  "unfinished": [
+   "Toujours en développement actif.",
+   "Le suivi GPS, une fonction essentielle, est prévu dans une application mobile encore en cours."
+  ],
+  "flow": [
+   "Planifier",
+   "Préparer",
+   "Vivre",
+   "Enregistrer",
+   "Se souvenir"
+  ],
+  "flowNotes": [
+   "Une activité à venir",
+   "Cochez le matériel de votre placard ; le poids du sac s’additionne",
+   "La randonnée elle-même",
+   "L’activité est sauvegardée comme enregistrement",
+   "Statistiques et souvenirs photo, calculés à partir des enregistrements"
+  ],
+  "facts": {
+   "who": "Randonneurs, trekkeurs et campeurs",
+   "when": "Randonnées, matériel et projets vivent à des endroits séparés",
+   "why": "Les réunir pose une question : qui peut voir quoi ?"
+  },
+  "tradeoff": {
+   "pick": "La confidentialité comme modèle",
+   "over": "La confidentialité comme page de réglages"
+  },
+  "wake": "Hébergement gratuit : la première requête après une période d’inactivité peut prendre 30 à 60 s pour réveiller le serveur.",
+  "shots": [
+   {
+    "alt": "Cairn : la liste des activités.",
+    "caption": "Mes sorties : chaque activité, avec recherche et tri."
+   },
+   {
+    "alt": "Cairn : l’écran d’accueil.",
+    "caption": "L’accueil : aventures récentes, projets à venir et souvenirs photo."
+   },
+   {
+    "alt": "Cairn : le placard à matériel.",
+    "caption": "Un placard de matériel personnel."
+   },
+   {
+    "alt": "Cairn : l’écran « préparer mon sac ».",
+    "caption": "Préparer mon sac : cochez le matériel d’une sortie à venir et le poids s’additionne."
+   },
+   {
+    "alt": "Cairn : la liste de ce qu’il faut acheter.",
+    "caption": "À acheter : une liste d’envies de matériel avec budgets et options envisagées."
+   },
+   {
+    "alt": "Cairn : la page de statistiques.",
+    "caption": "Statistiques calculées à partir des enregistrements d’activités."
+   },
+   {
+    "alt": "Cairn : le fil de la communauté.",
+    "caption": "Explorer : des aventures publiques partagées par d’autres randonneurs."
+   },
+   {
+    "alt": "Cairn : la vue d’une activité publique.",
+    "caption": "Une page d’activité publique, avec des kudos et des commentaires."
+   }
+  ],
+  "origin": "Je suis une personne qui aime la nature, et je consignais mes randonnées et leurs données dans un tableur. Mon matériel, celui que je voulais acheter, l’argent dépensé et ma liste de sac vivaient sur une autre feuille. C’était chargé et moche, ça ne me donnait jamais envie de noter quoi que ce soit, et il n’y avait même pas moyen d’y mettre mes photos de randonnée. Le nom vient des cairns que j’aime croiser le long d’un sentier : ils disent qu’on est sur le bon chemin, et quoi de mieux que de savoir qu’on n’est pas perdu ? J’ai donc construit Cairn pour consigner une randonnée en quelques clics, suivre le matériel que j’ai et celui qu’il me faut, et j’ai même prévu un petit espace de communauté."
+ },
+ "origin": "I am an outdoorsy person, and I used to log my hikes and their data in a spreadsheet. My gear, the gear I wanted to buy, the money spent and my packing checklist lived on another sheet. It felt crowded and ugly, it never gave me the urge to write anything down, and there was not even a way to put my hike photos in it. The name comes from the cairns I love crossing along a trail: they tell you that you are on the right path, and what feels better than knowing you are not lost? So I built Cairn to log a hike in a few clicks, keep track of the gear I own and the gear I need, and I even made room for a small community."
+}

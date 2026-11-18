@@ -1,0 +1,9 @@
+---
+import { getCollection } from 'astro:content';
+import CaseStudy from '../../../components/pages/CaseStudy.astro';
+export async function getStaticPaths() {
+  const all = await getCollection('projects');
+  return all.map((e) => ({ params: { id: e.id }, props: { p: { id: e.id, ...e.data } } }));
+}
+---
+<CaseStudy p={Astro.props.p} />
