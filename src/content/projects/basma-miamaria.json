@@ -19,7 +19,7 @@
   "Admin",
   "Content"
  ],
- "live": "https://basma-web.onrender.com/",
+ "live": "https://basma-miaamaria.onrender.com",
  "composition": "split",
  "build": [
   "A monorepo with an API, a web app and a shared package.",
